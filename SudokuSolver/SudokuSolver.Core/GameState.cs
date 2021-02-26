@@ -36,6 +36,7 @@ namespace SudokuSolver.Core
             int height = rows.Length / 3;
             SquareGroups = new SquareGroup[width * height];
 
+            //Get each inner square (3x3 squares) from the string
             string row1;
             string row2;
             string row3;

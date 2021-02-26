@@ -3,6 +3,7 @@ using SudokuSolver.Core;
 
 namespace SudokuSolver.Tests
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [TestClass]
     public class SquareTests
     {
@@ -15,7 +16,7 @@ namespace SudokuSolver.Tests
             //Act
 
             //Assert
-            Assert.IsNull(square.CurrentSquare);
+            Assert.AreEqual(0, square.CurrentSquare);
             for (int i = 0; i < 9; i++)
             {
                 Assert.AreEqual(i + 1, square.PossibleSquares[i]);
@@ -54,7 +55,7 @@ namespace SudokuSolver.Tests
             square.PossibleSquares[8] = 9;
 
             //Assert
-            Assert.IsNull(square.CurrentSquare);
+            Assert.AreEqual(0, square.CurrentSquare);
             string expected = @"
 ..3
 ...

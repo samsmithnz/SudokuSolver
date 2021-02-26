@@ -3,8 +3,9 @@ using SudokuSolver.Core;
 
 namespace SudokuSolver.Tests
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [TestClass]
-    public class BasicTests
+    public class GameStateTests
     {
         [TestMethod]
         public void EasyGameTest()
@@ -46,8 +47,14 @@ namespace SudokuSolver.Tests
 .81...24.
 7..4.2..1
 ";
+            string expectedSquare0 = @"
+2..
+.54
+.1.
+";
             Assert.IsTrue(gameState.UnsolvedSquares == 45);
             Assert.IsTrue(Utility.TrimNewLines(gameState.OutputState()) == Utility.TrimNewLines(expected));
+            Assert.AreEqual(Utility.TrimNewLines(expectedSquare0), gameState.SquareGroups[0].ToString());
         }
 
 

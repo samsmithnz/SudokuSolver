@@ -12,27 +12,38 @@ namespace SudokuSolver.Core
         //123
         //456
         //789
-        public Square[] squares = new Square[9];
+        public Square[] Squares = new Square[9];
+        public List<int> SolvedSquares;
 
         public SquareGroup(string row1, string row2, string row3)
         {
             int i = 0;
             foreach (char item in row1)
             {
-                squares[i] = new Square(GetNumber(item.ToString()));
+                Squares[i] = new Square(GetNumber(item.ToString()));
                 i++;
             }
             i = 3;
             foreach (char item in row2)
             {
-                squares[i] = new Square(GetNumber(item.ToString()));
+                Squares[i] = new Square(GetNumber(item.ToString()));
                 i++;
             }
             i = 6;
             foreach (char item in row3)
             {
-                squares[i] = new Square(GetNumber(item.ToString()));
+                Squares[i] = new Square(GetNumber(item.ToString()));
                 i++;
+            }
+
+            //Add the solved squares into a list, so it's easy to use later
+            SolvedSquares = new List<int>();
+            foreach (Square item in Squares)
+            {
+                if (item.CurrentSquare != 0)
+                {
+                    SolvedSquares.Add(item.CurrentSquare);
+                }
             }
         }
 
@@ -51,7 +62,7 @@ namespace SudokuSolver.Core
         {
             StringBuilder sb = new StringBuilder();
             int i = 0;
-            foreach (Square item in squares)
+            foreach (Square item in Squares)
             {
                 i++;
                 if (item.CurrentSquare == 0)
@@ -62,7 +73,7 @@ namespace SudokuSolver.Core
                 {
                     sb.Append(item.CurrentSquare.ToString());
                 }
-                if (i % 3 == 0 && i < squares.Length )
+                if (i % 3 == 0 && i < Squares.Length )
                 {
                     sb.Append(Environment.NewLine);
                 }

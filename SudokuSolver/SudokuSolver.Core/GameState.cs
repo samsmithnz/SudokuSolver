@@ -53,6 +53,18 @@ namespace SudokuSolver.Core
 
         }
 
+        public int ProcessRules()
+        {
+            Rules rules = new Rules();
+            int squaresSolved = 0;
+
+            (int, SquareGroup) result = rules.InnerSquareEliminationRule(SquareGroups[0]);
+            squaresSolved += result.Item1;
+            SquareGroups[0] = result.Item2;
+
+            return squaresSolved;
+        }
+
         public string OutputState()
         {
             return GameBoard;

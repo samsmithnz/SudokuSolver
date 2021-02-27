@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SudokuSolver.Core
@@ -10,11 +12,28 @@ namespace SudokuSolver.Core
         //456
         //789
         public int[] PossibleSquares = new int[9];
-        public int CurrentSquare = 0;
+        public List<int> PossibleSquaresFiltered;
+        private int _currentSquare = 0;
+        public int CurrentSquare
+        {
+            get
+            {
+                return _currentSquare;
+            }
+            set
+            {
+                if (_currentSquare == 0 & value == 0)
+                {
+                    EliminateAllPossibleSquares();
+                }
+                _currentSquare = value;
+            }
+        }
         public int PossibleSquareCount = 0;
 
         public Square(int currentSquare = 0)
         {
+            PossibleSquaresFiltered = new List<int>();
             CurrentSquare = currentSquare;
             if (currentSquare > 0)
             {
@@ -32,6 +51,40 @@ namespace SudokuSolver.Core
                 for (int i = 0; i < 9; i++)
                 {
                     PossibleSquares[i] = i + 1;
+                    PossibleSquaresFiltered.Add(i + 1);
+                }
+            }
+            RefreshPossibleSquaresFilteredList();
+        }
+
+        public void EliminatePossibleSquare(int number)
+        {
+            if (PossibleSquares[number - 1] > 0)
+            {
+                PossibleSquares[number - 1] = 0;
+                PossibleSquareCount--;
+                RefreshPossibleSquaresFilteredList();
+            }
+        }
+
+        private void EliminateAllPossibleSquares()
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                PossibleSquares[i] = 0;
+            }
+            PossibleSquareCount = 0;
+            RefreshPossibleSquaresFilteredList();
+        }
+
+        private void RefreshPossibleSquaresFilteredList()
+        {
+            PossibleSquaresFiltered = new List<int>();
+            for (int i = 0; i < 9; i++)
+            {
+                if (PossibleSquares[i] > 0)
+                {
+                    PossibleSquaresFiltered.Add(PossibleSquares[i]);
                 }
             }
         }

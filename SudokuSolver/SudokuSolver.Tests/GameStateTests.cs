@@ -21,9 +21,9 @@ namespace SudokuSolver.Tests
 #LEasy
 #Uhttp://www.sudocue.net/
 #S3
-2..1.5..3
-.54...71.
-.1.2.3.8.
+27.1.5..3
+354...71.
+9162.3.8.
 6.28.73.4
 .........
 1.53.98.6
@@ -34,12 +34,13 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
+            int squaresSolved = gameState.ProcessRules();
 
             //Assert
             string expected = @"
-2..1.5..3
-.54...71.
-.1.2.3.8.
+27.1.5..3
+354...71.
+9162.3.8.
 6.28.73.4
 .........
 1.53.98.6
@@ -48,11 +49,12 @@ namespace SudokuSolver.Tests
 7..4.2..1
 ";
             string expectedSquare0 = @"
-2..
-.54
-.1.
+278
+354
+916
 ";
-            Assert.IsTrue(gameState.UnsolvedSquares == 45);
+            Assert.IsTrue(gameState.UnsolvedSquares == 41);
+            Assert.AreEqual(1, squaresSolved);
             Assert.IsTrue(Utility.TrimNewLines(gameState.OutputState()) == Utility.TrimNewLines(expected));
             Assert.AreEqual(Utility.TrimNewLines(expectedSquare0), gameState.SquareGroups[0].ToString());
         }

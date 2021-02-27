@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,7 @@ namespace SudokuSolver.Core
             string row1;
             string row2;
             string row3;
+            int i = 0;
             for (int row = 0; row < height; row++)
             {
                 for (int col = 0; col < width; col++)
@@ -47,10 +49,25 @@ namespace SudokuSolver.Core
                     row1 = rows[(row * 3) + 0].Substring((col * 3), 3);
                     row2 = rows[(row * 3) + 1].Substring((col * 3), 3);
                     row3 = rows[(row * 3) + 2].Substring((col * 3), 3);
-                    SquareGroups[row + col] = new SquareGroup(row1, row2, row3);
+                    SquareGroups[i] = new SquareGroup(row1, row2, row3);
+                    i++;
                 }
             }
+        }
 
+        public int ProcessRules()
+        {
+            Rules rules = new Rules();
+            int squaresSolved = 0;
+
+            for (int i = 0; i < SquareGroups.Length-1; i++)
+            {
+                RuleResult result = rules.InnerSquareEliminationRule(SquareGroups[i]);
+                squaresSolved += result.SquaresSolved;
+                SquareGroups[i] = result.Group;
+            }
+
+            return squaresSolved;
         }
 
         public string OutputState()

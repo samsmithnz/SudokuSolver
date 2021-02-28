@@ -14,6 +14,7 @@ namespace SudokuSolver.Core
         public int UnsolvedSquareCount;
         public int[,] GameBoard;
         public HashSet<int>[,] GameBoardPossibilities;
+        public int IterationsToSolve = 0;
 
         public void LoadGame(string game)
         {
@@ -115,6 +116,22 @@ namespace SudokuSolver.Core
             return squaresSolved;
         }
 
+        public int SolveGame()
+        {
+            int squaresSolved = 0;
+            int newSquaresSolved;
+            IterationsToSolve = 0;
+            do
+            {
+                //Keep looping while new squares are solved
+                newSquaresSolved = ProcessRules(true, true, true);
+                squaresSolved += newSquaresSolved;
+                IterationsToSolve++;
+            } while (newSquaresSolved > 0);
+
+            return squaresSolved;
+        }
+
         private string UpdateProcessedGameBoardString(int[,] gameBoard)
         {
             StringBuilder sb = new StringBuilder();
@@ -134,7 +151,7 @@ namespace SudokuSolver.Core
 
         public string OutputState()
         {
-            return ProcessedGameBoardString.Replace("0", ".");
+            return Utility.TrimNewLines(ProcessedGameBoardString.Replace("0", "."));
         }
 
     }

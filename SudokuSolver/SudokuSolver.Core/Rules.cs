@@ -123,14 +123,6 @@ namespace SudokuSolver.Core
                         {
                             gameBoardPossibilities[x2, y].Remove(gameBoard[x, y]);
                         }
-                        //If there is only one possibility, set it
-                        if (gameBoardPossibilities[x, y].Count == 1)
-                        {
-                            gameBoard[x, y] = gameBoardPossibilities[x, y].First();
-                            //remove the last item from the hashset.
-                            gameBoardPossibilities[x, y].Remove(gameBoard[x, y]);
-                            squaresSolved++;
-                        }
                     }
                 }
             }
@@ -174,14 +166,6 @@ namespace SudokuSolver.Core
                         for (int y2 = 0; y2 < 9; y2++)
                         {
                             gameBoardPossibilities[x, y2].Remove(gameBoard[x, y]);
-                        }
-                        //If there is only one possibility, set it
-                        if (gameBoardPossibilities[x, y].Count == 1)
-                        {
-                            gameBoard[x, y] = gameBoardPossibilities[x, y].First();
-                            //remove the last item from the hashset.
-                            gameBoardPossibilities[x, y].Remove(gameBoard[x, y]);
-                            squaresSolved++;
                         }
                     }
                 }

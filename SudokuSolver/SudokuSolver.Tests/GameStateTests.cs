@@ -48,7 +48,6 @@ namespace SudokuSolver.Tests
             //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
             Assert.AreEqual(1, squaresSolved);
             Assert.AreEqual(Utility.TrimNewLines(expected), Utility.TrimNewLines(gameState.OutputState()));
-            //Assert.AreEqual(Utility.TrimNewLines(expectedSquare0), gameState.SquareGroups[0].ToString());
         }
 
 
@@ -91,7 +90,88 @@ namespace SudokuSolver.Tests
             //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
             Assert.AreEqual(1, squaresSolved);
             Assert.AreEqual(Utility.TrimNewLines(expected), Utility.TrimNewLines(gameState.OutputState()));
-            //Assert.AreEqual(Utility.TrimNewLines(expectedSquare0), gameState.SquareGroups[0].ToString());
+        }
+
+        [TestMethod]
+        public void SimpleSquareGroupExampleGameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+123456789
+45.789123
+789123456
+912345678
+678912345
+345678912
+234567891
+891234567
+567891234
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.ProcessRules(false, false, true);
+
+            //Assert
+            string expected = @"
+123456789
+456789123
+789123456
+912345678
+678912345
+345678912
+234567891
+891234567
+567891234
+";
+
+            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
+            //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
+            //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
+            Assert.AreEqual(1, squaresSolved);
+            Assert.AreEqual(Utility.TrimNewLines(expected), Utility.TrimNewLines(gameState.OutputState()));
+        }
+
+        [TestMethod]
+        public void SimpleExampleGameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+123456789
+456789123
+78.123456
+912345678
+678912345
+34567.912
+234567891
+891234567
+56789123.
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.ProcessRules(true, true, true);
+
+            //Assert
+            string expected = @"
+123456789
+456789123
+789123456
+912345678
+678912345
+345678912
+234567891
+891234567
+567891234
+";
+
+            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
+            //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
+            //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
+            Assert.AreEqual(3, squaresSolved);
+            Assert.AreEqual(Utility.TrimNewLines(expected), Utility.TrimNewLines(gameState.OutputState()));
         }
 
         [TestMethod]
@@ -113,11 +193,11 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true);
+            int squaresSolved = gameState.ProcessRules(true, true, true);
 
             //Assert
             string expected = @"
-27.1.5.93
+2781.5.93
 354...71.
 9162.3.8.
 6928.73.4
@@ -128,8 +208,8 @@ namespace SudokuSolver.Tests
 7..4.2..1
 ";
 
-            Assert.AreEqual(36, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(5, squaresSolved);
+            Assert.AreEqual(35, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(6, squaresSolved);
             Assert.AreEqual(Utility.TrimNewLines(gameState.OutputState()), Utility.TrimNewLines(expected));
         }
 

@@ -65,7 +65,7 @@ namespace SudokuSolver.Core
 
         public int ProcessRules(bool useRowRule = true,
             bool useColumnRule = true,
-            bool useInnerSquareRule = true)
+            bool useSquareGroupRule = true)
         {
             if (GameBoard == null || GameBoardPossibilities == null)
             {
@@ -99,9 +99,9 @@ namespace SudokuSolver.Core
                 }
             }
 
-            if (useInnerSquareRule == true)
+            if (useSquareGroupRule == true)
             {
-                ruleResult = rules.InnerSquareEliminationRule(GameBoard, GameBoardPossibilities);
+                ruleResult = rules.SquareGroupEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;

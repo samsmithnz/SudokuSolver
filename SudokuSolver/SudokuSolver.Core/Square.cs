@@ -22,7 +22,7 @@ namespace SudokuSolver.Core
             }
             set
             {
-                if (_currentSquare == 0 & value == 0)
+                if (_currentSquare == 0 & value != 0)
                 {
                     EliminateAllPossibleSquares();
                 }

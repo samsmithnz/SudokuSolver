@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SudokuSolver.Core
 {
@@ -73,14 +70,13 @@ namespace SudokuSolver.Core
                 throw new Exception("Game not loaded");
             }
 
-            Rules rules = new Rules();
-            RuleResult ruleResult = null;
+            RuleResult ruleResult;
             int squaresSolved = 0;
 
             //Process the board and update with any changes
             if (useRowRule == true)
             {
-                ruleResult = rules.RowEliminationRule(GameBoard, GameBoardPossibilities);
+                ruleResult = Rules.RowEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
@@ -91,7 +87,7 @@ namespace SudokuSolver.Core
 
             if (useColumnRule == true)
             {
-                ruleResult = rules.ColumnEliminationRule(GameBoard, GameBoardPossibilities);
+                ruleResult = Rules.ColumnEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
@@ -102,7 +98,7 @@ namespace SudokuSolver.Core
 
             if (useSquareGroupRule == true)
             {
-                ruleResult = rules.SquareGroupEliminationRule(GameBoard, GameBoardPossibilities);
+                ruleResult = Rules.SquareGroupEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
@@ -132,7 +128,7 @@ namespace SudokuSolver.Core
             return squaresSolved;
         }
 
-        private string UpdateProcessedGameBoardString(int[,] gameBoard)
+        private static string UpdateProcessedGameBoardString(int[,] gameBoard)
         {
             StringBuilder sb = new StringBuilder();
             int i = 0;
@@ -141,7 +137,7 @@ namespace SudokuSolver.Core
             {
                 for (int x = 0; x < 9; x++)
                 {
-                    sb.Append(gameBoard[x, y].ToString());
+                    sb.Append(gameBoard[x, y]);
                     i++;
                 }
                 sb.Append(Environment.NewLine);

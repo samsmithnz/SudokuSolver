@@ -1,52 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace SudokuSolver.Core
 {
+    //TODO: Add a rule that adds up the numbers and calculates what is missing (1 to 9 is 45)
     public class Rules
     {
-        //public RuleResult SquareGroupEliminationRuleMethod1(SquareGroup group)
-        //{
-        //    int squaresSolved = 0;
-        //    int i = 0;
 
-        //    //First mark all of the possible numbers in available squares, within the square group
-        //    foreach (int item in group.SolvedSquares)
-        //    {
-        //        i = 0;
-        //        for (int y = 0; y < 3; y++)
-        //        {
-        //            for (int x = 0; x < 3; x++)
-        //            {
-        //                if (group.Squares[i].CurrentSquare == 0)
-        //                {
-        //                    group.Squares[i].EliminatePossibleSquare(item);
-        //                }
-        //                i++;
-        //            }
-        //        }
-        //    }
-
-        //    //Then run a simple elimination, to see if the item can be solved
-        //    i = 0;
-        //    for (int y = 0; y < 3; y++)
-        //    {
-        //        for (int x = 0; x < 3; x++)
-        //        {
-        //            if (group.Squares[i].CurrentSquare == 0 && group.Squares[i].PossibleSquareCount == 1)
-        //            {
-        //                squaresSolved++;
-        //                group.Squares[i].CurrentSquare = group.Squares[i].PossibleSquaresFiltered[0];
-        //            }
-        //            i++;
-        //        }
-        //    }
-
-        //    return new RuleResult(squaresSolved, group, null);
-        //}
-
-        public RuleResult SquareGroupEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        public static RuleResult SquareGroupEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
 
@@ -103,7 +64,7 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
-        public RuleResult RowEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        public static RuleResult RowEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
 
@@ -146,7 +107,7 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
-        public RuleResult ColumnEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        public static RuleResult ColumnEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
 
@@ -190,21 +151,6 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
-        //TODO: Add a rule that adds up the numbers and calculates what is missing (1 to 9 is 45)
-        //TODO: Add a rule to look at the columns and rows
     }
 
-    public class RuleResult
-    {
-        public int SquaresSolved;
-        public int[,] GameBoard;
-        public HashSet<int>[,] GameBoardPossibilities;
-
-        public RuleResult(int squaresSolved, int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
-        {
-            SquaresSolved = squaresSolved;
-            GameBoard = gameBoard;
-            GameBoardPossibilities = gameBoardPossibilities;
-        }
-    }
 }

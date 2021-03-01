@@ -42,7 +42,7 @@ namespace SudokuSolver.Tests
 769482531
 ";
 
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString); 
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             Assert.AreEqual(41, squaresSolved);
             Assert.AreEqual(6, gameState.IterationsToSolve);
@@ -148,13 +148,6 @@ namespace SudokuSolver.Tests
             //Act
             gameState.LoadGame(game);
             int squaresSolved = gameState.SolveGame();
-            //int squaresSolved = gameState.ProcessRules(true, true, true);
-            //squaresSolved += gameState.ProcessRules(true, true, true);
-            //squaresSolved += gameState.ProcessRules(true, true, true);
-            //squaresSolved += gameState.ProcessRules(true, true, true);
-            //squaresSolved += gameState.ProcessRules(true, true, true);
-            //squaresSolved += gameState.ProcessRules(true, true, true);
-            //squaresSolved += gameState.ProcessRules(true, true, true);
 
             //Assert     
             string expected = @"

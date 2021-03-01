@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SudokuSolver.Core
@@ -80,6 +81,7 @@ namespace SudokuSolver.Core
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
+                    CheckForValue();
                     squaresSolved += ruleResult.SquaresSolved;
                     ProcessedGameBoardString = UpdateProcessedGameBoardString(ruleResult.GameBoard);
                 }
@@ -90,6 +92,7 @@ namespace SudokuSolver.Core
                 ruleResult = Rules.ColumnEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
+                    CheckForValue();
                     GameBoard = ruleResult.GameBoard;
                     squaresSolved += ruleResult.SquaresSolved;
                     ProcessedGameBoardString = UpdateProcessedGameBoardString(ruleResult.GameBoard);
@@ -102,6 +105,7 @@ namespace SudokuSolver.Core
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
+                    CheckForValue();
                     squaresSolved += ruleResult.SquaresSolved;
                     ProcessedGameBoardString = UpdateProcessedGameBoardString(ruleResult.GameBoard);
                 }
@@ -109,7 +113,17 @@ namespace SudokuSolver.Core
 
             UnsolvedSquareCount = ProcessedGameBoardString.Split('0').Length - 1;
 
+            ProcessedGameBoardString = Utility.TrimNewLines(ProcessedGameBoardString.Replace("0", "."));
+
             return squaresSolved;
+        }
+
+        private void CheckForValue()
+        {
+            if (GameBoard[2, 0] == 8)
+            {
+                Debug.WriteLine("This is where it is breaking");
+            }
         }
 
         public int SolveGame()
@@ -145,10 +159,10 @@ namespace SudokuSolver.Core
             return sb.ToString();
         }
 
-        public string OutputState()
-        {
-            return Utility.TrimNewLines(ProcessedGameBoardString.Replace("0", "."));
-        }
+        //public string OutputState()
+        //{
+        //    return Utility.TrimNewLines(ProcessedGameBoardString.Replace("0", "."));
+        //}
 
     }
 }

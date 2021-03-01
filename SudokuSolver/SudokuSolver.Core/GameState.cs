@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SudokuSolver.Core
 {
@@ -14,6 +11,7 @@ namespace SudokuSolver.Core
         public int UnsolvedSquareCount;
         public int[,] GameBoard;
         public HashSet<int>[,] GameBoardPossibilities;
+        public int IterationsToSolve = 0;
 
         public void LoadGame(string game)
         {
@@ -72,14 +70,13 @@ namespace SudokuSolver.Core
                 throw new Exception("Game not loaded");
             }
 
-            Rules rules = new Rules();
-            RuleResult ruleResult = null;
+            RuleResult ruleResult;
             int squaresSolved = 0;
 
             //Process the board and update with any changes
             if (useRowRule == true)
             {
-                ruleResult = rules.RowEliminationRule(GameBoard, GameBoardPossibilities);
+                ruleResult = Rules.RowEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
@@ -90,7 +87,7 @@ namespace SudokuSolver.Core
 
             if (useColumnRule == true)
             {
-                ruleResult = rules.ColumnEliminationRule(GameBoard, GameBoardPossibilities);
+                ruleResult = Rules.ColumnEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
@@ -101,7 +98,7 @@ namespace SudokuSolver.Core
 
             if (useSquareGroupRule == true)
             {
-                ruleResult = rules.SquareGroupEliminationRule(GameBoard, GameBoardPossibilities);
+                ruleResult = Rules.SquareGroupEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
@@ -115,7 +112,23 @@ namespace SudokuSolver.Core
             return squaresSolved;
         }
 
-        private string UpdateProcessedGameBoardString(int[,] gameBoard)
+        public int SolveGame()
+        {
+            int squaresSolved = 0;
+            int newSquaresSolved;
+            IterationsToSolve = 0;
+            do
+            {
+                //Keep looping while new squares are solved
+                newSquaresSolved = ProcessRules(true, true, true);
+                squaresSolved += newSquaresSolved;
+                IterationsToSolve++;
+            } while (newSquaresSolved > 0);
+
+            return squaresSolved;
+        }
+
+        private static string UpdateProcessedGameBoardString(int[,] gameBoard)
         {
             StringBuilder sb = new StringBuilder();
             int i = 0;
@@ -124,7 +137,7 @@ namespace SudokuSolver.Core
             {
                 for (int x = 0; x < 9; x++)
                 {
-                    sb.Append(gameBoard[x, y].ToString());
+                    sb.Append(gameBoard[x, y]);
                     i++;
                 }
                 sb.Append(Environment.NewLine);
@@ -134,7 +147,7 @@ namespace SudokuSolver.Core
 
         public string OutputState()
         {
-            return ProcessedGameBoardString.Replace("0", ".");
+            return Utility.TrimNewLines(ProcessedGameBoardString.Replace("0", "."));
         }
 
     }

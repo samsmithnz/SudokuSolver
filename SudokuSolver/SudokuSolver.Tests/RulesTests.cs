@@ -45,7 +45,7 @@ namespace SudokuSolver.Tests
             //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
             //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
             Assert.AreEqual(1, squaresSolved);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.OutputState());
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
         }
 
 
@@ -87,7 +87,7 @@ namespace SudokuSolver.Tests
             //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
             //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
             Assert.AreEqual(1, squaresSolved);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.OutputState());
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
         }
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace SudokuSolver.Tests
             //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
             //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
             Assert.AreEqual(1, squaresSolved);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.OutputState());
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
         }    
 
         [TestMethod]
@@ -167,7 +167,7 @@ namespace SudokuSolver.Tests
 
             Assert.AreEqual(35, gameState.UnsolvedSquareCount);
             Assert.AreEqual(6, squaresSolved);
-            Assert.AreEqual(gameState.OutputState(), Utility.TrimNewLines(expected));
+            Assert.AreEqual(gameState.ProcessedGameBoardString, Utility.TrimNewLines(expected));
         }
 
        

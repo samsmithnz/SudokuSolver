@@ -32,19 +32,19 @@ namespace SudokuSolver.Tests
             //Assert
             string expected = @"
 278145693
-354698719
+354698712
 916273485
 692817354
-837564122
+837564129
 145329876
-823751968
+423751968
 581936247
 769482531
 ";
 
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString); 
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(43, squaresSolved);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.OutputState());
+            Assert.AreEqual(41, squaresSolved);
             Assert.AreEqual(6, gameState.IterationsToSolve);
         }
 
@@ -82,9 +82,9 @@ namespace SudokuSolver.Tests
 7..1..4..
 ";
 
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(56, gameState.UnsolvedSquareCount);
             Assert.AreEqual(0, squaresSolved);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.OutputState());
             Assert.AreEqual(1, gameState.IterationsToSolve);
         }
 
@@ -122,10 +122,57 @@ namespace SudokuSolver.Tests
 849236751
 ";
 
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(36, gameState.UnsolvedSquareCount);
             Assert.AreEqual(3, squaresSolved);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.OutputState());
             Assert.AreEqual(3, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
+        public void SolveEasy4GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+.7...5...
+1...3.5.8
+...2.9.6.
+91.5..42.
+68.3...1.
+254.9...3
+7.68.1.4.
+345..6.71
+..1.7.2.6
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+            //int squaresSolved = gameState.ProcessRules(true, true, true);
+            //squaresSolved += gameState.ProcessRules(true, true, true);
+            //squaresSolved += gameState.ProcessRules(true, true, true);
+            //squaresSolved += gameState.ProcessRules(true, true, true);
+            //squaresSolved += gameState.ProcessRules(true, true, true);
+            //squaresSolved += gameState.ProcessRules(true, true, true);
+            //squaresSolved += gameState.ProcessRules(true, true, true);
+
+            //Assert     
+            string expected = @"
+479685132
+162734598
+538219764
+913568427
+687342915
+254197683
+726851349
+345926871
+891473256
+";
+
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(43, squaresSolved);
+            Assert.AreEqual(8, gameState.IterationsToSolve);
         }
 
     }

@@ -15,53 +15,38 @@ namespace SudokuSolver.Core
             //First mark all of the possible numbers in available squares, within the square group
             //Then run a simple elimination, to see if the item can be solved
 
-            HashSet<int>[,] squareGroupPossibilities = new HashSet<int>[3, 3];
-
-            //Get each square group
-            for (int y = 0; y < 3; y++)
+            //Get each row
+            for (int y = 0; y < 9; y++)
             {
-                for (int x = 0; x < 3; x++)
+                //Get each column
+                for (int x = 0; x < 9; x++)
                 {
-                    squareGroupPossibilities[x, y] = new HashSet<int>(Utility.SquareSet);
-                    //Remove all completed squares found in the square group
-                    for (int y2 = 0; y2 < 3; y2++)
+                    if (gameBoard[x, y] != 0)
                     {
-                        for (int x2 = 0; x2 < 3; x2++)
-                        {
-                            squareGroupPossibilities[x, y].Remove(gameBoard[(y * 3) + y2, (x * 3) + x2]);
-                        }
-                    }
-                }
-            }
-
-            //do a final loop through, looking for any squares with just one possibility
-            for (int y = 0; y < 3; y++)
-            {
-                for (int x = 0; x < 3; x++)
-                {
-                    //If there is only one possibility, set it in the unsolved spot in the square group
-                    if (squareGroupPossibilities[x, y].Count == 1)
-                    {
+                        //Get the top left of the square group
+                        int xSquare = (int)(x / 3f);
+                        int ySquare = (int)(y / 3f);
+                        //Loop through the square group
                         for (int y2 = 0; y2 < 3; y2++)
                         {
                             for (int x2 = 0; x2 < 3; x2++)
                             {
-                                int numberToCheck = gameBoard[(y * 3) + y2, (x * 3) + x2];
-                                if (numberToCheck == 0)
-                                {
-                                    gameBoard[(y * 3) + y2, (x * 3) + x2] = squareGroupPossibilities[x, y].First();
-                                    ////remove the last item from the hashset.
-                                    squareGroupPossibilities[x, y].Remove(numberToCheck);
-                                    squaresSolved++;
-                                    break;
-                                }
+                                gameBoardPossibilities[(xSquare * 3) + x2, (ySquare * 3) + y2].Remove(gameBoard[x, y]);
                             }
                         }
                     }
                 }
             }
 
-
+            //do a final loop through, looking for any squares with just one possibility
+            RuleResult ruleResult = FinalOptionEliminationRule(gameBoard, gameBoardPossibilities);
+            if (ruleResult != null)
+            {
+                squaresSolved += ruleResult.SquaresSolved;
+                gameBoard = ruleResult.GameBoard;
+                gameBoardPossibilities = ruleResult.GameBoardPossibilities;
+            }
+          
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
@@ -86,10 +71,6 @@ namespace SudokuSolver.Core
                         {
                             if (gameBoardPossibilities[x2, y].Contains(gameBoard[x, y]) == true)
                             {
-                                if (x2 == 2 && y == 0)
-                                {
-                                    Debug.WriteLine("Removing row: " + gameBoard[x, y] + " at (" + x + ", " + y + ") from possibility from (2,0):" + string.Join(",", gameBoardPossibilities[2, 0]));
-                                }
                                 gameBoardPossibilities[x2, y].Remove(gameBoard[x, y]);
                             }
                         }
@@ -98,23 +79,12 @@ namespace SudokuSolver.Core
             }
 
             //do a final loop through, looking for any squares with just one possibility
-            for (int y = 0; y < 9; y++)
+            RuleResult ruleResult = FinalOptionEliminationRule(gameBoard, gameBoardPossibilities);
+            if (ruleResult != null)
             {
-                for (int x = 0; x < 9; x++)
-                {
-                    //If there is only one possibility, set it
-                    if (gameBoardPossibilities[x, y].Count == 1 && gameBoard[x, y] == 0)
-                    {
-                        if (x == 2 && y == 0)
-                        {
-                            Debug.WriteLine("Here!");
-                        }
-                        gameBoard[x, y] = gameBoardPossibilities[x, y].First();
-                        //remove the last item from the hashset.
-                        gameBoardPossibilities[x, y].Remove(gameBoard[x, y]);
-                        squaresSolved++;
-                    }
-                }
+                squaresSolved += ruleResult.SquaresSolved;
+                gameBoard = ruleResult.GameBoard;
+                gameBoardPossibilities = ruleResult.GameBoardPossibilities;
             }
 
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
@@ -154,6 +124,21 @@ namespace SudokuSolver.Core
             }
 
             //do a final loop through, looking for any squares with just one possibility
+            RuleResult ruleResult = FinalOptionEliminationRule(gameBoard, gameBoardPossibilities);
+            if (ruleResult != null)
+            {
+                squaresSolved += ruleResult.SquaresSolved;
+                gameBoard = ruleResult.GameBoard;
+                gameBoardPossibilities = ruleResult.GameBoardPossibilities;
+            }
+
+            return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+        }
+
+        private static RuleResult FinalOptionEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        {
+            int squaresSolved = 0;
+            //do a final loop through, looking for any squares with just one possibility
             for (int y = 0; y < 9; y++)
             {
                 for (int x = 0; x < 9; x++)
@@ -162,19 +147,18 @@ namespace SudokuSolver.Core
                     if (gameBoardPossibilities[x, y].Count == 1 && gameBoard[x, y] == 0)
                     {
                         gameBoard[x, y] = gameBoardPossibilities[x, y].First();
-                        if (x == 2 && y == 0 && gameBoard[x, y] != 0)
-                        {
-                            Debug.WriteLine("Removing number from (2,0):" + gameBoard[x, y]);
-                        }
                         //remove the last item from the hashset.
+                        Debug.WriteLine("Solving square: " + gameBoard[x, y] + " at (" + x + ", " + y + ") from possibility at (" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]));
                         gameBoardPossibilities[x, y].Remove(gameBoard[x, y]);
                         squaresSolved++;
                     }
                 }
             }
 
+
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
+
 
         //TODO: Add a rule that adds up the numbers and calculates what is missing (1 to 9 is 45)
 

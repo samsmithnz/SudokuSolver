@@ -139,6 +139,9 @@ namespace SudokuSolver.Core
                 IterationsToSolve++;
             } while (newSquaresSolved > 0);
 
+            //run it one more time
+            squaresSolved += ProcessRules(true, true, true);
+
             return squaresSolved;
         }
 

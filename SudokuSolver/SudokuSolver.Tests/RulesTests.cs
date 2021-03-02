@@ -41,11 +41,11 @@ namespace SudokuSolver.Tests
 567891234
 ";
 
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
             //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
             Assert.AreEqual(1, squaresSolved);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
         }
 
 
@@ -83,11 +83,11 @@ namespace SudokuSolver.Tests
 567891234
 ";
 
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
             //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
             Assert.AreEqual(1, squaresSolved);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
         }
 
         [TestMethod]
@@ -124,12 +124,12 @@ namespace SudokuSolver.Tests
 567891234
 ";
 
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
             //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
             Assert.AreEqual(1, squaresSolved);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-        }    
+        }
 
         [TestMethod]
         public void AllRulesTest()
@@ -155,21 +155,21 @@ namespace SudokuSolver.Tests
             //Assert
             string expected = @"
 2781.5.93
-354...71.
-9162.3.8.
+354...712
+9162.3.85
 6928.73.4
-.........
+83.......
 1453.98.6
-.2.7.1.6.
+42.7.1.6.
 581..624.
 7..4.2..1
 ";
 
-            Assert.AreEqual(35, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(6, squaresSolved);
-            Assert.AreEqual(gameState.ProcessedGameBoardString, Utility.TrimNewLines(expected));
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(30, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(11, squaresSolved);
         }
 
-       
+
     }
 }

@@ -153,6 +153,17 @@ namespace SudokuSolver.Tests
             int squaresSolved = gameState.ProcessRules(true, true, true);
 
             //Assert
+//            string expected = @"
+//278145.93
+//354...712
+//916243.85
+//692817354
+//83....1..
+//145329826
+//4237.1.6.
+//581.36245
+//73.452..1
+//";         
             string expected = @"
 2781.5.93
 354...712

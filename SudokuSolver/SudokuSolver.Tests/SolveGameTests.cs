@@ -45,7 +45,7 @@ namespace SudokuSolver.Tests
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             Assert.AreEqual(41, squaresSolved);
-            Assert.AreEqual(6, gameState.IterationsToSolve);
+            Assert.AreEqual(5, gameState.IterationsToSolve);
         }
 
         [TestMethod]
@@ -71,21 +71,21 @@ namespace SudokuSolver.Tests
 
             //Assert
             string expected = @"
-..9..3..7
-..2..5..1
-..4..6..8
-.5..4....
-.3..7..6.
-....2..9.
-6..8..5..
-8..9..3..
-7..1..4..
+169483257
+382795641
+574216938
+957641823
+238579164
+416328795
+621834579
+845967312
+793152486
 ";
 
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(56, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(0, squaresSolved);
-            Assert.AreEqual(1, gameState.IterationsToSolve);
+            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(56, squaresSolved);
+            Assert.AreEqual(8, gameState.IterationsToSolve);
         }
 
         [TestMethod]
@@ -112,20 +112,20 @@ namespace SudokuSolver.Tests
             //Assert
             string expected = @"
 932654187
-.7.1..9..
-18.9.35..
-2...6...5
-3...92..8
-4...1...2
-..35.1.49
-..1..9.63
+675128934
+184973526
+218367495
+357492618
+496815372
+763581249
+521749863
 849236751
 ";
 
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(36, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(3, squaresSolved);
-            Assert.AreEqual(3, gameState.IterationsToSolve);
+            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(39, squaresSolved);
+            Assert.AreEqual(7, gameState.IterationsToSolve);
         }
 
         [TestMethod]
@@ -165,7 +165,7 @@ namespace SudokuSolver.Tests
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             Assert.AreEqual(43, squaresSolved);
-            Assert.AreEqual(8, gameState.IterationsToSolve);
+            Assert.AreEqual(4, gameState.IterationsToSolve);
         }
 
     }

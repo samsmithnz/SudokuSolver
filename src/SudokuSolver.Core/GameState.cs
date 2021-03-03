@@ -17,7 +17,7 @@ namespace SudokuSolver.Core
 
         public void LoadGame(string game)
         {
-            //RawGameString = game;
+            game = game.Trim();
             StringBuilder sb = new StringBuilder();
             foreach (string line in game.Split(Environment.NewLine))
             {

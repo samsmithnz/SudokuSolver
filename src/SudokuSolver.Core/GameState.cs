@@ -13,6 +13,7 @@ namespace SudokuSolver.Core
         public int[,] GameBoard;
         public HashSet<int>[,] GameBoardPossibilities;
         public int IterationsToSolve = 0;
+        public bool CrossCheckSuccessful;
 
         public void LoadGame(string game)
         {
@@ -120,10 +121,10 @@ namespace SudokuSolver.Core
 
         private void CheckForValue()
         {
-            if (GameBoard[2, 0] == 8)
-            {
-                Debug.WriteLine("This is where it is breaking");
-            }
+            //if (GameBoard[2, 0] == 8)
+            //{
+            //    Debug.WriteLine("This is where it is breaking");
+            //}
         }
 
         public int SolveGame()
@@ -139,9 +140,9 @@ namespace SudokuSolver.Core
                 IterationsToSolve++;
             } while (newSquaresSolved > 0);
 
-            //run it one more time
-            squaresSolved += ProcessRules(true, true, true);
-
+            //validate result
+            CrossCheckSuccessful = Rules.CrossCheckResultRule(GameBoard);
+             
             return squaresSolved;
         }
 

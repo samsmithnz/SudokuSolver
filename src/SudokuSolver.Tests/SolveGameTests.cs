@@ -42,10 +42,11 @@ namespace SudokuSolver.Tests
 769482531
 ";
 
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             Assert.AreEqual(41, squaresSolved);
-            Assert.AreEqual(5, gameState.IterationsToSolve);
+            //Assert.AreEqual(5, gameState.IterationsToSolve);
         }
 
         [TestMethod]
@@ -82,10 +83,11 @@ namespace SudokuSolver.Tests
 793152486
 ";
 
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             Assert.AreEqual(56, squaresSolved);
-            Assert.AreEqual(8, gameState.IterationsToSolve);
+            //Assert.AreEqual(8, gameState.IterationsToSolve);
         }
 
         [TestMethod]
@@ -122,10 +124,11 @@ namespace SudokuSolver.Tests
 849236751
 ";
 
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             Assert.AreEqual(39, squaresSolved);
-            Assert.AreEqual(7, gameState.IterationsToSolve);
+            //Assert.AreEqual(7, gameState.IterationsToSolve);
         }
 
         [TestMethod]
@@ -162,10 +165,52 @@ namespace SudokuSolver.Tests
 891473256
 ";
 
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             Assert.AreEqual(43, squaresSolved);
-            Assert.AreEqual(4, gameState.IterationsToSolve);
+            //Assert.AreEqual(4, gameState.IterationsToSolve);
+        } 
+        
+        [TestMethod]
+        public void SolveEasy5GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+47...5.32
+162734598
+53.2.9.64
+913568427
+68.342.15
+254.97.83
+726851349
+345926871
+891473256
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+479685132
+162734598
+538219764
+913568427
+687342915
+254197683
+726851349
+345926871
+891473256
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(11, squaresSolved);
+            //Assert.AreEqual(4, gameState.IterationsToSolve);
         }
 
         [TestMethod]
@@ -192,20 +237,21 @@ namespace SudokuSolver.Tests
             //Assert     
             string expected = @"
 753614982
-....5....
-9.......7
-2.......6
-.4.....5.
-8.......1
-1.......5
-.........
+628957134
+914382567
+275193846
+341268759
+869475321
+136849275
+487521693
 592736418
 ";
 
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(52, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(7, squaresSolved);
-            Assert.AreEqual(5, gameState.IterationsToSolve);
+            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(59, squaresSolved);
+            //Assert.AreEqual(5, gameState.IterationsToSolve);
         }
 
         //        [TestMethod]
@@ -242,6 +288,7 @@ namespace SudokuSolver.Tests
         //592736418
         //";
 
+        //Assert.IsTrue(gameState.CrossCheckSuccessful);
         //            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
         //            Assert.AreEqual(52, gameState.UnsolvedSquareCount);
         //            Assert.AreEqual(7, squaresSolved);
@@ -282,6 +329,7 @@ namespace SudokuSolver.Tests
         //592736418
         //";
 
+        //Assert.IsTrue(gameState.CrossCheckSuccessful);
         //            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
         //            Assert.AreEqual(52, gameState.UnsolvedSquareCount);
         //            Assert.AreEqual(7, squaresSolved);

@@ -38,7 +38,7 @@ namespace SudokuSolver.Core
                 }
             }
 
-            //look for any squares with just one possibility in a row/column/square group
+            //look for any numbers with just one possibility in a row/column/square group
             RuleResult possibilitiesRuleResult = PossibilitiesEliminationRule(gameBoard, gameBoardPossibilities);
             if (possibilitiesRuleResult != null)
             {
@@ -47,7 +47,7 @@ namespace SudokuSolver.Core
                 gameBoardPossibilities = possibilitiesRuleResult.GameBoardPossibilities;
             }
 
-            //look for any squares with just one possibility left
+            //look for any squares with only one possibility 
             RuleResult finalOptionRuleResult = FinalOptionEliminationRule(gameBoard, gameBoardPossibilities);
             if (finalOptionRuleResult != null)
             {
@@ -87,7 +87,7 @@ namespace SudokuSolver.Core
                 }
             }
 
-            //look for any squares with just one possibility in a row/column/square group
+            //look for any numbers with just one possibility in a row/column/square group
             RuleResult possibilitiesRuleResult = PossibilitiesEliminationRule(gameBoard, gameBoardPossibilities);
             if (possibilitiesRuleResult != null)
             {
@@ -96,7 +96,7 @@ namespace SudokuSolver.Core
                 gameBoardPossibilities = possibilitiesRuleResult.GameBoardPossibilities;
             }
 
-            //look for any squares with just one possibility left
+            //look for any squares with only one possibility 
             RuleResult finalOptionRuleResult = FinalOptionEliminationRule(gameBoard, gameBoardPossibilities);
             if (finalOptionRuleResult != null)
             {
@@ -130,10 +130,10 @@ namespace SudokuSolver.Core
                         {
                             if (gameBoardPossibilities[x, y2].Contains(gameBoard[x, y]) == true)
                             {
-                                if (x == 2 && y2 == 0)
-                                {
-                                    Debug.WriteLine("Removing col: " + gameBoard[x, y] + " at (" + x + ", " + y + ") from possibility from (2,0):" + string.Join(",", gameBoardPossibilities[2, 0]));
-                                }
+                                //if (x == 2 && y2 == 0)
+                                //{
+                                //    Debug.WriteLine("Removing col: " + gameBoard[x, y] + " at (" + x + ", " + y + ") from possibility from (2,0):" + string.Join(",", gameBoardPossibilities[2, 0]));
+                                //}
                                 gameBoardPossibilities[x, y2].Remove(gameBoard[x, y]);
                             }
                         }
@@ -141,7 +141,7 @@ namespace SudokuSolver.Core
                 }
             }
 
-            //look for any squares with just one possibility in a row/column/square group
+            //look for any numbers with just one possibility in a row/column/square group
             RuleResult possibilitiesRuleResult = PossibilitiesEliminationRule(gameBoard, gameBoardPossibilities);
             if (possibilitiesRuleResult != null)
             {
@@ -150,7 +150,7 @@ namespace SudokuSolver.Core
                 gameBoardPossibilities = possibilitiesRuleResult.GameBoardPossibilities;
             }
 
-            //look for any squares with just one possibility left
+            //look for any squares with only one possibility 
             RuleResult finalOptionRuleResult = FinalOptionEliminationRule(gameBoard, gameBoardPossibilities);
             if (finalOptionRuleResult != null)
             {
@@ -173,11 +173,15 @@ namespace SudokuSolver.Core
                     //If there is only one possibility, set it
                     if (gameBoardPossibilities[x, y].Count == 1 && gameBoard[x, y] == 0)
                     {
-                        gameBoard[x, y] = gameBoardPossibilities[x, y].First();
                         //remove the last item from the hashset.
-                        Debug.WriteLine("Solving square: " + gameBoard[x, y] + " at (" + x + ", " + y + ") from possibility at (" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]));
+                        int number = gameBoardPossibilities[x, y].First();
+                        Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + number.ToString() + "(Current value is " + gameBoard[x, y] + ")");
+                        gameBoard = SetGameBoard(gameBoard, x, y, number);
                         gameBoardPossibilities[x, y].Remove(gameBoard[x, y]);
                         squaresSolved++;
+                        gameBoardPossibilities = UpdateRowPossibilities(gameBoardPossibilities, y, number);
+                        gameBoardPossibilities = UpdateColumnPossibilities(gameBoardPossibilities, x, number);
+                        return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
                     }
                 }
             }
@@ -192,80 +196,158 @@ namespace SudokuSolver.Core
         {
             int squaresSolved = 0;
 
+            //Check each row
+            for (int y = 0; y < 9; y++)
+            {
+                //Check each number
+                for (int i = 1; i <= 9; i++)
+                {
+                    int numberFrequency = 0;
+                    //Check each column
+                    for (int x = 0; x < 9; x++)
+                    {
+                        if (gameBoardPossibilities[x, y].Contains(i) == true | gameBoard[x, y] == i)
+                        {
+                            numberFrequency++;
+                        }
+                    }
+                    //If there is only one instance of a number, solve it
+                    if (numberFrequency == 1)
+                    {
+                        for (int x = 0; x < 9; x++)
+                        {
+                            if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
+                            {
+                                //remove remaining items from the hashset.
+                                Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString() + "(Current value is " + gameBoard[x, y] + ")");
+                                gameBoard = SetGameBoard(gameBoard, x, y, i);
+                                gameBoardPossibilities[x, y] = new HashSet<int>();
+                                squaresSolved++;
+                                gameBoardPossibilities = UpdateRowPossibilities(gameBoardPossibilities, y, i);
+                                gameBoardPossibilities = UpdateColumnPossibilities(gameBoardPossibilities, x, i);
+                                return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+                            }
+                        }
+                    }
+                }
+            }
 
-            ////Check each row
-            //for (int y = 0; y < 9; y++)
-            //{
-            //    //Check each number
-            //    for (int i = 1; i <= 9; i++)
-            //    {
-            //        int numberFrequency = 0;
-            //        //Check each column
-            //        for (int x = 0; x < 9; x++)
-            //        {
-            //            if (gameBoardPossibilities[x,y].Contains(i) == true)
-            //            {
-            //                numberFrequency++;
-            //            }
-            //        }
-            //        //If there is only one instance of a number, solve it
-            //        if (numberFrequency == 1)
-            //        {
-            //            for (int x = 0; x < 9; x++)
-            //            {
-            //                if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
-            //                {
-            //                    gameBoard[x, y] = i;
-            //                    //remove remaining items from the hashset.
-            //                    Debug.WriteLine("Solving square: " + gameBoard[x, y] + " at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString());
-            //                    gameBoardPossibilities[x, y] = new HashSet<int>();
-            //                    squaresSolved++;
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-            ////Check each column
-            //for (int x = 0; x < 9; x++)
-            //{
-            //    //Check each number
-            //    for (int i = 1; i <= 9; i++)
-            //    {
-            //        int numberFrequency = 0;
-            //        //Check each column
-            //        for (int y = 0; y < 9; y++)
-            //        {
-            //            if (gameBoardPossibilities[x, y].Contains(i) == true)
-            //            {
-            //                numberFrequency++;
-            //            }
-            //        }
-            //        //If there is only one instance of a number, solve it
-            //        if (numberFrequency == 1)
-            //        {
-            //            for (int y = 0; y < 9; y++)
-            //            {
-            //                if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
-            //                {
-            //                    gameBoard[x, y] = i;
-            //                    //remove remaining items from the hashset.
-            //                    Debug.WriteLine("Solving square: " + gameBoard[x, y] + " at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString() );
-            //                    gameBoardPossibilities[x, y] = new HashSet<int>();
-            //                    squaresSolved++;
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+            //Check each column
+            for (int x = 0; x < 9; x++)
+            {
+                //Check each number
+                for (int i = 1; i <= 9; i++)
+                {
+                    int numberFrequency = 0;
+                    //Check each column
+                    for (int y = 0; y < 9; y++)
+                    {
+                        if (gameBoardPossibilities[x, y].Contains(i) == true | gameBoard[x,y] == i)
+                        {
+                            numberFrequency++;
+                        }
+                    }
+                    //If there is only one instance of a number, solve it
+                    if (numberFrequency == 1)
+                    {
+                        for (int y = 0; y < 9; y++)
+                        {
+                            if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
+                            {
+                                //remove remaining items from the hashset.
+                                Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString() + "(Current value is " + gameBoard[x, y] + ")");
+                                gameBoard = SetGameBoard(gameBoard, x, y, i);
+                                gameBoardPossibilities[x, y] = new HashSet<int>();
+                                squaresSolved++;
+                                gameBoardPossibilities = UpdateRowPossibilities(gameBoardPossibilities, y, i);
+                                gameBoardPossibilities = UpdateColumnPossibilities(gameBoardPossibilities, x, i);
+                                return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+                            }
+                        }
+                    }
+                }
+            }
 
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
+        private static HashSet<int>[,] UpdateRowPossibilities(HashSet<int>[,] gameBoardPossibilities, int y, int number)
+        {
+            //Check each column in row
+            for (int x = 0; x < 9; x++)
+            {
+                if (gameBoardPossibilities[x, y].Contains(number) == true)
+                {
+                    gameBoardPossibilities[x, y].Remove(number);
+                }
+            }
+
+            return gameBoardPossibilities;
+        }
+
+        private static HashSet<int>[,] UpdateColumnPossibilities(HashSet<int>[,] gameBoardPossibilities, int x, int number)
+        {
+            //Check each row in column
+            for (int y = 0; y < 9; y++)
+            {
+                if (gameBoardPossibilities[x, y].Contains(number) == true)
+                {
+                    gameBoardPossibilities[x, y].Remove(number);
+                }
+            }
+
+            return gameBoardPossibilities;
+        }
 
 
-        //TODO: Add a rule that adds up the numbers and calculates what is missing (1 to 9 is 45)
+        //Confirms that the puzzle has been solved correctly
+        public static bool CrossCheckResultRule(int[,] gameBoard)
+        {
+            //Check at each row to ensure it adds up to 45 and is complete.
+            for (int y = 0; y < 9; y++)
+            {
+                int rowSum = 0;
+                int unsolvedSquares = 0;
+                for (int x = 0; x < 9; x++)
+                { 
+                    rowSum += gameBoard[x, y];
+                    if (gameBoard[x, y] == 0)
+                    {
+                        unsolvedSquares++;
+                    }
+                }
+                if (unsolvedSquares == 0 & rowSum != 45)
+                {
+                    return false;
+                }
+            }
 
+            //Check at each column to ensure it adds up to 45 and is complete.
+            for (int x = 0; x < 9; x++)
+            {
+                int rowSum = 0;
+                int unsolvedSquares = 0;
+                for (int y = 0; y < 9; y++)
+                {
+                    rowSum += gameBoard[x, y];
+                    if (gameBoard[x, y] == 0)
+                    {
+                        unsolvedSquares++;
+                    }
+                }
+                if (unsolvedSquares == 0 & rowSum != 45)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static int[,] SetGameBoard(int[,] gameBoard, int x, int y, int i)
+        {
+            Debug.WriteLine("Solving square at (" + x + ", " + y + ") using number: " + i.ToString());
+            gameBoard[x, y] = i;
+            return gameBoard;
+        }
     }
-
 }

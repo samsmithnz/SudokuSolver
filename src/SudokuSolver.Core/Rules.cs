@@ -318,6 +318,7 @@ namespace SudokuSolver.Core
                 }
                 if (unsolvedSquares == 0 & rowSum != 45)
                 {
+                    //Note that if the code works, Code coverage should never get to here
                     return false;
                 }
             }
@@ -337,6 +338,7 @@ namespace SudokuSolver.Core
                 }
                 if (unsolvedSquares == 0 & rowSum != 45)
                 {
+                    //Note that if the code works, Code coverage should never get to here
                     return false;
                 }
             }

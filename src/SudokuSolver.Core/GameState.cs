@@ -83,11 +83,6 @@ namespace SudokuSolver.Core
             bool useColumnRule = true,
             bool useSquareGroupRule = true)
         {
-            if (GameBoard == null || GameBoardPossibilities == null)
-            {
-                throw new Exception("Game not loaded");
-            }
-
             RuleResult ruleResult;
             int squaresSolved = 0;
 

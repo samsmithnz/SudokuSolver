@@ -91,6 +91,8 @@ namespace SudokuSolver.Core
             RuleResult ruleResult;
             int squaresSolved = 0;
 
+            //1. Look to eliminate possibilities
+
             //Process the board and update with any changes
             if (useRowRule == true)
             {
@@ -98,9 +100,7 @@ namespace SudokuSolver.Core
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
-                    CheckForValue();
-                    squaresSolved += ruleResult.SquaresSolved;
-                    ProcessedGameBoardString = UpdateProcessedGameBoardString(ruleResult.GameBoard);
+                    GameBoardPossibilities = ruleResult.GameBoardPossibilities;
                 }
             }
 
@@ -109,23 +109,41 @@ namespace SudokuSolver.Core
                 ruleResult = Rules.ColumnEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
-                    CheckForValue();
                     GameBoard = ruleResult.GameBoard;
-                    squaresSolved += ruleResult.SquaresSolved;
-                    ProcessedGameBoardString = UpdateProcessedGameBoardString(ruleResult.GameBoard);
+                    GameBoardPossibilities = ruleResult.GameBoardPossibilities;
                 }
             }
 
             if (useSquareGroupRule == true)
             {
-                ruleResult = Rules.SquareGroupEliminationRule(GameBoard, GameBoardPossibilities);
+                ruleResult = Rules.UpdateSquareGroupPossibilities(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
-                    CheckForValue();
-                    squaresSolved += ruleResult.SquaresSolved;
-                    ProcessedGameBoardString = UpdateProcessedGameBoardString(ruleResult.GameBoard);
+                    GameBoardPossibilities = ruleResult.GameBoardPossibilities;
                 }
+            }
+
+            //2. Now looking at the possibilities, solve squares
+
+            //look for any squares with only one possibility 
+            RuleResult finalOptionRuleResult = Rules.FinalOptionEliminationRule(GameBoard, GameBoardPossibilities);
+            if (finalOptionRuleResult != null)
+            {
+                GameBoard = finalOptionRuleResult.GameBoard;
+                GameBoardPossibilities = finalOptionRuleResult.GameBoardPossibilities;
+                ProcessedGameBoardString = UpdateProcessedGameBoardString(finalOptionRuleResult.GameBoard);
+                squaresSolved += finalOptionRuleResult.SquaresSolved;
+            }
+
+            //look for any numbers with just one possibility in a row/column/square group
+            RuleResult possibilitiesRuleResult = Rules.PossibilitiesEliminationRule(GameBoard, GameBoardPossibilities);
+            if (possibilitiesRuleResult != null)
+            {
+                GameBoard = possibilitiesRuleResult.GameBoard;
+                GameBoardPossibilities = possibilitiesRuleResult.GameBoardPossibilities;
+                ProcessedGameBoardString = UpdateProcessedGameBoardString(possibilitiesRuleResult.GameBoard);
+                squaresSolved += possibilitiesRuleResult.SquaresSolved;
             }
 
             UnsolvedSquareCount = ProcessedGameBoardString.Split('0').Length - 1;
@@ -133,14 +151,6 @@ namespace SudokuSolver.Core
             ProcessedGameBoardString = Utility.TrimNewLines(ProcessedGameBoardString.Replace("0", "."));
 
             return squaresSolved;
-        }
-
-        private void CheckForValue()
-        {
-            //if (GameBoard[2, 0] == 8)
-            //{
-            //    Debug.WriteLine("This is where it is breaking");
-            //}
         }
 
         public int SolveGame()

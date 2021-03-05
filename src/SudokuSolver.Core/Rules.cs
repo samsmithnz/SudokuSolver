@@ -6,12 +6,37 @@ namespace SudokuSolver.Core
 {
     public class Rules
     {
+        public static HashSet<int>[,] UpdateRowPossibilities(HashSet<int>[,] gameBoardPossibilities, int y, int number)
+        {
+            //Check each column in row
+            for (int x = 0; x < 9; x++)
+            {
+                if (gameBoardPossibilities[x, y].Contains(number) == true)
+                {
+                    gameBoardPossibilities[x, y].Remove(number);
+                }
+            }
+
+            return gameBoardPossibilities;
+        }
+
+        public static HashSet<int>[,] UpdateColumnPossibilities(HashSet<int>[,] gameBoardPossibilities, int x, int number)
+        {
+            //Check each row in column
+            for (int y = 0; y < 9; y++)
+            {
+                if (gameBoardPossibilities[x, y].Contains(number) == true)
+                {
+                    gameBoardPossibilities[x, y].Remove(number);
+                }
+            }
+
+            return gameBoardPossibilities;
+        }
 
         //Look to solve square groups (3x3 sections), by eliminating square group options
-        public static RuleResult SquareGroupEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        public static RuleResult UpdateSquareGroupPossibilities(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
-            int squaresSolved = 0;
-
             //First mark all of the possible numbers in available squares, within the square group
             //Then run a simple elimination, to see if the item can be solved
 
@@ -38,32 +63,12 @@ namespace SudokuSolver.Core
                 }
             }
 
-            //look for any numbers with just one possibility in a row/column/square group
-            RuleResult possibilitiesRuleResult = PossibilitiesEliminationRule(gameBoard, gameBoardPossibilities);
-            if (possibilitiesRuleResult != null)
-            {
-                squaresSolved += possibilitiesRuleResult.SquaresSolved;
-                gameBoard = possibilitiesRuleResult.GameBoard;
-                gameBoardPossibilities = possibilitiesRuleResult.GameBoardPossibilities;
-            }
-
-            //look for any squares with only one possibility 
-            RuleResult finalOptionRuleResult = FinalOptionEliminationRule(gameBoard, gameBoardPossibilities);
-            if (finalOptionRuleResult != null)
-            {
-                squaresSolved += finalOptionRuleResult.SquaresSolved;
-                gameBoard = finalOptionRuleResult.GameBoard;
-                gameBoardPossibilities = finalOptionRuleResult.GameBoardPossibilities;
-            }
-
-            return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+            return new RuleResult(0, gameBoard, gameBoardPossibilities);
         }
 
         //Look to solve rows by eliminating row options
         public static RuleResult RowEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
-            int squaresSolved = 0;
-
             //First mark all of the possible numbers in available squares, within the row
             //Then run a simple elimination, to see if the item can be solved
 
@@ -87,32 +92,12 @@ namespace SudokuSolver.Core
                 }
             }
 
-            //look for any numbers with just one possibility in a row/column/square group
-            RuleResult possibilitiesRuleResult = PossibilitiesEliminationRule(gameBoard, gameBoardPossibilities);
-            if (possibilitiesRuleResult != null)
-            {
-                squaresSolved += possibilitiesRuleResult.SquaresSolved;
-                gameBoard = possibilitiesRuleResult.GameBoard;
-                gameBoardPossibilities = possibilitiesRuleResult.GameBoardPossibilities;
-            }
-
-            //look for any squares with only one possibility 
-            RuleResult finalOptionRuleResult = FinalOptionEliminationRule(gameBoard, gameBoardPossibilities);
-            if (finalOptionRuleResult != null)
-            {
-                squaresSolved += finalOptionRuleResult.SquaresSolved;
-                gameBoard = finalOptionRuleResult.GameBoard;
-                gameBoardPossibilities = finalOptionRuleResult.GameBoardPossibilities;
-            }
-
-            return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+            return new RuleResult(0, gameBoard, gameBoardPossibilities);
         }
 
         //Look to solve columns by eliminating column options
         public static RuleResult ColumnEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
-            int squaresSolved = 0;
-
             //First mark all of the possible numbers in available squares, within the column
             //Then run a simple elimination, to see if the item can be solved
 
@@ -141,28 +126,10 @@ namespace SudokuSolver.Core
                 }
             }
 
-            //look for any numbers with just one possibility in a row/column/square group
-            RuleResult possibilitiesRuleResult = PossibilitiesEliminationRule(gameBoard, gameBoardPossibilities);
-            if (possibilitiesRuleResult != null)
-            {
-                squaresSolved += possibilitiesRuleResult.SquaresSolved;
-                gameBoard = possibilitiesRuleResult.GameBoard;
-                gameBoardPossibilities = possibilitiesRuleResult.GameBoardPossibilities;
-            }
-
-            //look for any squares with only one possibility 
-            RuleResult finalOptionRuleResult = FinalOptionEliminationRule(gameBoard, gameBoardPossibilities);
-            if (finalOptionRuleResult != null)
-            {
-                squaresSolved += finalOptionRuleResult.SquaresSolved;
-                gameBoard = finalOptionRuleResult.GameBoard;
-                gameBoardPossibilities = finalOptionRuleResult.GameBoardPossibilities;
-            }
-
-            return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+            return new RuleResult(0, gameBoard, gameBoardPossibilities);
         }
 
-        private static RuleResult FinalOptionEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        public static RuleResult FinalOptionEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
             //do a final loop through, looking for any squares with just one possibility
@@ -190,9 +157,9 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
-        //TODO: Check possibilities in a row, to see if there if a number only has one possible option (even though multiple squares appear to be able to go into that square)
+        //Check possibilities in a row, to see if there if a number only has one possible option (even though multiple squares appear to be able to go into that square)
 
-        private static RuleResult PossibilitiesEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        public static RuleResult PossibilitiesEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
 
@@ -242,7 +209,7 @@ namespace SudokuSolver.Core
                     //Check each column
                     for (int y = 0; y < 9; y++)
                     {
-                        if (gameBoardPossibilities[x, y].Contains(i) == true | gameBoard[x,y] == i)
+                        if (gameBoardPossibilities[x, y].Contains(i) == true | gameBoard[x, y] == i)
                         {
                             numberFrequency++;
                         }
@@ -271,34 +238,6 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
-        private static HashSet<int>[,] UpdateRowPossibilities(HashSet<int>[,] gameBoardPossibilities, int y, int number)
-        {
-            //Check each column in row
-            for (int x = 0; x < 9; x++)
-            {
-                if (gameBoardPossibilities[x, y].Contains(number) == true)
-                {
-                    gameBoardPossibilities[x, y].Remove(number);
-                }
-            }
-
-            return gameBoardPossibilities;
-        }
-
-        private static HashSet<int>[,] UpdateColumnPossibilities(HashSet<int>[,] gameBoardPossibilities, int x, int number)
-        {
-            //Check each row in column
-            for (int y = 0; y < 9; y++)
-            {
-                if (gameBoardPossibilities[x, y].Contains(number) == true)
-                {
-                    gameBoardPossibilities[x, y].Remove(number);
-                }
-            }
-
-            return gameBoardPossibilities;
-        }
-
 
         //Confirms that the puzzle has been solved correctly
         public static bool CrossCheckResultRule(int[,] gameBoard)
@@ -309,7 +248,7 @@ namespace SudokuSolver.Core
                 int rowSum = 0;
                 int unsolvedSquares = 0;
                 for (int x = 0; x < 9; x++)
-                { 
+                {
                     rowSum += gameBoard[x, y];
                     if (gameBoard[x, y] == 0)
                     {

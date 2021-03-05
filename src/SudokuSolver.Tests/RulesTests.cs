@@ -153,24 +153,13 @@ namespace SudokuSolver.Tests
             int squaresSolved = gameState.ProcessRules(true, true, true);
             bool crossCheckSuccessful = Rules.CrossCheckResultRule(gameState.GameBoard);
 
-            //Assert
-            //            string expected = @"
-            //278145.93
-            //354...712
-            //916243.85
-            //692817354
-            //83....1..
-            //145329826
-            //4237.1.6.
-            //581.36245
-            //73.452..1
-            //";         
+            //Assert       
             string expected = @"
-2781.5.93
+2781.5..3
 354...712
 9162.3.8.
-6.28173.4
-..7......
+6.28.73.4
+.........
 1.53.98.6
 .2.7.1.6.
 .81...24.
@@ -179,8 +168,8 @@ namespace SudokuSolver.Tests
 
             Assert.IsTrue(crossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(36, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(5, squaresSolved);
+            Assert.AreEqual(39, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(2, squaresSolved);
         }
 
 

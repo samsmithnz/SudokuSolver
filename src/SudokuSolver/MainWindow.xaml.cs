@@ -53,15 +53,34 @@ namespace SudokuSolver
 
         public void LoadGrid()
         {
-            for (int i = 1; i <= 9; i++)
+            int i = 0;
+            for (int k = 1; k <= 9; k++)
             {
-                SudokuSolver.SquareGroupUserControl squareGroup = FindSquareGroup(i);
+                SudokuSolver.SquareGroupUserControl squareGroup = FindSquareGroup(k);
                 if (squareGroup != null)
                 {
                     for (int j = 1; j <= 9; j++)
                     {
+                        int xBase; 
+                        if (i >= 54)
+                        {
+                            xBase = (int)Math.Truncate(Math.Truncate((((decimal)i - 54m) / 9m)) * 3m);
+                        }
+                        else if (i >= 27)
+                        {
+                            xBase = (int)Math.Truncate(Math.Truncate((((decimal)i - 27m) / 9m)) * 3m);
+                        }
+                        else
+                        {
+                            xBase = (int)Math.Truncate((decimal)i / 9m) * 3;
+                        }
+                        int yBase = (int)Math.Truncate((decimal)i / 27m) * 3; 
+                        int x = xBase + (i % 3); 
+                        int y = yBase + (int)Math.Truncate((((decimal)i / 3m) % 3m)); 
+
                         SudokuSolver.SquareUserControl square = FindSquare(j, squareGroup);
-                        square.LoadSquare(GameState.GameBoard[0, 0], GameState.GameBoardPossibilities[0, 0]);
+                        square.LoadSquare(GameState.GameBoard[x, y], GameState.GameBoardPossibilities[x,y]);
+                        i++;
                     }
                 }
             }

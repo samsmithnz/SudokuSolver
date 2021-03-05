@@ -163,10 +163,5 @@ namespace SudokuSolver.Core
             return sb.ToString();
         }
 
-        //public string OutputState()
-        //{
-        //    return Utility.TrimNewLines(ProcessedGameBoardString.Replace("0", "."));
-        //}
-
     }
 }

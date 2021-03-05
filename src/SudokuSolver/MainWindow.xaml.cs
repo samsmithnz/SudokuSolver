@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,29 +30,46 @@ namespace SudokuSolver
         public MainWindow()
         {
             InitializeComponent();
-            LoadGame();
+            LoadGamesIntoDropdown();
             LoadGrid();
         }
 
-        public void LoadGame()
+        private void btnLoadSudoku_Click(object sender, RoutedEventArgs e)
         {
-            string game = @"
-27.1.5..3
-354...71.
-9162.3.8.
-6.28.73.4
-.........
-1.53.98.6
-.2.7.1.6.
-.81...24.
-7..4.2..1
-";
-
+            string[] lines = File.ReadAllLines(Environment.CurrentDirectory + "\\games\\" + cboSudokuGames.SelectedItem.ToString());
+            StringBuilder sb = new StringBuilder();
+            foreach (string item in lines)
+            {
+                sb.Append(item);
+                sb.Append(Environment.NewLine);
+            }
+            string game = sb.ToString();
             GameState.LoadGame(game);
-            GameState.ProcessRules(true, true, true);
+            LoadGrid();
         }
 
-        public void LoadGrid()
+        private void btnSolveSudoku_Click(object sender, RoutedEventArgs e)
+        {
+            GameState.ProcessRules(true, true, true);
+            GameState.CrossCheckSuccessful = Rules.CrossCheckResultRule(GameState.GameBoard);
+            LoadGrid();
+            txtStatus.Text = "Cross check successful: " + GameState.CrossCheckSuccessful;
+            txtStatus.Text += Environment.NewLine;
+            txtStatus.Text += "Unsolved squares: " + GameState.UnsolvedSquareCount;
+        }
+
+        private void LoadGamesIntoDropdown()
+        {
+            string gameFolder = Environment.CurrentDirectory + "\\games";
+            FileInfo[] files = new DirectoryInfo(gameFolder).GetFiles("*.sdk");
+            foreach (FileInfo file in files)
+            {
+                cboSudokuGames.Items.Add(file.Name);
+            }
+            cboSudokuGames.SelectedIndex = 0;
+        }
+
+        private void LoadGrid()
         {
             int i = 0;
             for (int k = 1; k <= 9; k++)
@@ -61,7 +79,8 @@ namespace SudokuSolver
                 {
                     for (int j = 1; j <= 9; j++)
                     {
-                        int xBase; 
+                        //This looks super complex, because it is. Essentially we have a [x,y] array, and we need to fill it by 3x3 square, top left, to bottom right.
+                        int xBase;
                         if (i >= 54)
                         {
                             xBase = (int)Math.Truncate(Math.Truncate((((decimal)i - 54m) / 9m)) * 3m);
@@ -74,117 +93,17 @@ namespace SudokuSolver
                         {
                             xBase = (int)Math.Truncate((decimal)i / 9m) * 3;
                         }
-                        int yBase = (int)Math.Truncate((decimal)i / 27m) * 3; 
-                        int x = xBase + (i % 3); 
-                        int y = yBase + (int)Math.Truncate((((decimal)i / 3m) % 3m)); 
+                        int yBase = (int)Math.Truncate((decimal)i / 27m) * 3;
+                        int x = xBase + (i % 3);
+                        int y = yBase + (int)Math.Truncate((((decimal)i / 3m) % 3m));
 
                         SudokuSolver.SquareUserControl square = FindSquare(j, squareGroup);
-                        square.LoadSquare(GameState.GameBoard[x, y], GameState.GameBoardPossibilities[x,y]);
+                        square.LoadSquare(GameState.GameBoard[x, y], GameState.GameBoardPossibilities[x, y]);
                         i++;
                     }
                 }
             }
-            //foreach (var squareObj in squareGroup.SquareGroupGrid.Children)
-            //{
-            //    if (squareObj.GetType().ToString() == "SudokuSolver.SquareUserControl")
-            //    {
-            //        SudokuSolver.SquareUserControl square = (SudokuSolver.SquareUserControl)squareObj;
-            //        square.LoadSquare(GameState.GameBoard[0, 0], GameState.GameBoardPossibilities[0, 0]);
-            //        square.LoadSquare(GameState.GameBoard[1, 0], GameState.GameBoardPossibilities[1, 0]);
-            //        square.LoadSquare(GameState.GameBoard[2, 0], GameState.GameBoardPossibilities[2, 0]);
-            //        square.LoadSquare(GameState.GameBoard[0, 1], GameState.GameBoardPossibilities[0, 1]);
-            //        square.LoadSquare(GameState.GameBoard[1, 1], GameState.GameBoardPossibilities[1, 1]);
-            //        square.LoadSquare(GameState.GameBoard[2, 1], GameState.GameBoardPossibilities[2, 1]);
-            //        square.LoadSquare(GameState.GameBoard[0, 2], GameState.GameBoardPossibilities[0, 2]);
-            //        square.LoadSquare(GameState.GameBoard[1, 2], GameState.GameBoardPossibilities[1, 2]);
-            //        square.LoadSquare(GameState.GameBoard[2, 2], GameState.GameBoardPossibilities[2, 2]);
 
-            //        square.LoadSquare(GameState.GameBoard[3, 0], GameState.GameBoardPossibilities[3, 0]);
-            //        square.LoadSquare(GameState.GameBoard[4, 0], GameState.GameBoardPossibilities[4, 0]);
-            //        square.LoadSquare(GameState.GameBoard[5, 0], GameState.GameBoardPossibilities[5, 0]);
-            //        square.LoadSquare(GameState.GameBoard[3, 1], GameState.GameBoardPossibilities[3, 1]);
-            //        square.LoadSquare(GameState.GameBoard[4, 1], GameState.GameBoardPossibilities[4, 1]);
-            //        square.LoadSquare(GameState.GameBoard[5, 1], GameState.GameBoardPossibilities[5, 1]);
-            //        square.LoadSquare(GameState.GameBoard[3, 2], GameState.GameBoardPossibilities[3, 2]);
-            //        square.LoadSquare(GameState.GameBoard[4, 2], GameState.GameBoardPossibilities[4, 2]);
-            //        square.LoadSquare(GameState.GameBoard[5, 2], GameState.GameBoardPossibilities[5, 2]);
-
-            //        square.LoadSquare(GameState.GameBoard[6, 0], GameState.GameBoardPossibilities[6, 0]);
-            //        square.LoadSquare(GameState.GameBoard[7, 0], GameState.GameBoardPossibilities[7, 0]);
-            //        square.LoadSquare(GameState.GameBoard[8, 0], GameState.GameBoardPossibilities[8, 0]);
-            //        square.LoadSquare(GameState.GameBoard[6, 1], GameState.GameBoardPossibilities[6, 1]);
-            //        square.LoadSquare(GameState.GameBoard[7, 1], GameState.GameBoardPossibilities[7, 1]);
-            //        square.LoadSquare(GameState.GameBoard[8, 1], GameState.GameBoardPossibilities[8, 1]);
-            //        square.LoadSquare(GameState.GameBoard[6, 2], GameState.GameBoardPossibilities[6, 2]);
-            //        square.LoadSquare(GameState.GameBoard[7, 2], GameState.GameBoardPossibilities[7, 2]);
-            //        square.LoadSquare(GameState.GameBoard[8, 2], GameState.GameBoardPossibilities[8, 2]);
-            //    }
-            //}
-            //}
-            //for (int y = 0; y < 9; y++)
-            //{
-            //    //GameState.GameBoard[x, y];
-
-            //}
-            //}
-
-
-            //int x = 0;
-            //int y = 0;
-            //int xBase = 0;
-            //int yBase = 0;
-            //foreach (var item in GameGrid.Children)
-            //{
-            //    if (item.GetType().ToString() == "SudokuSolver.SquareGroupUserControl")
-            //    {
-            //        SudokuSolver.SquareGroupUserControl squareGroup = (SudokuSolver.SquareGroupUserControl)item;
-            //        foreach (var item2 in squareGroup.SquareGroupGrid.Children)
-            //        {
-            //            if (item2.GetType().ToString() == "SudokuSolver.SquareUserControl")
-            //            {
-            //                x = xBase + x;
-            //                y = yBase + y;
-            //                SudokuSolver.SquareUserControl square = (SudokuSolver.SquareUserControl)item2;
-            //                square.LoadSquare(GameState.GameBoard[x, y], GameState.GameBoardPossibilities[x, y]);
-            //                Debug.WriteLine("x: " + x.ToString() + ", y: " + y.ToString());
-            //                x++;
-            //                if (x == 3 || x == 6 || x == 9)
-            //                {
-            //                    if (x == 3 || x == 6)
-            //                    {
-            //                        x -= 3;
-            //                    }
-            //                    else
-            //                    {
-            //                        x = 0;
-            //                    }
-            //                    y++;
-            //                    if (y >= 9)
-            //                    {
-            //                        y = 0;
-            //                    }
-            //                }
-            //            }
-            //            x += 3;
-            //            if (x >= 9)
-            //            {
-            //                x = 0;
-            //                y += 3;
-            //            }
-
-
-            //            //00
-            //            //10
-            //            //20
-            //            //01
-            //            //11
-            //            //21
-            //            //02
-            //            //12
-            //            //22
-            //        }
-            //    }
-            //}
         }
 
         private SudokuSolver.SquareGroupUserControl FindSquareGroup(int i)

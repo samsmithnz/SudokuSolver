@@ -15,6 +15,27 @@ namespace SudokuSolver.Core
         public int IterationsToSolve = 0;
         public bool CrossCheckSuccessful;
 
+        public GameState()
+        {
+            //Create the 9x9 board
+            GameBoard = new int[9, 9];
+            //Create the possibilities object
+            GameBoardPossibilities = new HashSet<int>[9, 9];
+
+            int i = 0;
+            //Load the rows into a 2d array
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    GameBoard[x, y] = 0;
+                    //add all 9 possible numbers to initialize
+                    GameBoardPossibilities[x, y] = new HashSet<int>(Utility.SquareSet);
+                    i++;
+                }
+            }
+        }
+
         public void LoadGame(string game)
         {
             game = game.Trim();
@@ -35,10 +56,6 @@ namespace SudokuSolver.Core
             ProcessedGameBoardString = ProcessedGameBoardString.Replace(".", "0");
             string[] rows = ProcessedGameBoardString.Split(Environment.NewLine);
 
-            //Create the 9x9 board
-            GameBoard = new int[9, 9];
-            //Create the possibilities object
-            GameBoardPossibilities = new HashSet<int>[9, 9];
             int i = 0;
             //Load the rows into a 2d array
             for (int x = 0; x < 9; x++)
@@ -60,7 +77,6 @@ namespace SudokuSolver.Core
                     i++;
                 }
             }
-
         }
 
         public int ProcessRules(bool useRowRule = true,
@@ -142,7 +158,7 @@ namespace SudokuSolver.Core
 
             //validate result
             CrossCheckSuccessful = Rules.CrossCheckResultRule(GameBoard);
-             
+
             return squaresSolved;
         }
 

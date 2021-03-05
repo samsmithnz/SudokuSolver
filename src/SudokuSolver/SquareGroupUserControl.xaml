@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="SudokuSolver.SquareGroupUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SudokuSolver"
+             mc:Ignorable="d" 
+             d:DesignHeight="225" d:DesignWidth="225">
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid Name="SquareGroupGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0" Grid.Row="0" BorderBrush="Gray" BorderThickness="0.5" ></Border>
+            <Border Grid.Column="1" Grid.Row="0" BorderBrush="Gray" BorderThickness="0.5" ></Border>
+            <Border Grid.Column="2" Grid.Row="0" BorderBrush="Gray" BorderThickness="0.5" ></Border>
+            <Border Grid.Column="0" Grid.Row="1" BorderBrush="Gray" BorderThickness="0.5" ></Border>
+            <Border Grid.Column="1" Grid.Row="1" BorderBrush="Gray" BorderThickness="0.5" ></Border>
+            <Border Grid.Column="2" Grid.Row="1" BorderBrush="Gray" BorderThickness="0.5" ></Border>
+            <Border Grid.Column="0" Grid.Row="2" BorderBrush="Gray" BorderThickness="0.5" ></Border>
+            <Border Grid.Column="1" Grid.Row="2" BorderBrush="Gray" BorderThickness="0.5" ></Border>
+            <Border Grid.Column="2" Grid.Row="2" BorderBrush="Gray" BorderThickness="0.5" ></Border>
+            <local:SquareUserControl x:Name="square1" Grid.Column="0" Grid.Row="0"></local:SquareUserControl>
+            <local:SquareUserControl x:Name="square2" Grid.Column="1" Grid.Row="0"></local:SquareUserControl>
+            <local:SquareUserControl x:Name="square3" Grid.Column="2" Grid.Row="0"></local:SquareUserControl>
+            <local:SquareUserControl x:Name="square4" Grid.Column="0" Grid.Row="1"></local:SquareUserControl>
+            <local:SquareUserControl x:Name="square5" Grid.Column="1" Grid.Row="1"></local:SquareUserControl>
+            <local:SquareUserControl x:Name="square6" Grid.Column="2" Grid.Row="1"></local:SquareUserControl>
+            <local:SquareUserControl x:Name="square7" Grid.Column="0" Grid.Row="2"></local:SquareUserControl>
+            <local:SquareUserControl x:Name="square8" Grid.Column="1" Grid.Row="2"></local:SquareUserControl>
+            <local:SquareUserControl x:Name="square9" Grid.Column="2" Grid.Row="2"></local:SquareUserControl>
+        </Grid>
+    </Border>
+</UserControl>

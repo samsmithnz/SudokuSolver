@@ -5,8 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SudokuSolver"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="800" Width="800" WindowState="Maximized">
+    <Grid Margin="0,0,0,-179">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition MinWidth="675" MaxWidth="675"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="675" MaxHeight="675"></RowDefinition>
+        </Grid.RowDefinitions>
 
+        <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Margin="10" >
+            <Grid Name="GameGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border Grid.Column="0" Grid.Row="0" BorderBrush="DarkGray" BorderThickness="0" ></Border>
+                <Border Grid.Column="1" Grid.Row="0" BorderBrush="DarkGray" BorderThickness="0" ></Border>
+                <Border Grid.Column="2" Grid.Row="0" BorderBrush="DarkGray" BorderThickness="0" ></Border>
+                <Border Grid.Column="0" Grid.Row="1" BorderBrush="DarkGray" BorderThickness="0" ></Border>
+                <Border Grid.Column="1" Grid.Row="1" BorderBrush="DarkGray" BorderThickness="0" ></Border>
+                <Border Grid.Column="2" Grid.Row="1" BorderBrush="DarkGray" BorderThickness="0" ></Border>
+                <Border Grid.Column="0" Grid.Row="2" BorderBrush="DarkGray" BorderThickness="0" ></Border>
+                <Border Grid.Column="1" Grid.Row="2" BorderBrush="DarkGray" BorderThickness="0" ></Border>
+                <Border Grid.Column="2" Grid.Row="2" BorderBrush="DarkGray" BorderThickness="0" ></Border>
+
+                <local:SquareGroupUserControl x:Name="squareGroup1" Grid.Column="0" Grid.Row="0"></local:SquareGroupUserControl>
+                <local:SquareGroupUserControl x:Name="squareGroup2" Grid.Column="1" Grid.Row="0"></local:SquareGroupUserControl>
+                <local:SquareGroupUserControl x:Name="squareGroup3" Grid.Column="2" Grid.Row="0"></local:SquareGroupUserControl>
+                <local:SquareGroupUserControl x:Name="squareGroup4" Grid.Column="0" Grid.Row="1"></local:SquareGroupUserControl>
+                <local:SquareGroupUserControl x:Name="squareGroup5" Grid.Column="1" Grid.Row="1"></local:SquareGroupUserControl>
+                <local:SquareGroupUserControl x:Name="squareGroup6" Grid.Column="2" Grid.Row="1"></local:SquareGroupUserControl>
+                <local:SquareGroupUserControl x:Name="squareGroup7" Grid.Column="0" Grid.Row="2"></local:SquareGroupUserControl>
+                <local:SquareGroupUserControl x:Name="squareGroup8" Grid.Column="1" Grid.Row="2"></local:SquareGroupUserControl>
+                <local:SquareGroupUserControl x:Name="squareGroup9" Grid.Column="2" Grid.Row="2"></local:SquareGroupUserControl>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

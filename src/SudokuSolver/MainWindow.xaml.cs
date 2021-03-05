@@ -45,12 +45,13 @@ namespace SudokuSolver
             }
             string game = sb.ToString();
             GameState.LoadGame(game);
+            GameState.ProcessRules(true, true, true, false);
             LoadGrid();
         }
 
         private void btnSolveSudoku_Click(object sender, RoutedEventArgs e)
         {
-            GameState.ProcessRules(true, true, true);
+            GameState.ProcessRules(true, true, true, true);
             GameState.CrossCheckSuccessful = Rules.CrossCheckResultRule(GameState.GameBoard);
             LoadGrid();
             txtStatus.Text = "Cross check successful: " + GameState.CrossCheckSuccessful;

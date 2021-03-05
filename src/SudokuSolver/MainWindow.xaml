@@ -48,18 +48,18 @@
                 <local:SquareGroupUserControl x:Name="squareGroup9" Grid.Column="2" Grid.Row="2"></local:SquareGroupUserControl>
             </Grid>
         </Border>
-        <StackPanel>
-            <GroupBox Header="1. Select game" Height="92">
+        <StackPanel ClipToBounds="True">
+            <GroupBox Header="1. Select game" Height="92" ClipToBounds="True">
                 <StackPanel>
                     <ComboBox Name="cboSudokuGames" HorizontalAlignment="Left" Margin="7,10,0,0" Width="100"/>
                     <Button Name="btnLoadSudoku" Content="Load Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="100" Click="btnLoadSudoku_Click"/>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="2. Solve game" Height="171">
-                <StackPanel>
+            <GroupBox Header="2. Solve game" Height="171" ClipToBounds="True">
+                <StackPanel CanVerticallyScroll="True">
                     <Button Name="btnSolveSudoku" Content="Solve Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="100" Click="btnSolveSudoku_Click"/>
-                    <Border BorderBrush="Gray" BorderThickness="0.2" Grid.Column="1" Margin="7,10,7,0" >
-                        <TextBlock Name="txtStatus" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="0,0,0,0" Width="100" Height="100" ></TextBlock>
+                    <Border BorderBrush="Gray" BorderThickness="0.2" Grid.Column="1" Margin="7,10,7,0" ClipToBounds="True" >
+                        <TextBlock Name="txtStatus" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="0,0,0,0" Width="100" Height="100" ClipToBounds="True" ></TextBlock>
                     </Border>
                 </StackPanel>
             </GroupBox>

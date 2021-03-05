@@ -192,7 +192,7 @@ namespace SudokuSolver.Core
                                 squaresSolved++;
                                 gameBoardPossibilities = UpdateRowPossibilities(gameBoardPossibilities, y, i);
                                 gameBoardPossibilities = UpdateColumnPossibilities(gameBoardPossibilities, x, i);
-                                return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+                                // return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
                             }
                         }
                     }
@@ -228,7 +228,7 @@ namespace SudokuSolver.Core
                                 squaresSolved++;
                                 gameBoardPossibilities = UpdateRowPossibilities(gameBoardPossibilities, y, i);
                                 gameBoardPossibilities = UpdateColumnPossibilities(gameBoardPossibilities, x, i);
-                                return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+                                // return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
                             }
                         }
                     }

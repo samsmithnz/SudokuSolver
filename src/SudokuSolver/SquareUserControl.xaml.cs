@@ -27,13 +27,14 @@ namespace SudokuSolver
 
         public bool LoadSquare(int number, HashSet<int> possibilities)
         {
+            txtSquare.Text = number.ToString();
             if (number == 0)
             {
-                txtSquare.Visibility = Visibility.Hidden; 
+                txtSquare.Visibility = Visibility.Hidden;
             }
             else
             {
-                txtSquare.Text = number.ToString();
+                txtSquare.Visibility = Visibility.Visible;
             }
             if (possibilities.Contains(1) == true)
             {

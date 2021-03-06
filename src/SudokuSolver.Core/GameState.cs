@@ -15,6 +15,27 @@ namespace SudokuSolver.Core
         public int IterationsToSolve = 0;
         public bool CrossCheckSuccessful;
 
+        public GameState()
+        {
+            //Create the 9x9 board
+            GameBoard = new int[9, 9];
+            //Create the possibilities object
+            GameBoardPossibilities = new HashSet<int>[9, 9];
+
+            int i = 0;
+            //Load the rows into a 2d array
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    GameBoard[x, y] = 0;
+                    //add all 9 possible numbers to initialize
+                    GameBoardPossibilities[x, y] = new HashSet<int>(Utility.SquareSet);
+                    i++;
+                }
+            }
+        }
+
         public void LoadGame(string game)
         {
             game = game.Trim();
@@ -35,10 +56,6 @@ namespace SudokuSolver.Core
             ProcessedGameBoardString = ProcessedGameBoardString.Replace(".", "0");
             string[] rows = ProcessedGameBoardString.Split(Environment.NewLine);
 
-            //Create the 9x9 board
-            GameBoard = new int[9, 9];
-            //Create the possibilities object
-            GameBoardPossibilities = new HashSet<int>[9, 9];
             int i = 0;
             //Load the rows into a 2d array
             for (int x = 0; x < 9; x++)
@@ -60,20 +77,17 @@ namespace SudokuSolver.Core
                     i++;
                 }
             }
-
         }
 
         public int ProcessRules(bool useRowRule = true,
             bool useColumnRule = true,
-            bool useSquareGroupRule = true)
+            bool useSquareGroupRule = true,
+            bool solveSquares = true)
         {
-            if (GameBoard == null || GameBoardPossibilities == null)
-            {
-                throw new Exception("Game not loaded");
-            }
-
             RuleResult ruleResult;
             int squaresSolved = 0;
+
+            //1. Look to eliminate possibilities
 
             //Process the board and update with any changes
             if (useRowRule == true)
@@ -82,9 +96,7 @@ namespace SudokuSolver.Core
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
-                    CheckForValue();
-                    squaresSolved += ruleResult.SquaresSolved;
-                    ProcessedGameBoardString = UpdateProcessedGameBoardString(ruleResult.GameBoard);
+                    GameBoardPossibilities = ruleResult.GameBoardPossibilities;
                 }
             }
 
@@ -93,38 +105,49 @@ namespace SudokuSolver.Core
                 ruleResult = Rules.ColumnEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
-                    CheckForValue();
                     GameBoard = ruleResult.GameBoard;
-                    squaresSolved += ruleResult.SquaresSolved;
-                    ProcessedGameBoardString = UpdateProcessedGameBoardString(ruleResult.GameBoard);
+                    GameBoardPossibilities = ruleResult.GameBoardPossibilities;
                 }
             }
 
             if (useSquareGroupRule == true)
             {
-                ruleResult = Rules.SquareGroupEliminationRule(GameBoard, GameBoardPossibilities);
+                ruleResult = Rules.UpdateSquareGroupPossibilities(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
-                    CheckForValue();
-                    squaresSolved += ruleResult.SquaresSolved;
-                    ProcessedGameBoardString = UpdateProcessedGameBoardString(ruleResult.GameBoard);
+                    GameBoardPossibilities = ruleResult.GameBoardPossibilities;
+                }
+            }
+
+            //2. Now looking at the possibilities, solve squares
+            if (solveSquares == true)
+            {
+                //look for any squares with only one possibility 
+                RuleResult finalOptionRuleResult = Rules.FinalOptionEliminationRule(GameBoard, GameBoardPossibilities);
+                if (finalOptionRuleResult != null)
+                {
+                    GameBoard = finalOptionRuleResult.GameBoard;
+                    GameBoardPossibilities = finalOptionRuleResult.GameBoardPossibilities;
+                    ProcessedGameBoardString = UpdateProcessedGameBoardString(finalOptionRuleResult.GameBoard);
+                    squaresSolved += finalOptionRuleResult.SquaresSolved;
+                }
+
+                //look for any numbers with just one possibility in a row/column/square group
+                RuleResult possibilitiesRuleResult = Rules.PossibilitiesEliminationRule(GameBoard, GameBoardPossibilities);
+                if (possibilitiesRuleResult != null)
+                {
+                    GameBoard = possibilitiesRuleResult.GameBoard;
+                    GameBoardPossibilities = possibilitiesRuleResult.GameBoardPossibilities;
+                    ProcessedGameBoardString = UpdateProcessedGameBoardString(possibilitiesRuleResult.GameBoard);
+                    squaresSolved += possibilitiesRuleResult.SquaresSolved;
                 }
             }
 
             UnsolvedSquareCount = ProcessedGameBoardString.Split('0').Length - 1;
-
             ProcessedGameBoardString = Utility.TrimNewLines(ProcessedGameBoardString.Replace("0", "."));
 
             return squaresSolved;
-        }
-
-        private void CheckForValue()
-        {
-            //if (GameBoard[2, 0] == 8)
-            //{
-            //    Debug.WriteLine("This is where it is breaking");
-            //}
         }
 
         public int SolveGame()
@@ -135,14 +158,14 @@ namespace SudokuSolver.Core
             do
             {
                 //Keep looping while new squares are solved
-                newSquaresSolved = ProcessRules(true, true, true);
+                newSquaresSolved = ProcessRules(true, true, true, true);
                 squaresSolved += newSquaresSolved;
                 IterationsToSolve++;
             } while (newSquaresSolved > 0);
 
             //validate result
             CrossCheckSuccessful = Rules.CrossCheckResultRule(GameBoard);
-             
+
             return squaresSolved;
         }
 

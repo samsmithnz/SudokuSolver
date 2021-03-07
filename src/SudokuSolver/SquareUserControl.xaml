@@ -17,7 +17,9 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Name="txtSquare" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Text="3" FontSize="50" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" TextAlignment="Center" Foreground="Black" Canvas.ZIndex="1"></TextBlock>
+        <TextBox Name="txtSquare" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Text="0" FontSize="50" FontWeight="Bold" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Height="75" TextAlignment="Center" Foreground="Black" Margin="1,1,1,1" Canvas.ZIndex="1"></TextBox>
+        <!--<Border BorderBrush="Blue" BorderThickness="0.5" >
+        </Border>-->
         <Grid Grid.Row="2" Grid.Column="2" Canvas.ZIndex="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>

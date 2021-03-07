@@ -49,10 +49,19 @@ namespace SudokuSolver
             LoadGrid();
         }
 
-        private void btnSolveSudoku_Click(object sender, RoutedEventArgs e)
+        private void btnSolvePartialSudoku_Click(object sender, RoutedEventArgs e)
         {
             GameState.ProcessRules(true, true, true, true);
             GameState.CrossCheckSuccessful = Rules.CrossCheckResultRule(GameState.GameBoard);
+            LoadGrid();
+            txtStatus.Text = "Cross check successful: " + GameState.CrossCheckSuccessful;
+            txtStatus.Text += Environment.NewLine;
+            txtStatus.Text += "Unsolved squares: " + GameState.UnsolvedSquareCount;
+        }
+
+        private void btnSolveEntireSudoku_Click(object sender, RoutedEventArgs e)
+        {
+            GameState.SolveGame();
             LoadGrid();
             txtStatus.Text = "Cross check successful: " + GameState.CrossCheckSuccessful;
             txtStatus.Text += Environment.NewLine;

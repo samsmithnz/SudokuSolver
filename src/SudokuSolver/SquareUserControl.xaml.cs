@@ -30,11 +30,16 @@ namespace SudokuSolver
             txtSquare.Text = number.ToString();
             if (number == 0)
             {
-                txtSquare.Visibility = Visibility.Hidden;
+                txtSquare.Visibility = Visibility.Visible;
+                //txtSquare.IsEnabled = false;
+                //txtSquare.Background = Brushes.White;
+                txtSquare.Text = "";
             }
             else
             {
                 txtSquare.Visibility = Visibility.Visible;
+                //txtSquare.IsEnabled = true;
+                //txtSquare.Background = Brushes.LightGray;
             }
             if (possibilities.Contains(1) == true)
             {

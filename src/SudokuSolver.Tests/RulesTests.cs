@@ -132,6 +132,47 @@ namespace SudokuSolver.Tests
         }
 
         [TestMethod]
+        public void NakedPairsRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+..738...9
+38.4697.2
+49.72.83.
+...8.6.73
+.39.4728.
+87.2.3...
+762..83.4
+953674128
+148.326.7
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.ProcessRules(true, true, true, true);
+
+            //Assert
+            string expected = @"
+..738...9
+38.4697.2
+49.72.83.
+...8.6.73
+.39.4728.
+87.2.3...
+762..83.4
+953674128
+148.326.7
+";
+
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(28, gameState.UnsolvedSquareCount);
+            //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
+            //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
+            Assert.AreEqual(0, squaresSolved);
+        }
+
+        [TestMethod]
         public void AllRulesTest()
         {
             //Arrange

@@ -6,36 +6,8 @@ namespace SudokuSolver.Core
 {
     public class Rules
     {
-        public static HashSet<int>[,] UpdateRowPossibilities(HashSet<int>[,] gameBoardPossibilities, int y, int number)
-        {
-            //Check each column in row
-            for (int x = 0; x < 9; x++)
-            {
-                if (gameBoardPossibilities[x, y].Contains(number) == true)
-                {
-                    gameBoardPossibilities[x, y].Remove(number);
-                }
-            }
-
-            return gameBoardPossibilities;
-        }
-
-        public static HashSet<int>[,] UpdateColumnPossibilities(HashSet<int>[,] gameBoardPossibilities, int x, int number)
-        {
-            //Check each row in column
-            for (int y = 0; y < 9; y++)
-            {
-                if (gameBoardPossibilities[x, y].Contains(number) == true)
-                {
-                    gameBoardPossibilities[x, y].Remove(number);
-                }
-            }
-
-            return gameBoardPossibilities;
-        }
-
         //Look to solve square groups (3x3 sections), by eliminating square group options
-        public static RuleResult UpdateSquareGroupPossibilities(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        public static RuleResult SquareGroupEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             //First mark all of the possible numbers in available squares, within the square group
             //Then run a simple elimination, to see if the item can be solved
@@ -129,7 +101,8 @@ namespace SudokuSolver.Core
             return new RuleResult(0, gameBoard, gameBoardPossibilities);
         }
 
-        public static RuleResult FinalOptionEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        //A Lone Single is when a cell has only one pencil mark left.
+        public static RuleResult LoneSingleEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
             //do a final loop through, looking for any squares with just one possibility
@@ -157,9 +130,9 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
-        //Check possibilities in a row, to see if there if a number only has one possible option (even though multiple squares appear to be able to go into that square)
-
-        public static RuleResult PossibilitiesEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        //The definition of a hidden single is when a pencil mark is the only one of its kind in an entire row, column, or block.
+        //Similar to a lone single, but more work
+        public static RuleResult HiddenSingleEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
 
@@ -239,6 +212,7 @@ namespace SudokuSolver.Core
         }
 
 
+
         //Confirms that the puzzle has been solved correctly
         public static bool CrossCheckResultRule(int[,] gameBoard)
         {
@@ -282,6 +256,36 @@ namespace SudokuSolver.Core
                 }
             }
             return true;
+        }
+
+        //Looks at a specific row possibilities 
+        private static HashSet<int>[,] UpdateRowPossibilities(HashSet<int>[,] gameBoardPossibilities, int y, int number)
+        {
+            //Check each column in row
+            for (int x = 0; x < 9; x++)
+            {
+                if (gameBoardPossibilities[x, y].Contains(number) == true)
+                {
+                    gameBoardPossibilities[x, y].Remove(number);
+                }
+            }
+
+            return gameBoardPossibilities;
+        }
+
+        //Looks at a specific column possibilities 
+        private static HashSet<int>[,] UpdateColumnPossibilities(HashSet<int>[,] gameBoardPossibilities, int x, int number)
+        {
+            //Check each row in column
+            for (int y = 0; y < 9; y++)
+            {
+                if (gameBoardPossibilities[x, y].Contains(number) == true)
+                {
+                    gameBoardPossibilities[x, y].Remove(number);
+                }
+            }
+
+            return gameBoardPossibilities;
         }
 
         private static int[,] SetGameBoard(int[,] gameBoard, int x, int y, int i)

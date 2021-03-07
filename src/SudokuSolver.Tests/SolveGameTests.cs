@@ -336,5 +336,46 @@ namespace SudokuSolver.Tests
             //Assert.AreEqual(9, gameState.IterationsToSolve);
         }
 
+        [TestMethod]
+        public void SolveHard3GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+..73....9
+38.46.7..
+4..7...3.
+.......73
+.39...28.
+87.......
+.6...8..4
+..3.74.28
+1....26..
+        ";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+..738...9
+38.4697.2
+49.72.83.
+...8.6.73
+.39.4728.
+87.2.3...
+762..83.4
+953674128
+148.326.7
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(28, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(23, squaresSolved);
+            //Assert.AreEqual(9, gameState.IterationsToSolve);
+        }
+
     }
 }

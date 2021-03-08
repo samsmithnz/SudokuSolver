@@ -132,7 +132,7 @@ namespace SudokuSolver.Tests
         }
 
         [TestMethod]
-        public void NakedPairsRuleTest()
+        public void NakedPairsColumnRuleTest()
         {
             //Arrange
             GameState gameState = new GameState();
@@ -155,7 +155,7 @@ namespace SudokuSolver.Tests
             //Assert
             string expected = @"
 ..738...9
-38.4697.2
+385469712
 49.72.83.
 ...8.6.73
 .39.4728.
@@ -166,9 +166,51 @@ namespace SudokuSolver.Tests
 ";
 
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(28, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 1].Count);
+            Assert.AreEqual(26, gameState.UnsolvedSquareCount);
+            //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 1].Count);
             Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 6].Count);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
+            Assert.AreEqual(2, squaresSolved);
+        }
+
+        [TestMethod]
+        public void NakedPairsRowRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+4..27.6..
+798156234
+.2.84...7
+237468951
+849531726
+561792843
+.82.15479
+.7..243..
+..4.87..2
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.ProcessRules(true, true, true, true, true);
+
+            //Assert
+            string expected = @"
+4..27.6..
+798156234
+.2.84...7
+237468951
+849531726
+561792843
+.82.15479
+.7..243..
+..4.87..2
+";
+
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(22, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[1, 8].Count);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[6, 8].Count);
             Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
             Assert.AreEqual(0, squaresSolved);
         }

@@ -360,7 +360,7 @@ namespace SudokuSolver.Tests
             //Assert     
             string expected = @"
 ..738...9
-38.4697.2
+385469712
 49.72.83.
 ...8.6.73
 .39.4728.
@@ -372,8 +372,8 @@ namespace SudokuSolver.Tests
 
             Assert.IsTrue(gameState.CrossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(28, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(23, squaresSolved);
+            Assert.AreEqual(26, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(25, squaresSolved);
             //Assert.AreEqual(9, gameState.IterationsToSolve);
         }
 

@@ -52,13 +52,13 @@
             <GroupBox Header="1. Select game" Height="92" ClipToBounds="True">
                 <StackPanel>
                     <ComboBox Name="cboSudokuGames" HorizontalAlignment="Left" Margin="7,10,0,0" Width="200"/>
-                    <Button Name="btnLoadSudoku" Content="Load Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="btnLoadSudoku_Click"/>
+                    <Button Name="btnLoadSudoku" Content="Load Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonLoadSudoku_Click"/>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="2. Solve game" Height="171" ClipToBounds="True">
                 <StackPanel CanVerticallyScroll="True">
-                    <Button Name="btnSolvePartialSudoku" Content="Solve next batch of squares" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="btnSolvePartialSudoku_Click"/>
-                    <Button Name="btnSolveEntireSudoku" Content="Solve entire Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="btnSolveEntireSudoku_Click"/>
+                    <Button Name="btnSolvePartialSudoku" Content="Solve next batch of squares" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonSolvePartialSudoku_Click"/>
+                    <Button Name="btnSolveEntireSudoku" Content="Solve entire Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonSolveEntireSudoku_Click"/>
                     <Border BorderBrush="Gray" BorderThickness="0.2" Grid.Column="1" Margin="7,10,7,0" ClipToBounds="True" >
                         <TextBlock Name="txtStatus" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="0,0,0,0" Height="200" ClipToBounds="True" ></TextBlock>
                     </Border>

@@ -29,7 +29,7 @@ namespace SudokuSolver.Core
         public static int NthElement(HashSet<int> mySet, int n)
         {
             List<int> items = mySet.ToList<int>();
-            if (items.Count > n)
+            if (items.Count >= n)
             {
                 return items[n - 1];
             }

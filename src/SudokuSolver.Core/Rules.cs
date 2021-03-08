@@ -258,51 +258,41 @@ namespace SudokuSolver.Core
             //Check each column
             for (int x = 0; x < 9; x++)
             {
+                List<KeyValuePair<Point, HashSet<int>>> nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
+
                 //Check each column
                 for (int y = 0; y < 9; y++)
                 {
-                    HashSet<int> nakedPair = null;
-                    Point point1 = new Point();
-                    Point point2 = new Point();
-                    int number1 = 0;
-                    int number2 = 0;
                     //If there is only one instance of a number, solve it
                     if (gameBoardPossibilities[x, y].Count == 2)
                     {
-                        if (nakedPair == null)
+                        nakedPair.Add(new KeyValuePair<Point, HashSet<int>>(new Point(x, y), gameBoardPossibilities[x, y]));
+                    }
+                }
+
+                foreach (KeyValuePair<Point, HashSet<int>> item in nakedPair)
+                {
+                    int number1 = item.Value.First();
+                    int number2 = Utility.NthElement(item.Value, 2); //get the second item (not zero based)         
+                    for (int y2 = 0; y2 < 9; y2++)
+                    {
+                        if (y2 != item.Key.Y)
                         {
-                            nakedPair = gameBoardPossibilities[x, y];
-                            point1 = new Point(x, y);
-                            number1 = gameBoardPossibilities[x, y].First();
-                            number2 = Utility.NthElement(gameBoardPossibilities[x, y], 2); //get the second item (not zero based)
-                        }
-                        else
-                        {
-                            if (nakedPair.SetEquals(gameBoardPossibilities[x, y]))
+                            Point point1 = item.Key;
+                            if (item.Value.SetEquals(gameBoardPossibilities[x, y2]))
                             {
-                                point2 = new Point(x, y);
+                                Point point2 = new Point(x, y2);
                                 //Loop back through the column, removing all numbers not at the two points
-                                for (int y2 = 0; y2 < 9; y2++)
+                                for (int y3 = 0; y3 < 9; y3++)
                                 {
-                                    if (new Point(x, y2) != point1 & new Point(x, y2) != point2)
+                                    if (new Point(x, y3) != point1 & new Point(x, y3) != point2)
                                     {
-                                        gameBoardPossibilities[x, y2].Remove(number1);
-                                        gameBoardPossibilities[x, y2].Remove(number2);
+                                        gameBoardPossibilities[x, y3].Remove(number1);
+                                        gameBoardPossibilities[x, y3].Remove(number2);
                                     }
                                 }
                             }
                         }
-                        //if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
-                        //{
-                        //    //remove remaining items from the hashset.
-                        //    Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString() + "(Current value is " + gameBoard[x, y] + ")");
-                        //    gameBoard = SetGameBoard(gameBoard, x, y, i);
-                        //    gameBoardPossibilities[x, y] = new HashSet<int>();
-                        //    squaresSolved++;
-                        //    gameBoardPossibilities = UpdateRowPossibilities(gameBoardPossibilities, y, i);
-                        //    gameBoardPossibilities = UpdateColumnPossibilities(gameBoardPossibilities, x, i);
-                        //    // return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
-                        //}
                     }
                 }
             }

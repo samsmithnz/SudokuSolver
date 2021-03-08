@@ -219,76 +219,86 @@ namespace SudokuSolver.Core
         {
             int squaresSolved = 0;
 
-            ////Check each row
-            //for (int y = 0; y < 9; y++)
-            //{
-            //    //Check each number
-            //    for (int i = 1; i <= 9; i++)
-            //    {
-            //        int numberFrequency = 0;
-            //        //Check each column
-            //        for (int x = 0; x < 9; x++)
-            //        {
-            //            if (gameBoardPossibilities[x, y].Contains(i) == true | gameBoard[x, y] == i)
-            //            {
-            //                numberFrequency++;
-            //            }
-            //        }
-            //        //If there is only one instance of a number, solve it
-            //        if (numberFrequency == 1)
-            //        {
-            //            for (int x = 0; x < 9; x++)
-            //            {
-            //                if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
-            //                {
-            //                    //remove remaining items from the hashset.
-            //                    Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString() + "(Current value is " + gameBoard[x, y] + ")");
-            //                    gameBoard = SetGameBoard(gameBoard, x, y, i);
-            //                    gameBoardPossibilities[x, y] = new HashSet<int>();
-            //                    squaresSolved++;
-            //                    gameBoardPossibilities = UpdateRowPossibilities(gameBoardPossibilities, y, i);
-            //                    gameBoardPossibilities = UpdateColumnPossibilities(gameBoardPossibilities, x, i);
-            //                    // return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-            //Check each column
-            for (int x = 0; x < 9; x++)
+            if (true)
             {
-                List<KeyValuePair<Point, HashSet<int>>> nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
-
-                //Check each column
+                //Check each row
                 for (int y = 0; y < 9; y++)
                 {
-                    //If there is only one instance of a number, solve it
-                    if (gameBoardPossibilities[x, y].Count == 2)
+                    List<KeyValuePair<Point, HashSet<int>>> nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
+
+                    //Check each column
+                    for (int x = 0; x < 9; x++)
                     {
-                        nakedPair.Add(new KeyValuePair<Point, HashSet<int>>(new Point(x, y), gameBoardPossibilities[x, y]));
+                        //If there is only one instance of a number, solve it
+                        if (gameBoardPossibilities[x, y].Count == 2)
+                        {
+                            nakedPair.Add(new KeyValuePair<Point, HashSet<int>>(new Point(x, y), gameBoardPossibilities[x, y]));
+                        }
+                    }
+                    foreach (KeyValuePair<Point, HashSet<int>> item in nakedPair)
+                    {
+                        int number1 = item.Value.First();
+                        int number2 = Utility.NthElement(item.Value, 2); //get the second item (not zero based)         
+                        for (int x2 = 0; x2 < 9; x2++)
+                        {
+                            if (x2 != item.Key.X)
+                            {
+                                Point point1 = item.Key;
+                                if (item.Value.SetEquals(gameBoardPossibilities[x2, y]))
+                                {
+                                    Point point2 = new Point(x2, y);
+                                    //Loop back through the column, removing all numbers not at the two points
+                                    for (int x3 = 0; x3 < 9; x3++)
+                                    {
+                                        if (new Point(x3, y) != point1 & new Point(x3, y) != point2)
+                                        {
+                                            gameBoardPossibilities[x3, y].Remove(number1);
+                                            gameBoardPossibilities[x3, y].Remove(number2);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
+            }
 
-                foreach (KeyValuePair<Point, HashSet<int>> item in nakedPair)
+            if (true)
+            {
+                //Check each column
+                for (int x = 0; x < 9; x++)
                 {
-                    int number1 = item.Value.First();
-                    int number2 = Utility.NthElement(item.Value, 2); //get the second item (not zero based)         
-                    for (int y2 = 0; y2 < 9; y2++)
+                    List<KeyValuePair<Point, HashSet<int>>> nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
+
+                    //Check each row
+                    for (int y = 0; y < 9; y++)
                     {
-                        if (y2 != item.Key.Y)
+                        //If there is only one instance of a number, solve it
+                        if (gameBoardPossibilities[x, y].Count == 2)
                         {
-                            Point point1 = item.Key;
-                            if (item.Value.SetEquals(gameBoardPossibilities[x, y2]))
+                            nakedPair.Add(new KeyValuePair<Point, HashSet<int>>(new Point(x, y), gameBoardPossibilities[x, y]));
+                        }
+                    }
+                    foreach (KeyValuePair<Point, HashSet<int>> item in nakedPair)
+                    {
+                        int number1 = item.Value.First();
+                        int number2 = Utility.NthElement(item.Value, 2); //get the second item (not zero based)         
+                        for (int y2 = 0; y2 < 9; y2++)
+                        {
+                            if (y2 != item.Key.Y)
                             {
-                                Point point2 = new Point(x, y2);
-                                //Loop back through the column, removing all numbers not at the two points
-                                for (int y3 = 0; y3 < 9; y3++)
+                                Point point1 = item.Key;
+                                if (item.Value.SetEquals(gameBoardPossibilities[x, y2]))
                                 {
-                                    if (new Point(x, y3) != point1 & new Point(x, y3) != point2)
+                                    Point point2 = new Point(x, y2);
+                                    //Loop back through the column, removing all numbers not at the two points
+                                    for (int y3 = 0; y3 < 9; y3++)
                                     {
-                                        gameBoardPossibilities[x, y3].Remove(number1);
-                                        gameBoardPossibilities[x, y3].Remove(number2);
+                                        if (new Point(x, y3) != point1 & new Point(x, y3) != point2)
+                                        {
+                                            gameBoardPossibilities[x, y3].Remove(number1);
+                                            gameBoardPossibilities[x, y3].Remove(number2);
+                                        }
                                     }
                                 }
                             }

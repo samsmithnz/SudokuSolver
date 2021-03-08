@@ -204,15 +204,15 @@ namespace SudokuSolver.Tests
 561792843
 .82.15479
 .7..243..
-..4.87..2
+..4.87.62
 ";
 
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(22, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(21, gameState.UnsolvedSquareCount);
             Assert.AreEqual(2, gameState.GameBoardPossibilities[1, 8].Count);
             Assert.AreEqual(2, gameState.GameBoardPossibilities[6, 8].Count);
-            Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
-            Assert.AreEqual(0, squaresSolved);
+            //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
+            Assert.AreEqual(1, squaresSolved);
         }
 
         [TestMethod]

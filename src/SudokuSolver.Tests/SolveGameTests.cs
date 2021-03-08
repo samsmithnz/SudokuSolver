@@ -137,6 +137,47 @@ namespace SudokuSolver.Tests
             //Arrange
             GameState gameState = new GameState();
             string game = @"
+9......7.
+1.....2.4
+.5..34..9
+...5..4..
+28..9.7..
+..1..7...
+7....1...
+.24......
+..8.....5
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+9421...7.
+1...7.2.4
+857234..9
+.7951.42.
+28549.7.1
+4.1.27...
+79..51.42
+524.....7
+.18742..5
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(32, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(26, squaresSolved);
+            //Assert.AreEqual(5, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
+        public void SolveMedium2GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
 ..36.49..
 ....5....
 9.......7

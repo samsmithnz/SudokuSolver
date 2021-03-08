@@ -51,8 +51,8 @@
         <StackPanel ClipToBounds="True">
             <GroupBox Header="1. Select game" Height="92" ClipToBounds="True">
                 <StackPanel>
-                    <ComboBox Name="cboSudokuGames" HorizontalAlignment="Left" Margin="7,10,0,0" Width="200"/>
-                    <Button Name="btnLoadSudoku" Content="Load Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonLoadSudoku_Click"/>
+                    <ComboBox Name="cboSudokuGames" HorizontalAlignment="Left" Margin="7,10,0,0" Width="200" SelectionChanged="DropdownChanged"/>
+                    <Button Name="btnLoadSudoku" Content="Load Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Visibility="Hidden"/>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="2. Solve game" Height="171" ClipToBounds="True">

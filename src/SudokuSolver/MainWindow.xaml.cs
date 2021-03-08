@@ -34,7 +34,7 @@ namespace SudokuSolver
             LoadGrid();
         }
 
-        private void ButtonLoadSudoku_Click(object sender, RoutedEventArgs e)
+        private void DropdownChanged(object sender, SelectionChangedEventArgs e)
         {
             string[] lines = File.ReadAllLines(Environment.CurrentDirectory + "\\games\\" + cboSudokuGames.SelectedItem.ToString());
             StringBuilder sb = new StringBuilder();
@@ -45,7 +45,7 @@ namespace SudokuSolver
             }
             string game = sb.ToString();
             GameState.LoadGame(game);
-            GameState.ProcessRules(true, true, true,true, false);
+            GameState.ProcessRules(true, true, true, true, false);
             LoadGrid();
         }
 
@@ -147,5 +147,6 @@ namespace SudokuSolver
             }
             return null;
         }
+
     }
 }

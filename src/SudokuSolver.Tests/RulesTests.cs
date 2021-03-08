@@ -26,7 +26,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, false, false, true);
+            int squaresSolved = gameState.ProcessRules(true, false, false, false, true);
 
             //Assert
             string expected = @"
@@ -68,7 +68,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(false, true, false, true);
+            int squaresSolved = gameState.ProcessRules(false, true, false, false, true);
 
             //Assert
             string expected = @"
@@ -109,7 +109,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(false, false, true, true);
+            int squaresSolved = gameState.ProcessRules(false, false, true, false, true);
 
             //Assert
             string expected = @"
@@ -150,7 +150,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true, true, true);
+            int squaresSolved = gameState.ProcessRules(true, true, true, true, true);
 
             //Assert
             string expected = @"
@@ -167,8 +167,9 @@ namespace SudokuSolver.Tests
 
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(28, gameState.UnsolvedSquareCount);
-            //Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(gameState.GameBoardPossibilities[2, 0]));
-            //Assert.AreEqual(1, gameState.GameBoardPossibilities[2, 0].Count);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 1].Count);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 6].Count);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
             Assert.AreEqual(0, squaresSolved);
         }
 
@@ -191,7 +192,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true, true, true);
+            int squaresSolved = gameState.ProcessRules(true, true, true, false, true);
             bool crossCheckSuccessful = Rules.CrossCheckResultRule(gameState.GameBoard);
 
             //Assert       

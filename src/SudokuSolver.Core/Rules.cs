@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 
 namespace SudokuSolver.Core
@@ -211,7 +212,103 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
+        //The phrase refers to pencil marks — specifically, when two cells in the same house have the exact same two pencil marks. 
+        //For example, if two cells in the same block/row/column have pencil marks of 2 or 3.
+        //Therefore the other cells in the block/row/column cannot be 2 or 3.
+        public static RuleResult NakedPairsEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        {
+            int squaresSolved = 0;
 
+            ////Check each row
+            //for (int y = 0; y < 9; y++)
+            //{
+            //    //Check each number
+            //    for (int i = 1; i <= 9; i++)
+            //    {
+            //        int numberFrequency = 0;
+            //        //Check each column
+            //        for (int x = 0; x < 9; x++)
+            //        {
+            //            if (gameBoardPossibilities[x, y].Contains(i) == true | gameBoard[x, y] == i)
+            //            {
+            //                numberFrequency++;
+            //            }
+            //        }
+            //        //If there is only one instance of a number, solve it
+            //        if (numberFrequency == 1)
+            //        {
+            //            for (int x = 0; x < 9; x++)
+            //            {
+            //                if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
+            //                {
+            //                    //remove remaining items from the hashset.
+            //                    Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString() + "(Current value is " + gameBoard[x, y] + ")");
+            //                    gameBoard = SetGameBoard(gameBoard, x, y, i);
+            //                    gameBoardPossibilities[x, y] = new HashSet<int>();
+            //                    squaresSolved++;
+            //                    gameBoardPossibilities = UpdateRowPossibilities(gameBoardPossibilities, y, i);
+            //                    gameBoardPossibilities = UpdateColumnPossibilities(gameBoardPossibilities, x, i);
+            //                    // return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+            //Check each column
+            for (int x = 0; x < 9; x++)
+            {
+                //Check each column
+                for (int y = 0; y < 9; y++)
+                {
+                    HashSet<int> nakedPair = null;
+                    Point point1 = new Point();
+                    Point point2 = new Point();
+                    int number1 = 0;
+                    int number2 = 0;
+                    //If there is only one instance of a number, solve it
+                    if (gameBoardPossibilities[x, y].Count == 2)
+                    {
+                        if (nakedPair == null)
+                        {
+                            nakedPair = gameBoardPossibilities[x, y];
+                            point1 = new Point(x, y);
+                            number1 = gameBoardPossibilities[x, y].First();
+                            number2 = Utility.NthElement(gameBoardPossibilities[x, y], 2); //get the second item (not zero based)
+                        }
+                        else
+                        {
+                            if (nakedPair.SetEquals(gameBoardPossibilities[x, y]))
+                            {
+                                point2 = new Point(x, y);
+                                //Loop back through the column, removing all numbers not at the two points
+                                for (int y2 = 0; y2 < 9; y2++)
+                                {
+                                    if (new Point(x, y2) != point1 & new Point(x, y2) != point2)
+                                    {
+                                        gameBoardPossibilities[x, y2].Remove(number1);
+                                        gameBoardPossibilities[x, y2].Remove(number2);
+                                    }
+                                }
+                            }
+                        }
+                        //if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
+                        //{
+                        //    //remove remaining items from the hashset.
+                        //    Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString() + "(Current value is " + gameBoard[x, y] + ")");
+                        //    gameBoard = SetGameBoard(gameBoard, x, y, i);
+                        //    gameBoardPossibilities[x, y] = new HashSet<int>();
+                        //    squaresSolved++;
+                        //    gameBoardPossibilities = UpdateRowPossibilities(gameBoardPossibilities, y, i);
+                        //    gameBoardPossibilities = UpdateColumnPossibilities(gameBoardPossibilities, x, i);
+                        //    // return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+                        //}
+                    }
+                }
+            }
+
+            return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+        }
 
         //Confirms that the puzzle has been solved correctly
         public static bool CrossCheckResultRule(int[,] gameBoard)

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 
 namespace SudokuSolver.Core
 {
     public class GameState
     {
-        //public string RawGameString;
         public string ProcessedGameBoardString;
         public int UnsolvedSquareCount;
         public int[,] GameBoard;
@@ -21,6 +19,8 @@ namespace SudokuSolver.Core
             GameBoard = new int[9, 9];
             //Create the possibilities object
             GameBoardPossibilities = new HashSet<int>[9, 9];
+            //Create the gameboard string
+            ProcessedGameBoardString = "";
 
             int i = 0;
             //Load the rows into a 2d array
@@ -81,10 +81,11 @@ namespace SudokuSolver.Core
         }
 
         //Process the rules on the game array
-        public int ProcessRules(bool useRowRule = true,
-            bool useColumnRule = true,
-            bool useSquareGroupRule = true,
-            bool solveSquares = true)
+        public int ProcessRules(bool useRowRule,
+            bool useColumnRule,
+            bool useSquareGroupRule,
+            bool useNakedPairsRule,
+            bool solveSquares)
         {
             RuleResult ruleResult;
             int squaresSolved = 0;
@@ -115,6 +116,16 @@ namespace SudokuSolver.Core
             if (useSquareGroupRule == true)
             {
                 ruleResult = Rules.SquareGroupEliminationRule(GameBoard, GameBoardPossibilities);
+                if (ruleResult != null)
+                {
+                    GameBoard = ruleResult.GameBoard;
+                    GameBoardPossibilities = ruleResult.GameBoardPossibilities;
+                }
+            }
+
+            if (useNakedPairsRule == true)
+            {
+                ruleResult = Rules.NakedPairsEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
@@ -160,7 +171,7 @@ namespace SudokuSolver.Core
             do
             {
                 //Keep looping while new squares are solved
-                newSquaresSolved = ProcessRules(true, true, true, true);
+                newSquaresSolved = ProcessRules(true, true, true,false, true);
                 squaresSolved += newSquaresSolved;
                 IterationsToSolve++;
             } while (newSquaresSolved > 0);

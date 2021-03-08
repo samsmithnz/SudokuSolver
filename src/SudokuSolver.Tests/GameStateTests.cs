@@ -19,12 +19,12 @@ namespace SudokuSolver.Tests
             try
             {
                 //Calling process rules without loading a game first
-                gameState.ProcessRules();
+                gameState.ProcessRules(false, false, false, false, false);
             }
             catch (Exception ex)
             {
                 //Assert
-                Assert.IsTrue(ex.Message == "Game not loaded");
+                Assert.AreEqual("Game not loaded", ex.Message);
             }
 
         }

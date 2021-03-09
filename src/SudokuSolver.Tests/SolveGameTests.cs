@@ -14,9 +14,9 @@ namespace SudokuSolver.Tests
             //Arrange
             GameState gameState = new GameState();
             string game = @"
-27.1.5..3
-354...71.
-9162.3.8.
+2..1.5..3
+.54...71.
+.1.2.3.8.
 6.28.73.4
 .........
 1.53.98.6
@@ -45,7 +45,7 @@ namespace SudokuSolver.Tests
             Assert.IsTrue(gameState.CrossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(41, squaresSolved);
+            Assert.AreEqual(45, squaresSolved);
             //Assert.AreEqual(5, gameState.IterationsToSolve);
         }
 
@@ -132,20 +132,20 @@ namespace SudokuSolver.Tests
         }
 
         [TestMethod]
-        public void SolveEasy4GameTest()
+        public void SolveMedium1GameTest()
         {
             //Arrange
             GameState gameState = new GameState();
             string game = @"
-.7...5...
-1...3.5.8
-...2.9.6.
-91.5..42.
-68.3...1.
-254.9...3
-7.68.1.4.
-345..6.71
-..1.7.2.6
+9......7.
+1.....2.4
+.5..34..9
+...5..4..
+28..9.7..
+..1..7...
+7....1...
+.24......
+..8.....5
 ";
 
             //Act
@@ -154,67 +154,26 @@ namespace SudokuSolver.Tests
 
             //Assert     
             string expected = @"
-479685132
-162734598
-538219764
-913568427
-687342915
-254197683
-726851349
-345926871
-891473256
+9421...7.
+1...7.2.4
+857234..9
+.7951.42.
+28549.7.1
+4.1.27...
+79..51.42
+524.....7
+.18742..5
 ";
 
             Assert.IsTrue(gameState.CrossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(43, squaresSolved);
-            //Assert.AreEqual(4, gameState.IterationsToSolve);
-        } 
-        
-        [TestMethod]
-        public void SolveEasy5GameTest()
-        {
-            //Arrange
-            GameState gameState = new GameState();
-            string game = @"
-47...5.32
-162734598
-53.2.9.64
-913568427
-68.342.15
-254.97.83
-726851349
-345926871
-891473256
-";
-
-            //Act
-            gameState.LoadGame(game);
-            int squaresSolved = gameState.SolveGame();
-
-            //Assert     
-            string expected = @"
-479685132
-162734598
-538219764
-913568427
-687342915
-254197683
-726851349
-345926871
-891473256
-";
-
-            Assert.IsTrue(gameState.CrossCheckSuccessful);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(11, squaresSolved);
-            //Assert.AreEqual(4, gameState.IterationsToSolve);
+            Assert.AreEqual(32, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(26, squaresSolved);
+            //Assert.AreEqual(5, gameState.IterationsToSolve);
         }
 
         [TestMethod]
-        public void SolveMedium1GameTest()
+        public void SolveMedium2GameTest()
         {
             //Arrange
             GameState gameState = new GameState();
@@ -277,11 +236,11 @@ namespace SudokuSolver.Tests
 
             //Assert     
             string expected = @"
-.....8...
+.....8..3
 3......76
 2.7..39.4
 .....2645
-...957...
+.3.957..2
 .528.6...
 ..32..5.8
 94...5..1
@@ -290,8 +249,8 @@ namespace SudokuSolver.Tests
 
             Assert.IsTrue(gameState.CrossCheckSuccessful);
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(50, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(6, squaresSolved);
+            Assert.AreEqual(47, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(9, squaresSolved);
             //Assert.AreEqual(3, gameState.IterationsToSolve);
         }
 
@@ -333,6 +292,252 @@ namespace SudokuSolver.Tests
             Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
             Assert.AreEqual(22, gameState.UnsolvedSquareCount);
             Assert.AreEqual(33, squaresSolved);
+            //Assert.AreEqual(9, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
+        public void SolveHard3GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+.84..25.1
+31......9
+.7....8..
+...27..9.
+4..9.8..7
+.9..41...
+..3....5.
+7......42
+8.95..61.
+        ";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+.84..25.1
+31......9
+.7....8..
+..827..9.
+4..9.8..7
+.97.41.8.
+..3...758
+7.....942
+849527613
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(41, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(10, squaresSolved);
+            //Assert.AreEqual(9, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
+        public void SolveHard4GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+..73....9
+38.46.7..
+4..7...3.
+.......73
+.39...28.
+87.......
+.6...8..4
+..3.74.28
+1....26..
+        ";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+..738...9
+385469712
+49.72.83.
+...8.6.73
+.39.4728.
+87.2.3...
+762..83.4
+953674128
+148.326.7
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(26, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(25, squaresSolved);
+            //Assert.AreEqual(9, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
+        public void SolveHard5GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+..4..8...
+..3429...
+.8.35.2..
+.4....7..
+367...891
+..8....2.
+..9.32.7.
+...9743..
+...5..9..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+..4..8...
+..3429...
+.8.35.2..
+.4....7..
+367245891
+..8...42.
+4.9.32.7.
+8..9743..
+73.5..9..
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(43, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(8, squaresSolved);
+            //Assert.AreEqual(9, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
+        public void SolveHard6GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+4..27.6..
+798156234
+.2.84...7
+237468951
+849531726
+561792843
+.82.15479
+.7..243..
+..4.87..2
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+4..27.6..
+798156234
+.2.84...7
+237468951
+849531726
+561792843
+.82.15479
+.7..243..
+..4.87.62
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(21, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(1, squaresSolved);
+            //Assert.AreEqual(9, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
+        public void SolveImpossible1GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+...6..2..
+8.4.3....
+.....9...
+4.5.....7
+71.......
+..3.5...8
+3...7...4
+.....19..
+...2...6.
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+...6..2..
+8.4.3....
+.....9...
+4.5.....7
+71.......
+..3.5...8
+3...7...4
+.....19..
+...2...6.
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(60, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(0, squaresSolved);
+            //Assert.AreEqual(9, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
+        public void SolveImpossible2GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+8........
+..36.....
+.7..9.2..
+.5..7....
+....457..
+...1...3.
+..1....68
+..85...1.
+.9....4..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+8........
+..36.....
+.7..9.2..
+.5..7....
+....457..
+...1...3.
+..1....68
+..85...1.
+.9....4..
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(60, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(0, squaresSolved);
             //Assert.AreEqual(9, gameState.IterationsToSolve);
         }
 

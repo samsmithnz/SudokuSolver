@@ -24,7 +24,7 @@ namespace SudokuSolver
     public partial class MainWindow : Window
     {
 
-        private GameState GameState = new GameState();
+        private readonly GameState GameState = new GameState();
 
 
         public MainWindow()
@@ -34,7 +34,7 @@ namespace SudokuSolver
             LoadGrid();
         }
 
-        private void btnLoadSudoku_Click(object sender, RoutedEventArgs e)
+        private void DropdownChanged(object sender, SelectionChangedEventArgs e)
         {
             string[] lines = File.ReadAllLines(Environment.CurrentDirectory + "\\games\\" + cboSudokuGames.SelectedItem.ToString());
             StringBuilder sb = new StringBuilder();
@@ -45,14 +45,23 @@ namespace SudokuSolver
             }
             string game = sb.ToString();
             GameState.LoadGame(game);
-            GameState.ProcessRules(true, true, true, false);
+            GameState.ProcessRules(true, true, true, true, false);
             LoadGrid();
         }
 
-        private void btnSolveSudoku_Click(object sender, RoutedEventArgs e)
+        private void ButtonSolvePartialSudoku_Click(object sender, RoutedEventArgs e)
         {
-            GameState.ProcessRules(true, true, true, true);
+            GameState.ProcessRules(true, true, true, true, true);
             GameState.CrossCheckSuccessful = Rules.CrossCheckResultRule(GameState.GameBoard);
+            LoadGrid();
+            txtStatus.Text = "Cross check successful: " + GameState.CrossCheckSuccessful;
+            txtStatus.Text += Environment.NewLine;
+            txtStatus.Text += "Unsolved squares: " + GameState.UnsolvedSquareCount;
+        }
+
+        private void ButtonSolveEntireSudoku_Click(object sender, RoutedEventArgs e)
+        {
+            GameState.SolveGame();
             LoadGrid();
             txtStatus.Text = "Cross check successful: " + GameState.CrossCheckSuccessful;
             txtStatus.Text += Environment.NewLine;
@@ -123,7 +132,7 @@ namespace SudokuSolver
             return null;
         }
 
-        private SudokuSolver.SquareUserControl FindSquare(int i, SudokuSolver.SquareGroupUserControl squareGroup)
+        private static SudokuSolver.SquareUserControl FindSquare(int i, SudokuSolver.SquareGroupUserControl squareGroup)
         {
             foreach (var item in squareGroup.SquareGroupGrid.Children)
             {
@@ -138,5 +147,6 @@ namespace SudokuSolver
             }
             return null;
         }
+
     }
 }

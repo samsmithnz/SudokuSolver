@@ -17,8 +17,10 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Name="txtSquare" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Text="3" FontSize="50" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" TextAlignment="Center" Foreground="Black" Canvas.ZIndex="1"></TextBlock>
-        <Grid Grid.Row="2" Grid.Column="2" Canvas.ZIndex="3">
+        <TextBox Name="txtSquare" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Text="0" FontSize="50" FontWeight="Bold" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Height="75" TextAlignment="Center" Foreground="Black" Margin="1,1,1,1" Canvas.ZIndex="1"></TextBox>
+        <!--<Border BorderBrush="Blue" BorderThickness="0.5" >
+        </Border>-->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3"  Canvas.ZIndex="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -29,15 +31,15 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Name="lbl1" Grid.Row="0" Grid.Column="0" FontSize="7" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">1</Label>
-            <Label Name="lbl2" Grid.Row="0" Grid.Column="1" FontSize="7" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">2</Label>
-            <Label Name="lbl3" Grid.Row="0" Grid.Column="2" FontSize="7" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">3</Label>
-            <Label Name="lbl4" Grid.Row="1" Grid.Column="0" FontSize="7" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">4</Label>
-            <Label Name="lbl5" Grid.Row="1" Grid.Column="1" FontSize="7" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">5</Label>
-            <Label Name="lbl6" Grid.Row="1" Grid.Column="2" FontSize="7" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">6</Label>
-            <Label Name="lbl7" Grid.Row="2" Grid.Column="0" FontSize="7" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">7</Label>
-            <Label Name="lbl8" Grid.Row="2" Grid.Column="1" FontSize="7" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">8</Label>
-            <Label Name="lbl9" Grid.Row="2" Grid.Column="2" FontSize="7" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">9</Label>
+            <Label Name="PencilMark1" Grid.Row="0" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">1</Label>
+            <Label Name="PencilMark2" Grid.Row="0" Grid.Column="1" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">2</Label>
+            <Label Name="PencilMark3" Grid.Row="0" Grid.Column="2" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">3</Label>
+            <Label Name="PencilMark4" Grid.Row="1" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">4</Label>
+            <Label Name="PencilMark5" Grid.Row="1" Grid.Column="1" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">5</Label>
+            <Label Name="PencilMark6" Grid.Row="1" Grid.Column="2" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">6</Label>
+            <Label Name="PencilMark7" Grid.Row="2" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">7</Label>
+            <Label Name="PencilMark8" Grid.Row="2" Grid.Column="1" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">8</Label>
+            <Label Name="PencilMark9" Grid.Row="2" Grid.Column="2" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">9</Label>
         </Grid>
     </Grid>
 </UserControl>

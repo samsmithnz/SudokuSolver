@@ -1,41 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 
 namespace SudokuSolver.Core
 {
     public class Rules
     {
-        public static HashSet<int>[,] UpdateRowPossibilities(HashSet<int>[,] gameBoardPossibilities, int y, int number)
-        {
-            //Check each column in row
-            for (int x = 0; x < 9; x++)
-            {
-                if (gameBoardPossibilities[x, y].Contains(number) == true)
-                {
-                    gameBoardPossibilities[x, y].Remove(number);
-                }
-            }
-
-            return gameBoardPossibilities;
-        }
-
-        public static HashSet<int>[,] UpdateColumnPossibilities(HashSet<int>[,] gameBoardPossibilities, int x, int number)
-        {
-            //Check each row in column
-            for (int y = 0; y < 9; y++)
-            {
-                if (gameBoardPossibilities[x, y].Contains(number) == true)
-                {
-                    gameBoardPossibilities[x, y].Remove(number);
-                }
-            }
-
-            return gameBoardPossibilities;
-        }
-
         //Look to solve square groups (3x3 sections), by eliminating square group options
-        public static RuleResult UpdateSquareGroupPossibilities(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        public static RuleResult SquareGroupEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             //First mark all of the possible numbers in available squares, within the square group
             //Then run a simple elimination, to see if the item can be solved
@@ -129,7 +102,8 @@ namespace SudokuSolver.Core
             return new RuleResult(0, gameBoard, gameBoardPossibilities);
         }
 
-        public static RuleResult FinalOptionEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        //A Lone Single is when a cell has only one pencil mark left.
+        public static RuleResult LoneSingleEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
             //do a final loop through, looking for any squares with just one possibility
@@ -157,9 +131,9 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
-        //Check possibilities in a row, to see if there if a number only has one possible option (even though multiple squares appear to be able to go into that square)
-
-        public static RuleResult PossibilitiesEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        //The definition of a hidden single is when a pencil mark is the only one of its kind in an entire row, column, or block.
+        //Similar to a lone single, but more work
+        public static RuleResult HiddenSingleEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
 
@@ -238,6 +212,103 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
+        //The phrase refers to pencil marks — specifically, when two cells in the same house have the exact same two pencil marks. 
+        //For example, if two cells in the same block/row/column have pencil marks of 2 or 3.
+        //Therefore the other cells in the block/row/column cannot be 2 or 3.
+        public static RuleResult NakedPairsEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        {
+            int squaresSolved = 0;
+
+            if (true)
+            {
+                //Check each row
+                for (int y = 0; y < 9; y++)
+                {
+                    List<KeyValuePair<Point, HashSet<int>>> nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
+
+                    //Check each column
+                    for (int x = 0; x < 9; x++)
+                    {
+                        //If there is only one instance of a number, solve it
+                        if (gameBoardPossibilities[x, y].Count == 2)
+                        {
+                            nakedPair.Add(new KeyValuePair<Point, HashSet<int>>(new Point(x, y), gameBoardPossibilities[x, y]));
+                        }
+                    }
+                    foreach (KeyValuePair<Point, HashSet<int>> item in nakedPair)
+                    {
+                        int number1 = item.Value.First();
+                        int number2 = Utility.NthElement(item.Value, 2); //get the second item (not zero based)         
+                        for (int x2 = 0; x2 < 9; x2++)
+                        {
+                            if (x2 != item.Key.X)
+                            {
+                                Point point1 = item.Key;
+                                if (item.Value.SetEquals(gameBoardPossibilities[x2, y]))
+                                {
+                                    Point point2 = new Point(x2, y);
+                                    //Loop back through the column, removing all numbers not at the two points
+                                    for (int x3 = 0; x3 < 9; x3++)
+                                    {
+                                        if (new Point(x3, y) != point1 & new Point(x3, y) != point2)
+                                        {
+                                            gameBoardPossibilities[x3, y].Remove(number1);
+                                            gameBoardPossibilities[x3, y].Remove(number2);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (true)
+            {
+                //Check each column
+                for (int x = 0; x < 9; x++)
+                {
+                    List<KeyValuePair<Point, HashSet<int>>> nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
+
+                    //Check each row
+                    for (int y = 0; y < 9; y++)
+                    {
+                        //If there is only one instance of a number, solve it
+                        if (gameBoardPossibilities[x, y].Count == 2)
+                        {
+                            nakedPair.Add(new KeyValuePair<Point, HashSet<int>>(new Point(x, y), gameBoardPossibilities[x, y]));
+                        }
+                    }
+                    foreach (KeyValuePair<Point, HashSet<int>> item in nakedPair)
+                    {
+                        int number1 = item.Value.First();
+                        int number2 = Utility.NthElement(item.Value, 2); //get the second item (not zero based)         
+                        for (int y2 = 0; y2 < 9; y2++)
+                        {
+                            if (y2 != item.Key.Y)
+                            {
+                                Point point1 = item.Key;
+                                if (item.Value.SetEquals(gameBoardPossibilities[x, y2]))
+                                {
+                                    Point point2 = new Point(x, y2);
+                                    //Loop back through the column, removing all numbers not at the two points
+                                    for (int y3 = 0; y3 < 9; y3++)
+                                    {
+                                        if (new Point(x, y3) != point1 & new Point(x, y3) != point2)
+                                        {
+                                            gameBoardPossibilities[x, y3].Remove(number1);
+                                            gameBoardPossibilities[x, y3].Remove(number2);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+        }
 
         //Confirms that the puzzle has been solved correctly
         public static bool CrossCheckResultRule(int[,] gameBoard)
@@ -282,6 +353,36 @@ namespace SudokuSolver.Core
                 }
             }
             return true;
+        }
+
+        //Looks at a specific row possibilities 
+        private static HashSet<int>[,] UpdateRowPossibilities(HashSet<int>[,] gameBoardPossibilities, int y, int number)
+        {
+            //Check each column in row
+            for (int x = 0; x < 9; x++)
+            {
+                if (gameBoardPossibilities[x, y].Contains(number) == true)
+                {
+                    gameBoardPossibilities[x, y].Remove(number);
+                }
+            }
+
+            return gameBoardPossibilities;
+        }
+
+        //Looks at a specific column possibilities 
+        private static HashSet<int>[,] UpdateColumnPossibilities(HashSet<int>[,] gameBoardPossibilities, int x, int number)
+        {
+            //Check each row in column
+            for (int y = 0; y < 9; y++)
+            {
+                if (gameBoardPossibilities[x, y].Contains(number) == true)
+                {
+                    gameBoardPossibilities[x, y].Remove(number);
+                }
+            }
+
+            return gameBoardPossibilities;
         }
 
         private static int[,] SetGameBoard(int[,] gameBoard, int x, int y, int i)

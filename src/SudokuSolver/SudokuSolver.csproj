@@ -14,11 +14,13 @@
     <None Remove="Games\Hard001.sdk" />
     <None Remove="Games\Hard002.sdk" />
     <None Remove="Games\Hard003.sdk" />
-    <None Remove="Games\HardestPossiblePuzzle01.sdk" />
-    <None Remove="Games\HardestPossiblePuzzle02.sdk" />
+    <None Remove="Games\Hard004.sdk" />
+    <None Remove="Games\Hard005.sdk" />
+    <None Remove="Games\Hard006.sdk" />
+    <None Remove="Games\Impossible001.sdk" />
+    <None Remove="Games\Impossible002.sdk" />
+    <None Remove="Games\MediumPuzzle01.sdk" />
     <None Remove="Games\MediumPuzzle02.sdk" />
-    <None Remove="Games\MetroHard21Feb2012.sdk" />
-    <None Remove="Games\MetroHard27Jul.sdk" />
     <None Remove="Games\VeryHard001.sdk" />
     <None Remove="Games\VeryHard002.sdk" />
     <None Remove="Games\VeryHard003.sdk" />
@@ -45,19 +47,22 @@
     <Content Include="Games\Hard003.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\HardestPossiblePuzzle01.sdk">
+    <Content Include="Games\Impossible001.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\HardestPossiblePuzzle02.sdk">
+    <Content Include="Games\Impossible002.sdk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Games\MediumPuzzle01.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\MediumPuzzle02.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\MetroHard21Feb2012.sdk">
+    <Content Include="Games\Hard004.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\MetroHard27Jul.sdk">
+    <Content Include="Games\Hard005.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\VeryHard001.sdk">
@@ -72,6 +77,9 @@
     <Content Include="Games\VeryHard004.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Games\Hard006.sdk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Games\VeryHard005.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -79,12 +87,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SudokuSolver.Core\SudokuSolver.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Games\ATestGame.sdk">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

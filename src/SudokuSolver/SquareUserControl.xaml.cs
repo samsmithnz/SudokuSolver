@@ -30,83 +30,88 @@ namespace SudokuSolver
             txtSquare.Text = number.ToString();
             if (number == 0)
             {
-                txtSquare.Visibility = Visibility.Hidden;
+                txtSquare.Visibility = Visibility.Visible;
+                //txtSquare.IsEnabled = false;
+                //txtSquare.Background = Brushes.White;
+                txtSquare.Text = "";
             }
             else
             {
                 txtSquare.Visibility = Visibility.Visible;
+                //txtSquare.IsEnabled = true;
+                //txtSquare.Background = Brushes.LightGray;
             }
             if (possibilities.Contains(1) == true)
             {
-                lbl1.Visibility = Visibility.Visible;
+                PencilMark1.Visibility = Visibility.Visible;
             }
             else
             {
-                lbl1.Visibility = Visibility.Hidden;
+                PencilMark1.Visibility = Visibility.Hidden;
             }
             if (possibilities.Contains(2) == true)
             {
-                lbl2.Visibility = Visibility.Visible;
+                PencilMark2.Visibility = Visibility.Visible;
             }
             else
             {
-                lbl2.Visibility = Visibility.Hidden;
+                PencilMark2.Visibility = Visibility.Hidden;
             }
             if (possibilities.Contains(3) == true)
             {
-                lbl3.Visibility = Visibility.Visible;
+                PencilMark3.Visibility = Visibility.Visible;
             }
             else
             {
-                lbl3.Visibility = Visibility.Hidden;
+                PencilMark3.Visibility = Visibility.Hidden;
             }
             if (possibilities.Contains(4) == true)
             {
-                lbl4.Visibility = Visibility.Visible;
+                PencilMark4.Visibility = Visibility.Visible;
             }
             else
             {
-                lbl4.Visibility = Visibility.Hidden;
+                PencilMark4.Visibility = Visibility.Hidden;
             }
             if (possibilities.Contains(5) == true)
             {
-                lbl5.Visibility = Visibility.Visible;
+                PencilMark5.Visibility = Visibility.Visible;
             }
             else
             {
-                lbl5.Visibility = Visibility.Hidden;
+                PencilMark5.Visibility = Visibility.Hidden;
             }
             if (possibilities.Contains(6) == true)
             {
-                lbl6.Visibility = Visibility.Visible;
+                PencilMark6.Visibility = Visibility.Visible;
             }
             else
             {
-                lbl6.Visibility = Visibility.Hidden;
+                PencilMark6.Visibility = Visibility.Hidden;
             }
             if (possibilities.Contains(7) == true)
             {
-                lbl7.Visibility = Visibility.Visible;
+                PencilMark7.Visibility = Visibility.Visible;
             }
             else
             {
-                lbl7.Visibility = Visibility.Hidden;
+                PencilMark7.Visibility = Visibility.Hidden;
             }
             if (possibilities.Contains(8) == true)
             {
-                lbl8.Visibility = Visibility.Visible;
+                PencilMark8.Visibility = Visibility.Visible;
             }
             else
             {
-                lbl8.Visibility = Visibility.Hidden;
+                PencilMark8.Visibility = Visibility.Hidden;
             }
             if (possibilities.Contains(9) == true)
             {
-                lbl9.Visibility = Visibility.Visible;
+                PencilMark9.Visibility = Visibility.Visible;
             }
             else
             {
-                lbl9.Visibility = Visibility.Hidden;
+                PencilMark9.Visibility = Visibility.Hidden;
             }
             return true;
         }

@@ -1,4 +1,7 @@
-﻿namespace SudokuSolver.Core
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace SudokuSolver.Core
 {
     public class Utility
     {
@@ -9,7 +12,6 @@
             //Trim off any leading or trailing new lines 
             input = input.TrimStart('\r', '\n');
             input = input.TrimEnd('\r', '\n');
-
             return input;
         }
 
@@ -22,6 +24,19 @@
                 itemNumber = int.Parse(number.ToString());
             }
             return itemNumber;
+        }
+
+        public static int NthElement(HashSet<int> mySet, int n)
+        {
+            List<int> items = mySet.ToList<int>();
+            if (items.Count >= n)
+            {
+                return items[n - 1];
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

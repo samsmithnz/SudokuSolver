@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 
 namespace SudokuSolver.Core
 {
     public class GameState
     {
-        //public string RawGameString;
         public string ProcessedGameBoardString;
         public int UnsolvedSquareCount;
         public int[,] GameBoard;
@@ -21,6 +19,8 @@ namespace SudokuSolver.Core
             GameBoard = new int[9, 9];
             //Create the possibilities object
             GameBoardPossibilities = new HashSet<int>[9, 9];
+            //Create the gameboard string
+            ProcessedGameBoardString = "";
 
             int i = 0;
             //Load the rows into a 2d array
@@ -36,6 +36,7 @@ namespace SudokuSolver.Core
             }
         }
 
+        //Convert the game string into an array
         public void LoadGame(string game)
         {
             game = game.Trim();
@@ -79,10 +80,12 @@ namespace SudokuSolver.Core
             }
         }
 
-        public int ProcessRules(bool useRowRule = true,
-            bool useColumnRule = true,
-            bool useSquareGroupRule = true,
-            bool solveSquares = true)
+        //Process the rules on the game array
+        public int ProcessRules(bool useRowRule,
+            bool useColumnRule,
+            bool useSquareGroupRule,
+            bool useNakedPairsRule,
+            bool solveSquares)
         {
             RuleResult ruleResult;
             int squaresSolved = 0;
@@ -112,7 +115,17 @@ namespace SudokuSolver.Core
 
             if (useSquareGroupRule == true)
             {
-                ruleResult = Rules.UpdateSquareGroupPossibilities(GameBoard, GameBoardPossibilities);
+                ruleResult = Rules.SquareGroupEliminationRule(GameBoard, GameBoardPossibilities);
+                if (ruleResult != null)
+                {
+                    GameBoard = ruleResult.GameBoard;
+                    GameBoardPossibilities = ruleResult.GameBoardPossibilities;
+                }
+            }
+
+            if (useNakedPairsRule == true)
+            {
+                ruleResult = Rules.NakedPairsEliminationRule(GameBoard, GameBoardPossibilities);
                 if (ruleResult != null)
                 {
                     GameBoard = ruleResult.GameBoard;
@@ -124,7 +137,7 @@ namespace SudokuSolver.Core
             if (solveSquares == true)
             {
                 //look for any squares with only one possibility 
-                RuleResult finalOptionRuleResult = Rules.FinalOptionEliminationRule(GameBoard, GameBoardPossibilities);
+                RuleResult finalOptionRuleResult = Rules.LoneSingleEliminationRule(GameBoard, GameBoardPossibilities);
                 if (finalOptionRuleResult != null)
                 {
                     GameBoard = finalOptionRuleResult.GameBoard;
@@ -134,7 +147,7 @@ namespace SudokuSolver.Core
                 }
 
                 //look for any numbers with just one possibility in a row/column/square group
-                RuleResult possibilitiesRuleResult = Rules.PossibilitiesEliminationRule(GameBoard, GameBoardPossibilities);
+                RuleResult possibilitiesRuleResult = Rules.HiddenSingleEliminationRule(GameBoard, GameBoardPossibilities);
                 if (possibilitiesRuleResult != null)
                 {
                     GameBoard = possibilitiesRuleResult.GameBoard;
@@ -158,7 +171,7 @@ namespace SudokuSolver.Core
             do
             {
                 //Keep looping while new squares are solved
-                newSquaresSolved = ProcessRules(true, true, true, true);
+                newSquaresSolved = ProcessRules(true, true, true,true, true);
                 squaresSolved += newSquaresSolved;
                 IterationsToSolve++;
             } while (newSquaresSolved > 0);

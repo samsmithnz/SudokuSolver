@@ -26,7 +26,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, false, false, true);
+            int squaresSolved = gameState.ProcessRules(true, false, false, false, true);
 
             //Assert
             string expected = @"
@@ -68,7 +68,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(false, true, false, true);
+            int squaresSolved = gameState.ProcessRules(false, true, false, false, true);
 
             //Assert
             string expected = @"
@@ -109,7 +109,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(false, false, true, true);
+            int squaresSolved = gameState.ProcessRules(false, false, true, false, true);
 
             //Assert
             string expected = @"
@@ -132,6 +132,90 @@ namespace SudokuSolver.Tests
         }
 
         [TestMethod]
+        public void NakedPairsColumnRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+..738...9
+38.4697.2
+49.72.83.
+...8.6.73
+.39.4728.
+87.2.3...
+762..83.4
+953674128
+148.326.7
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.ProcessRules(true, true, true, true, true);
+
+            //Assert
+            string expected = @"
+..738...9
+385469712
+49.72.83.
+...8.6.73
+.39.4728.
+87.2.3...
+762..83.4
+953674128
+148.326.7
+";
+
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(26, gameState.UnsolvedSquareCount);
+            //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 1].Count);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 6].Count);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
+            Assert.AreEqual(2, squaresSolved);
+        }
+
+        [TestMethod]
+        public void NakedPairsRowRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+4..27.6..
+798156234
+.2.84...7
+237468951
+849531726
+561792843
+.82.15479
+.7..243..
+..4.87..2
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.ProcessRules(true, true, true, true, true);
+
+            //Assert
+            string expected = @"
+4..27.6..
+798156234
+.2.84...7
+237468951
+849531726
+561792843
+.82.15479
+.7..243..
+..4.87.62
+";
+
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(21, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[1, 8].Count);
+            Assert.AreEqual(2, gameState.GameBoardPossibilities[6, 8].Count);
+            //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
+            Assert.AreEqual(1, squaresSolved);
+        }
+
+        [TestMethod]
         public void AllRulesTest()
         {
             //Arrange
@@ -150,7 +234,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true, true, true);
+            int squaresSolved = gameState.ProcessRules(true, true, true, false, true);
             bool crossCheckSuccessful = Rules.CrossCheckResultRule(gameState.GameBoard);
 
             //Assert       

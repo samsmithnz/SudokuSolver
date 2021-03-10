@@ -54,18 +54,14 @@ namespace SudokuSolver
             GameState.ProcessRules(true, true, true, true, true);
             GameState.CrossCheckSuccessful = Rules.CrossCheckResultRule(GameState.GameBoard);
             LoadGrid();
-            txtStatus.Text = "Cross check successful: " + GameState.CrossCheckSuccessful;
-            txtStatus.Text += Environment.NewLine;
-            txtStatus.Text += "Unsolved squares: " + GameState.UnsolvedSquareCount;
+            UpdateTextStatus();
         }
 
         private void ButtonSolveEntireSudoku_Click(object sender, RoutedEventArgs e)
         {
             GameState.SolveGame();
             LoadGrid();
-            txtStatus.Text = "Cross check successful: " + GameState.CrossCheckSuccessful;
-            txtStatus.Text += Environment.NewLine;
-            txtStatus.Text += "Unsolved squares: " + GameState.UnsolvedSquareCount;
+            UpdateTextStatus();
         }
 
         private void LoadGamesIntoDropdown()
@@ -146,6 +142,62 @@ namespace SudokuSolver
                 }
             }
             return null;
+        }
+
+        private void UpdateTextStatus()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append( "Cross check successful: " + GameState.CrossCheckSuccessful);
+            sb.Append(Environment.NewLine);
+            sb.Append("Unsolved squares: " + GameState.UnsolvedSquareCount);
+            sb.Append(Environment.NewLine);
+            sb.Append("Possiblity breakdown: " );
+            sb.Append(Environment.NewLine);
+
+            int[] possiblities = new int[9];
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    for (int i = 1; i <= 9; i++)
+                    {
+                        if (GameState.GameBoardPossibilities[x, y].Contains(i)==true)
+                        {
+                            possiblities[i-1]++;
+                        }
+
+                    }
+                }
+            }
+            sb.Append("1:");
+            sb.Append(possiblities[0]);
+            sb.Append(Environment.NewLine);
+            sb.Append("2:");
+            sb.Append(possiblities[1]);
+            sb.Append(Environment.NewLine);
+            sb.Append("3:");
+            sb.Append(possiblities[2]);
+            sb.Append(Environment.NewLine);
+            sb.Append("4:");
+            sb.Append(possiblities[3]);
+            sb.Append(Environment.NewLine);
+            sb.Append("5:");
+            sb.Append(possiblities[4]);
+            sb.Append(Environment.NewLine);
+            sb.Append("6:");
+            sb.Append(possiblities[5]);
+            sb.Append(Environment.NewLine);
+            sb.Append("7:");
+            sb.Append(possiblities[6]);
+            sb.Append(Environment.NewLine);
+            sb.Append("8:");
+            sb.Append(possiblities[7]);
+            sb.Append(Environment.NewLine);
+            sb.Append("9:");
+            sb.Append(possiblities[8]);
+            sb.Append(Environment.NewLine);
+
+            txtStatus.Text = sb.ToString();
         }
 
     }

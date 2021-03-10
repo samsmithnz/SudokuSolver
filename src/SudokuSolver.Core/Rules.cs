@@ -116,7 +116,7 @@ namespace SudokuSolver.Core
                     {
                         //remove the last item from the hashset.
                         int number = gameBoardPossibilities[x, y].First();
-                        Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + number.ToString() + "(Current value is " + gameBoard[x, y] + ")");
+                        Debug.WriteLine("Solving square (" + x + ", " + y + ") from possibility (" + x + ", " + y + "), with options [" + string.Join(",", gameBoardPossibilities[x, y]) + "], using number: " + number.ToString() + " (Current value is " + gameBoard[x, y] + ")");
                         gameBoard = SetGameBoard(gameBoard, x, y, number);
                         gameBoardPossibilities[x, y].Remove(gameBoard[x, y]);
                         squaresSolved++;
@@ -160,7 +160,7 @@ namespace SudokuSolver.Core
                             if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
                             {
                                 //remove remaining items from the hashset.
-                                Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString() + "(Current value is " + gameBoard[x, y] + ")");
+                                Debug.WriteLine("Solving square (" + x + ", " + y + ") from possibility (" + x + ", " + y + "), with options [" + string.Join(",", gameBoardPossibilities[x, y]) + "], using number: " + i.ToString() + " (Current value is " + gameBoard[x, y] + ")");
                                 gameBoard = SetGameBoard(gameBoard, x, y, i);
                                 gameBoardPossibilities[x, y] = new HashSet<int>();
                                 squaresSolved++;
@@ -196,7 +196,7 @@ namespace SudokuSolver.Core
                             if (gameBoardPossibilities[x, y].Contains(i) == true && gameBoard[x, y] == 0)
                             {
                                 //remove remaining items from the hashset.
-                                Debug.WriteLine("Solving square at (" + x + ", " + y + ") from possibility at(" + x + ", " + y + "):" + string.Join(",", gameBoardPossibilities[x, y]) + " using number: " + i.ToString() + "(Current value is " + gameBoard[x, y] + ")");
+                                Debug.WriteLine("Solving square (" + x + ", " + y + ") from possibility (" + x + ", " + y + "), with options [" + string.Join(",", gameBoardPossibilities[x, y]) + "], using number: " + i.ToString() + " (Current value is " + gameBoard[x, y] + ")");
                                 gameBoard = SetGameBoard(gameBoard, x, y, i);
                                 gameBoardPossibilities[x, y] = new HashSet<int>();
                                 squaresSolved++;
@@ -387,7 +387,7 @@ namespace SudokuSolver.Core
 
         private static int[,] SetGameBoard(int[,] gameBoard, int x, int y, int i)
         {
-            Debug.WriteLine("Solving square at (" + x + ", " + y + ") using number: " + i.ToString());
+            Debug.WriteLine("Solving square (" + x + ", " + y + ") using number: " + i.ToString());
             gameBoard[x, y] = i;
             return gameBoard;
         }

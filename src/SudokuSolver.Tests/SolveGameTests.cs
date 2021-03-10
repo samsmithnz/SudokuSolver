@@ -214,6 +214,88 @@ namespace SudokuSolver.Tests
         }
 
         [TestMethod]
+        public void SolveMedium3GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+...12....
+.6839....
+7...6....
+.1.93....
+.9..56...
+6..8..93.
+..9..2...
+..6.....5
+.2....3.1
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+9..12...3
+26839....
+731.6..29
+.1.93....
+.93256...
+6..8.193.
+3.9.12...
+1.6..3295
+.2...93.1
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(39, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(17, squaresSolved);
+            //Assert.AreEqual(5, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
+        public void SolveMedium4GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+...9...3.
+.725.6.9.
+.94.1.5..
+.5.....4.
+.....73..
+12..43...
+.......2.
+5.....6..
+...67.1..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+615924837
+872536491
+394718562
+753169248
+948257316
+126843759
+467381925
+581492673
+239675184
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(56, squaresSolved);
+            //Assert.AreEqual(5, gameState.IterationsToSolve);
+        }
+
+        [TestMethod]
         public void SolveHard1GameTest()
         {
             //Arrange

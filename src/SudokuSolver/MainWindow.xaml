@@ -55,12 +55,12 @@
                     <Button Name="btnLoadSudoku" Content="Load Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Visibility="Hidden"/>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="2. Solve game" Height="171" ClipToBounds="True">
+            <GroupBox Header="2. Solve game" Height="400" ClipToBounds="True">
                 <StackPanel CanVerticallyScroll="True">
                     <Button Name="btnSolvePartialSudoku" Content="Solve next batch of squares" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonSolvePartialSudoku_Click"/>
                     <Button Name="btnSolveEntireSudoku" Content="Solve entire Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonSolveEntireSudoku_Click"/>
-                    <Border BorderBrush="Gray" BorderThickness="0.2" Grid.Column="1" Margin="7,10,7,0" ClipToBounds="True" >
-                        <TextBlock Name="txtStatus" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="0,0,0,0" Height="200" ClipToBounds="True" ></TextBlock>
+                    <Border BorderBrush="Gray" BorderThickness="0.2" Grid.Column="1" Margin="7,10,7,0" ClipToBounds="True" Height="300" >
+                        <TextBlock Name="txtStatus" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="0,0,0,0" Height="300" ClipToBounds="True" ></TextBlock>
                     </Border>
                 </StackPanel>
             </GroupBox>

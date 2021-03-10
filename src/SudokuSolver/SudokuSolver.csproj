@@ -21,6 +21,9 @@
     <None Remove="Games\Impossible002.sdk" />
     <None Remove="Games\MediumPuzzle01.sdk" />
     <None Remove="Games\MediumPuzzle02.sdk" />
+    <None Remove="Games\MediumPuzzle03.sdk" />
+    <None Remove="Games\MediumPuzzle04.sdk" />
+    <None Remove="Games\MediumPuzzle05.sdk" />
     <None Remove="Games\VeryHard001.sdk" />
     <None Remove="Games\VeryHard002.sdk" />
     <None Remove="Games\VeryHard003.sdk" />
@@ -54,6 +57,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\MediumPuzzle01.sdk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Games\MediumPuzzle05.sdk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Games\MediumPuzzle04.sdk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Games\MediumPuzzle03.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\MediumPuzzle02.sdk">

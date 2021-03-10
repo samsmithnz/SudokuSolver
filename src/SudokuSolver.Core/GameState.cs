@@ -85,6 +85,7 @@ namespace SudokuSolver.Core
             bool useColumnRule,
             bool useSquareGroupRule,
             bool useNakedPairsRule,
+            bool useHiddenNakedPairsRule,
             bool solveSquares)
         {
             RuleResult ruleResult;
@@ -133,6 +134,16 @@ namespace SudokuSolver.Core
                 }
             }
 
+            if (useHiddenNakedPairsRule == true)
+            {
+                ruleResult = Rules.HiddenNakedPairsEliminationRule(GameBoard, GameBoardPossibilities);
+                if (ruleResult != null)
+                {
+                    GameBoard = ruleResult.GameBoard;
+                    GameBoardPossibilities = ruleResult.GameBoardPossibilities;
+                }
+            }
+
             //2. Now looking at the possibilities, solve squares
             if (solveSquares == true)
             {
@@ -163,7 +174,12 @@ namespace SudokuSolver.Core
             return squaresSolved;
         }
 
-        public int SolveGame()
+        public int SolveGame(bool useRowRule=true,
+            bool useColumnRule = true,
+            bool useSquareGroupRule = true,
+            bool useNakedPairsRule = true,
+            bool useHiddenNakedPairsRule = true,
+            bool solveSquares = true)
         {
             int squaresSolved = 0;
             int newSquaresSolved;
@@ -171,7 +187,7 @@ namespace SudokuSolver.Core
             do
             {
                 //Keep looping while new squares are solved
-                newSquaresSolved = ProcessRules(true, true, true,true, true);
+                newSquaresSolved = ProcessRules(useRowRule, useColumnRule, useSquareGroupRule, useNakedPairsRule, useHiddenNakedPairsRule, solveSquares);
                 squaresSolved += newSquaresSolved;
                 IterationsToSolve++;
             } while (newSquaresSolved > 0);

@@ -19,7 +19,7 @@ namespace SudokuSolver.Tests
             try
             {
                 //Calling process rules without loading a game first
-                gameState.ProcessRules(false, false, false, false, false);
+                gameState.ProcessRules(false, false, false, false, false, false);
             }
             catch (Exception ex)
             {

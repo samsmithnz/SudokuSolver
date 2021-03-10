@@ -310,8 +310,15 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
-        //Confirms that the puzzle has been solved correctly
-        public static bool CrossCheckResultRule(int[,] gameBoard)
+        public static RuleResult HiddenNakedPairsEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        {
+            int squaresSolved = 0;
+
+            return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
+        }
+
+            //Confirms that the puzzle has been solved correctly
+            public static bool CrossCheckResultRule(int[,] gameBoard)
         {
             //Check at each row to ensure it adds up to 45 and is complete.
             for (int y = 0; y < 9; y++)

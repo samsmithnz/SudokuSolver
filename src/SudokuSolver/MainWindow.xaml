@@ -59,10 +59,36 @@
                 <StackPanel CanVerticallyScroll="True">
                     <Button Name="btnSolvePartialSudoku" Content="Solve next batch of squares" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonSolvePartialSudoku_Click"/>
                     <Button Name="btnSolveEntireSudoku" Content="Solve entire Sudoku" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonSolveEntireSudoku_Click"/>
+                    <CheckBox Name="chkUseRowRule">Row</CheckBox>
+                    <CheckBox Name="chkUseColumnRule">Column</CheckBox>
+                    <CheckBox Name="chkUseSquareGroupRule">Square group</CheckBox>
+                    <CheckBox Name="chkUseNakedPairsRule">Naked pairs</CheckBox>
+                    <CheckBox Name="chkUseHiddenNakedPairsRule">Hidden naked pairs</CheckBox>
                     <Border BorderBrush="Gray" BorderThickness="0.2" Grid.Column="1" Margin="7,10,7,0" ClipToBounds="True" Height="300" >
                         <TextBlock Name="txtStatus" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="0,0,0,0" Height="300" ClipToBounds="True" ></TextBlock>
                     </Border>
                 </StackPanel>
+            </GroupBox>
+            <GroupBox Header="3. Debugging tools" Height="200" ClipToBounds="True">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel CanVerticallyScroll="True" Grid.Column="0">
+                        <CheckBox Name="chk1" Margin="7,10,0,0" Checked="CheckBox1_Checked" Unchecked="CheckBox1_Checked">Highlight "1" possibilities</CheckBox>
+                        <CheckBox Name="chk2" Margin="7,10,0,0" Checked="CheckBox2_Checked" Unchecked="CheckBox2_Checked">Highlight "2" possibilities</CheckBox>
+                        <CheckBox Name="chk3" Margin="7,10,0,0" Checked="CheckBox3_Checked" Unchecked="CheckBox3_Checked">Highlight "3" possibilities</CheckBox>
+                        <CheckBox Name="chk4" Margin="7,10,0,0" Checked="CheckBox4_Checked" Unchecked="CheckBox4_Checked">Highlight "4" possibilities</CheckBox>
+                        <CheckBox Name="chk5" Margin="7,10,0,0" Checked="CheckBox5_Checked" Unchecked="CheckBox5_Checked">Highlight "5" possibilities</CheckBox>
+                    </StackPanel>
+                    <StackPanel CanVerticallyScroll="True" Grid.Column="1">
+                        <CheckBox Name="chk6" Margin="7,10,0,0" Checked="CheckBox6_Checked" Unchecked="CheckBox6_Checked">Highlight "6" possibilities</CheckBox>
+                        <CheckBox Name="chk7" Margin="7,10,0,0" Checked="CheckBox7_Checked" Unchecked="CheckBox7_Checked">Highlight "7" possibilities</CheckBox>
+                        <CheckBox Name="chk8" Margin="7,10,0,0" Checked="CheckBox8_Checked" Unchecked="CheckBox8_Checked">Highlight "8" possibilities</CheckBox>
+                        <CheckBox Name="chk9" Margin="7,10,0,0" Checked="CheckBox9_Checked" Unchecked="CheckBox9_Checked">Highlight "9" possibilities</CheckBox>
+                    </StackPanel>
+                </Grid>
             </GroupBox>
         </StackPanel>
 

@@ -541,6 +541,47 @@ namespace SudokuSolver.Tests
             //Assert.AreEqual(9, gameState.IterationsToSolve);
         }
 
+         [TestMethod]
+        public void SolveHard7GameTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+3......8.
+1..6.3..2
+.6.......
+.8.1..97.
+...5.....
+2.9..48..
+..1...62.
+.......43
+.7..5.1..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame();
+
+            //Assert     
+            string expected = @"
+3......86
+1..6.3.52
+.6....319
+.8.1..97.
+...5..2..
+2.9..48..
+..1...627
+......543
+.7..5.198
+";
+
+            Assert.IsTrue(gameState.CrossCheckSuccessful);
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(47, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(10, squaresSolved);
+            //Assert.AreEqual(9, gameState.IterationsToSolve);
+        }
+
         [TestMethod]
         public void SolveImpossible1GameTest()
         {

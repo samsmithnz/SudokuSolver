@@ -8,9 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Games\Easy001.sdk" />
-    <None Remove="Games\Easy002.sdk" />
-    <None Remove="Games\Easy003.sdk" />
+    <None Remove="Games\1Easy001.sdk" />
+    <None Remove="Games\1Easy002.sdk" />
+    <None Remove="Games\1Easy003.sdk" />
+    <None Remove="Games\1Easy004.sdk" />
+    <None Remove="Games\1Easy005.sdk" />
+    <None Remove="Games\2Medium001.sdk" />
     <None Remove="Games\Hard001.sdk" />
     <None Remove="Games\Hard002.sdk" />
     <None Remove="Games\Hard003.sdk" />
@@ -18,28 +21,25 @@
     <None Remove="Games\Hard005.sdk" />
     <None Remove="Games\Hard006.sdk" />
     <None Remove="Games\Hard007.sdk" />
-    <None Remove="Games\Impossible001.sdk" />
-    <None Remove="Games\Impossible002.sdk" />
-    <None Remove="Games\MediumPuzzle01.sdk" />
-    <None Remove="Games\MediumPuzzle02.sdk" />
-    <None Remove="Games\MediumPuzzle03.sdk" />
-    <None Remove="Games\MediumPuzzle04.sdk" />
-    <None Remove="Games\MediumPuzzle05.sdk" />
+    <None Remove="Games\Hard008.sdk" />
+    <None Remove="Games\Hard009.sdk" />
     <None Remove="Games\VeryHard001.sdk" />
     <None Remove="Games\VeryHard002.sdk" />
     <None Remove="Games\VeryHard003.sdk" />
     <None Remove="Games\VeryHard004.sdk" />
     <None Remove="Games\VeryHard005.sdk" />
+    <None Remove="Games\VeryHard006.sdk" />
+    <None Remove="Games\VeryHard007.sdk" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Games\Easy001.sdk">
+    <Content Include="Games\1Easy001.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\Easy002.sdk">
+    <Content Include="Games\1Easy002.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\Easy003.sdk">
+    <Content Include="Games\1Easy003.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\Hard001.sdk">
@@ -54,25 +54,25 @@
     <Content Include="Games\Hard007.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\Impossible001.sdk">
+    <Content Include="Games\VeryHard006.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\Impossible002.sdk">
+    <Content Include="Games\VeryHard007.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\MediumPuzzle01.sdk">
+    <Content Include="Games\Hard008.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\MediumPuzzle05.sdk">
+    <Content Include="Games\1Easy005.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\MediumPuzzle04.sdk">
+    <Content Include="Games\2Medium001.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\MediumPuzzle03.sdk">
+    <Content Include="Games\Hard009.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\MediumPuzzle02.sdk">
+    <Content Include="Games\1Easy004.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\Hard004.sdk">

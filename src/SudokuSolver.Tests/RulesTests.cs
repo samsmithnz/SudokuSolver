@@ -26,7 +26,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, false, false, false, false, true);
+            int squaresSolved = gameState.ProcessRules(true, false, 
+                false, false, false, 
+                true);
 
             //Assert
             string expected = @"
@@ -68,7 +70,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(false, true, false, false, false, true);
+            int squaresSolved = gameState.ProcessRules(false, true,
+                false, false, false, 
+                true);
 
             //Assert
             string expected = @"
@@ -109,7 +113,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(false, false, true, false, false, true);
+            int squaresSolved = gameState.ProcessRules(false, false,
+                true, false, false,
+                true);
 
             //Assert
             string expected = @"
@@ -150,7 +156,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true, true, true, true, true);
+            int squaresSolved = gameState.ProcessRules(true, true,
+                true, true, true, 
+                true);
 
             //Assert
             string expected = @"
@@ -192,7 +200,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true, true, true, true, true);
+            int squaresSolved = gameState.ProcessRules(true, true,
+                true, true, false,
+                true);
 
             //Assert
             string expected = @"
@@ -234,7 +244,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true, true, false, false, true);
+            int squaresSolved = gameState.ProcessRules(true, true,
+                true, false, false,
+                true);
             bool crossCheckSuccessful = Rules.CrossCheckResultRule(gameState.GameBoard);
 
             //Assert       

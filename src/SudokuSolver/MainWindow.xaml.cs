@@ -36,6 +36,16 @@ namespace SudokuSolver
 
         private void DropdownChanged(object sender, SelectionChangedEventArgs e)
         {
+            LoadGame();
+        }
+
+        private void ButtonRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            LoadGame();
+        }
+
+        private void LoadGame()
+        {
             string[] lines = File.ReadAllLines(Environment.CurrentDirectory + "\\games\\" + cboSudokuGames.SelectedItem.ToString());
             StringBuilder sb = new StringBuilder();
             foreach (string item in lines)
@@ -271,6 +281,18 @@ namespace SudokuSolver
             }
         }
 
+        private void CheckBoxAll_Checked(object sender, RoutedEventArgs e)
+        {
+            chk1.IsChecked = chkAll.IsChecked;
+            chk2.IsChecked = chkAll.IsChecked;
+            chk3.IsChecked = chkAll.IsChecked;
+            chk4.IsChecked = chkAll.IsChecked;
+            chk5.IsChecked = chkAll.IsChecked;
+            chk6.IsChecked = chkAll.IsChecked;
+            chk7.IsChecked = chkAll.IsChecked;
+            chk8.IsChecked = chkAll.IsChecked;
+            chk9.IsChecked = chkAll.IsChecked;
+        }
         private void CheckBox1_Checked(object sender, RoutedEventArgs e)
         {
             HighlightPossibilities(1, (bool)chk1.IsChecked);

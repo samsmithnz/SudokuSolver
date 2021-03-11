@@ -26,8 +26,8 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, false, 
-                false, false, false, 
+            int squaresSolved = gameState.ProcessRules(true, false,
+                false, false, false,
                 true);
 
             //Assert
@@ -71,7 +71,7 @@ namespace SudokuSolver.Tests
             //Act
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(false, true,
-                false, false, false, 
+                false, false, false,
                 true);
 
             //Assert
@@ -157,7 +157,7 @@ namespace SudokuSolver.Tests
             //Act
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, true,
-                true, true, true, 
+                true, true, true,
                 true);
 
             //Assert
@@ -223,6 +223,58 @@ namespace SudokuSolver.Tests
             Assert.AreEqual(2, gameState.GameBoardPossibilities[6, 8].Count);
             //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
             Assert.AreEqual(1, squaresSolved);
+        }
+
+
+
+        [TestMethod]
+        public void CrossCheckRowRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+888888888
+..36.....
+.7..9.2..
+.5..7....
+....457..
+...1...3.
+..1....68
+..85...1.
+.9....4..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            bool result = Rules.CrossCheckResultRule(gameState.GameBoard);
+
+            //Assert
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
+        public void CrossCheckColumnRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+8........
+8.36.....
+87..9.2..
+85..7....
+8...457..
+8..1...3.
+8.1....68
+8.85...1.
+89....4..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            bool result = Rules.CrossCheckResultRule(gameState.GameBoard);
+
+            //Assert
+            Assert.AreEqual(false, result);
         }
 
         [TestMethod]

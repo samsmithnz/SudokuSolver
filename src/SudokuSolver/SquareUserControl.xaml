@@ -31,15 +31,15 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Name="PencilMark1" Grid.Row="0" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">1</Label>
-            <Label Name="PencilMark2" Grid.Row="0" Grid.Column="1" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">2</Label>
-            <Label Name="PencilMark3" Grid.Row="0" Grid.Column="2" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">3</Label>
-            <Label Name="PencilMark4" Grid.Row="1" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">4</Label>
-            <Label Name="PencilMark5" Grid.Row="1" Grid.Column="1" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">5</Label>
-            <Label Name="PencilMark6" Grid.Row="1" Grid.Column="2" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">6</Label>
-            <Label Name="PencilMark7" Grid.Row="2" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">7</Label>
-            <Label Name="PencilMark8" Grid.Row="2" Grid.Column="1" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">8</Label>
-            <Label Name="PencilMark9" Grid.Row="2" Grid.Column="2" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" Foreground="Blue">9</Label>
+            <Label Name="PencilMark1" Grid.Row="0" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Blue" Width="15" Height="15">1</Label>
+            <Label Name="PencilMark2" Grid.Row="0" Grid.Column="1" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Blue" Width="15" Height="15">2</Label>
+            <Label Name="PencilMark3" Grid.Row="0" Grid.Column="2" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Blue" Width="15" Height="15">3</Label>
+            <Label Name="PencilMark4" Grid.Row="1" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Blue" Width="15" Height="15">4</Label>
+            <Label Name="PencilMark5" Grid.Row="1" Grid.Column="1" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Blue" Width="15" Height="15">5</Label>
+            <Label Name="PencilMark6" Grid.Row="1" Grid.Column="2" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Blue" Width="15" Height="15">6</Label>
+            <Label Name="PencilMark7" Grid.Row="2" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Blue" Width="15" Height="15">7</Label>
+            <Label Name="PencilMark8" Grid.Row="2" Grid.Column="1" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Blue" Width="15" Height="15">8</Label>
+            <Label Name="PencilMark9" Grid.Row="2" Grid.Column="2" FontSize="10" VerticalAlignment="Center" Padding="0" Margin="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Blue" Width="15" Height="15">9</Label>
         </Grid>
     </Grid>
 </UserControl>

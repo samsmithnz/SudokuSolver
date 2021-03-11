@@ -264,9 +264,34 @@ namespace SudokuSolver.Tests
 85..7....
 8...457..
 8..1...3.
-8.1....68
-8.85...1.
+8.1....62
+8.25...1.
 89....4..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            bool result = Rules.CrossCheckResultRule(gameState.GameBoard);
+
+            //Assert
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
+        public void CrossCheckGroupRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+888......
+8886.....
+888.9.2..
+.5..7....
+....457..
+...1...3.
+..1....68
+..25...1.
+.9....4..
 ";
 
             //Act

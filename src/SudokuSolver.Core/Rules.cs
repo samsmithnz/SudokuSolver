@@ -317,46 +317,42 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
-            //Confirms that the puzzle has been solved correctly
-            public static bool CrossCheckResultRule(int[,] gameBoard)
+        //Confirms that the puzzle has been solved correctly
+        public static bool CrossCheckResultRule(int[,] gameBoard)
         {
-            //Check at each row to ensure it adds up to 45 and is complete.
+            int[] checker = new int[10];
+
+            //Check that each row only contains a number once
             for (int y = 0; y < 9; y++)
             {
-                int rowSum = 0;
-                int unsolvedSquares = 0;
+                checker = new int[10];
                 for (int x = 0; x < 9; x++)
                 {
-                    rowSum += gameBoard[x, y];
-                    if (gameBoard[x, y] == 0)
-                    {
-                        unsolvedSquares++;
-                    }
+                    checker[gameBoard[x, y]]++;
                 }
-                if (unsolvedSquares == 0 & rowSum != 45)
+                for (int j = 1; j <= 9; j++)
                 {
-                    //Note that if the code works, Code coverage should never get to here
-                    return false;
+                    if (checker[j] > 1)
+                    {
+                        return false;
+                    }
                 }
             }
 
-            //Check at each column to ensure it adds up to 45 and is complete.
+            //Check that each column only contains a number once
             for (int x = 0; x < 9; x++)
             {
-                int rowSum = 0;
-                int unsolvedSquares = 0;
+                checker = new int[10];
                 for (int y = 0; y < 9; y++)
                 {
-                    rowSum += gameBoard[x, y];
-                    if (gameBoard[x, y] == 0)
-                    {
-                        unsolvedSquares++;
-                    }
+                    checker[gameBoard[x, y]]++;
                 }
-                if (unsolvedSquares == 0 & rowSum != 45)
+                for (int j = 1; j <= 9; j++)
                 {
-                    //Note that if the code works, Code coverage should never get to here
-                    return false;
+                    if (checker[j] > 1)
+                    {
+                        return false;
+                    }
                 }
             }
             return true;

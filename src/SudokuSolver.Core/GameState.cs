@@ -12,6 +12,7 @@ namespace SudokuSolver.Core
         public HashSet<int>[,] GameBoardPossibilities;
         public int IterationsToSolve = 0;
         public bool CrossCheckSuccessful;
+        public string GameLevel;
 
         public GameState()
         {
@@ -49,6 +50,17 @@ namespace SudokuSolver.Core
                     sb.Append(line);
                     sb.Append(Environment.NewLine);
                 }
+                else
+                {
+                    if (line.Trim().StartsWith("#L") == true)
+                    {
+                        GameLevel = line.Trim().Replace("#L", "").Trim();
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(GameLevel) == true)
+            {
+                GameLevel = "Unknown";
             }
             //Strip out new lines before and after the board
             ProcessedGameBoardString = Utility.TrimNewLines(sb.ToString());
@@ -174,7 +186,7 @@ namespace SudokuSolver.Core
             return squaresSolved;
         }
 
-        public int SolveGame(bool useRowRule=true,
+        public int SolveGame(bool useRowRule = true,
             bool useColumnRule = true,
             bool useSquareGroupRule = true,
             bool useNakedPairsRule = true,

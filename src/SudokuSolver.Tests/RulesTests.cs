@@ -26,7 +26,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, false, false, false, false, true);
+            int squaresSolved = gameState.ProcessRules(true, false,
+                false, false, false,
+                true);
 
             //Assert
             string expected = @"
@@ -68,7 +70,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(false, true, false, false, false, true);
+            int squaresSolved = gameState.ProcessRules(false, true,
+                false, false, false,
+                true);
 
             //Assert
             string expected = @"
@@ -109,7 +113,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(false, false, true, false, false, true);
+            int squaresSolved = gameState.ProcessRules(false, false,
+                true, false, false,
+                true);
 
             //Assert
             string expected = @"
@@ -150,7 +156,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true, true, true, true, true);
+            int squaresSolved = gameState.ProcessRules(true, true,
+                true, true, true,
+                true);
 
             //Assert
             string expected = @"
@@ -192,7 +200,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true, true, true, true, true);
+            int squaresSolved = gameState.ProcessRules(true, true,
+                true, true, false,
+                true);
 
             //Assert
             string expected = @"
@@ -215,6 +225,127 @@ namespace SudokuSolver.Tests
             Assert.AreEqual(1, squaresSolved);
         }
 
+//        [TestMethod]
+//        public void NakedPairsSquareGroupRuleTest()
+//        {
+//            //Arrange
+//            GameState gameState = new GameState();
+//            string game = @"
+//265194738
+//7.986.42.
+//..472.6.9
+//647931..2
+//..82473.6
+//3.2586.74
+//4.6352...
+//.21679.43
+//9.341826.
+//";
+
+//            //Act
+//            gameState.LoadGame(game);
+//            int squaresSolved = gameState.ProcessRules(true, true,
+//                true, true, false,
+//                true);
+
+//            //Assert
+//            string expected = @"
+//265194738
+//7.986.42.
+//..472.6.9
+//647931..2
+//..8247356
+//3.2586.74
+//4.6352...
+//.21679.43
+//9.341826.
+//";
+
+        //    Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+        //    Assert.AreEqual(21, gameState.UnsolvedSquareCount);
+        //    Assert.AreEqual(2, gameState.GameBoardPossibilities[1, 8].Count);
+        //    Assert.AreEqual(2, gameState.GameBoardPossibilities[6, 8].Count);
+        //    //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
+        //    Assert.AreEqual(1, squaresSolved);
+        //}
+
+
+
+        [TestMethod]
+        public void CrossCheckRowRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+888888888
+..36.....
+.7..9.2..
+.5..7....
+....457..
+...1...3.
+..1....68
+..85...1.
+.9....4..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            bool result = Rules.CrossCheckResultRule(gameState.GameBoard);
+
+            //Assert
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
+        public void CrossCheckColumnRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+8........
+8.36.....
+87..9.2..
+85..7....
+8...457..
+8..1...3.
+8.1....62
+8.25...1.
+89....4..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            bool result = Rules.CrossCheckResultRule(gameState.GameBoard);
+
+            //Assert
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
+        public void CrossCheckGroupRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+888......
+8886.....
+888.9.2..
+.5..7....
+....457..
+...1...3.
+..1....68
+..25...1.
+.9....4..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            bool result = Rules.CrossCheckResultRule(gameState.GameBoard);
+
+            //Assert
+            Assert.AreEqual(false, result);
+        }
+
         [TestMethod]
         public void AllRulesTest()
         {
@@ -234,7 +365,9 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true, true, false, false, true);
+            int squaresSolved = gameState.ProcessRules(true, true,
+                true, false, false,
+                true);
             bool crossCheckSuccessful = Rules.CrossCheckResultRule(gameState.GameBoard);
 
             //Assert       

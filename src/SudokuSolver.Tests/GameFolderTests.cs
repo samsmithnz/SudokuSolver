@@ -36,16 +36,18 @@ namespace SudokuSolver.Tests
                         break;
                     case "Hard":
                         Assert.IsTrue(solvedSquares >= 0);
+                        Assert.IsTrue(solvedSquares <= 30);
                         Assert.IsTrue(gameState.UnsolvedSquareCount > 0);
                         break;
                     case "Very Hard":
                         Assert.IsTrue(solvedSquares >= 0);
+                        Assert.IsTrue(solvedSquares <= 4);
                         Assert.IsTrue(gameState.UnsolvedSquareCount > 0);
                         break;
                     default:
                         throw new Exception("Unknown game: " + path);
                         //Assert.IsTrue(gameState.GameLevel == "");
-                        break;
+                        //break;
                 }
             }
 

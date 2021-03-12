@@ -261,13 +261,13 @@ namespace SudokuSolver.Tests
 //9.341826.
 //";
 
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(21, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(2, gameState.GameBoardPossibilities[1, 8].Count);
-            Assert.AreEqual(2, gameState.GameBoardPossibilities[6, 8].Count);
-            //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
-            Assert.AreEqual(1, squaresSolved);
-        }
+        //    Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+        //    Assert.AreEqual(21, gameState.UnsolvedSquareCount);
+        //    Assert.AreEqual(2, gameState.GameBoardPossibilities[1, 8].Count);
+        //    Assert.AreEqual(2, gameState.GameBoardPossibilities[6, 8].Count);
+        //    //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
+        //    Assert.AreEqual(1, squaresSolved);
+        //}
 
 
 

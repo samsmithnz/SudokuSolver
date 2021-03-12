@@ -347,7 +347,7 @@ namespace SudokuSolver.Tests
         }
 
         [TestMethod]
-        public void SquareGroupSectionRuleTest()
+        public void SquareGroupExtractionRuleTest()
         {
             //Arrange
             GameState gameState = new GameState();
@@ -391,7 +391,7 @@ namespace SudokuSolver.Tests
 567
 234
 ";
-            Assert.AreEqual(Utility.TrimNewLines(expectedTopLeft), 
+            Assert.AreEqual(Utility.TrimNewLines(expectedTopLeft),
                 Utility.TrimNewLines(RulesUtility.ConvertGameBoardToString(topLeft).Replace(".", "0")));
             Assert.AreEqual(Utility.TrimNewLines(expectedTopMiddle),
                 Utility.TrimNewLines(RulesUtility.ConvertGameBoardToString(topMiddle).Replace(".", "0")));
@@ -401,6 +401,55 @@ namespace SudokuSolver.Tests
                 Utility.TrimNewLines(RulesUtility.ConvertGameBoardToString(bottomRight).Replace(".", "0")));
         }
 
+
+
+        [TestMethod]
+        public void SquareGroupInsertationRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+.........
+.........
+.........
+912345678
+678912345
+345678912
+234567...
+891234...
+567891...
+";
+            int[,] topLeft = new int[3, 3] { { 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 } };
+            int[,] topMiddle = new int[3, 3] { { 4, 7, 1 }, { 5, 8, 2 }, { 6, 9, 3 } };
+            int[,] topRight = new int[3, 3] { { 7, 1, 4 }, { 8, 2, 5 }, { 9, 3, 6 } };
+            int[,] bottomRight = new int[3, 3] { { 8, 5, 2 }, { 9, 6, 3 }, { 1, 7, 4 } };
+
+            //Act
+            gameState.LoadGame(game);
+            gameState.GameBoard = BasicRules.InsertSquareGroupIntoGameBoard(gameState.GameBoard, topLeft, 0, 0);
+            gameState.ProcessedGameBoardString = RulesUtility.ConvertGameBoardToString(gameState.GameBoard).Replace("0", ".");
+            gameState.GameBoard = BasicRules.InsertSquareGroupIntoGameBoard(gameState.GameBoard, topMiddle, 1, 0);
+            gameState.ProcessedGameBoardString = RulesUtility.ConvertGameBoardToString(gameState.GameBoard).Replace("0", ".");
+            gameState.GameBoard = BasicRules.InsertSquareGroupIntoGameBoard(gameState.GameBoard, topRight, 2, 0);
+            gameState.ProcessedGameBoardString = RulesUtility.ConvertGameBoardToString(gameState.GameBoard).Replace("0", ".");
+            gameState.GameBoard = BasicRules.InsertSquareGroupIntoGameBoard(gameState.GameBoard, bottomRight, 2, 2);
+            gameState.ProcessedGameBoardString = RulesUtility.ConvertGameBoardToString(gameState.GameBoard).Replace("0", ".");
+
+            //Assert
+            string expected = @"
+123456789
+456789123
+789123456
+912345678
+678912345
+345678912
+234567891
+891234567
+567891234
+";
+            Assert.AreEqual(Utility.TrimNewLines(expected), Utility.TrimNewLines(gameState.ProcessedGameBoardString));
+
+        }
 
 
         [TestMethod]

@@ -28,7 +28,7 @@ namespace SudokuSolver.Core
             return itemNumber;
         }
 
-        //Note that n is NOT zero based - hence the -1 on line 35
+        //Note that n is NOT zero based - hence the -1 on line 37
         public static int NthElement(HashSet<int> mySet, int n)
         {
             List<int> items = mySet.ToList<int>();

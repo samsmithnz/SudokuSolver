@@ -289,6 +289,40 @@ namespace SudokuSolver.Core
             return result;
         }
 
+        public static int[,] InsertSquareGroupIntoGameBoard(int[,] gameBoard, int[,] squareBoard, int squareGroupX, int squareGroupY)
+        {
+            int xLow = (squareGroupX * 3);
+            int xHigh = ((squareGroupX + 1) * 3) - 1;
+            int yLow = (squareGroupY * 3);
+            int yHigh = ((squareGroupY + 1) * 3) - 1;
+            int x2 = 0;
+            int y2 = 0;
+            for (int y = 0; y < 9; y++)
+            {
+                for (int x = 0; x < 9; x++)
+                {
+                    if (x >= xLow & x <= xHigh & y >= yLow & y <= yHigh)
+                    {
+                        int number = squareBoard[x2, y2];
+                        gameBoard[x, y] = number;
+                        Debug.WriteLine(number);
+                    }
+                    x2++;
+                    if (x2 >= 3)
+                    {
+                        x2 = 0;
+                    }
+                }
+                y2++;
+                if (y2 >= 3)
+                {
+                    y2 = 0;
+                }
+            }
+
+            return gameBoard;
+        }
+
         //Looks at a specific row possibilities 
         private static HashSet<int>[,] UpdateRowPossibilities(HashSet<int>[,] gameBoardPossibilities, int y, int number)
         {

@@ -307,6 +307,33 @@ namespace SudokuSolver.Core
                 }
             }
 
+            //square group
+            //if (true)
+            //{
+            //    //Get each row
+            //    for (int y = 0; y < 9; y++)
+            //    {
+            //        //Get each column
+            //        for (int x = 0; x < 9; x++)
+            //        {
+            //            if (gameBoard[x, y] != 0)
+            //            {
+            //                //Get the top left of the square group
+            //                int xSquare = (int)(x / 3f);
+            //                int ySquare = (int)(y / 3f);
+            //                //Loop through the square group
+            //                for (int y2 = 0; y2 < 3; y2++)
+            //                {
+            //                    for (int x2 = 0; x2 < 3; x2++)
+            //                    {
+            //                        gameBoardPossibilities[(xSquare * 3) + x2, (ySquare * 3) + y2].Remove(gameBoard[x, y]);
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 

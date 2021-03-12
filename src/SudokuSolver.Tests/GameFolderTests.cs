@@ -36,7 +36,7 @@ namespace SudokuSolver.Tests
                         break;
                     case "Hard":
                         Assert.IsTrue(solvedSquares >= 0);
-                        Assert.IsTrue(solvedSquares <= 30);
+                        Assert.IsTrue(solvedSquares <= 35);
                         Assert.IsTrue(gameState.UnsolvedSquareCount > 0);
                         break;
                     case "Very Hard":

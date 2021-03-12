@@ -225,49 +225,49 @@ namespace SudokuSolver.Tests
             Assert.AreEqual(1, squaresSolved);
         }
 
-//        [TestMethod]
-//        public void NakedPairsSquareGroupRuleTest()
-//        {
-//            //Arrange
-//            GameState gameState = new GameState();
-//            string game = @"
-//265194738
-//7.986.42.
-//..472.6.9
-//647931..2
-//..82473.6
-//3.2586.74
-//4.6352...
-//.21679.43
-//9.341826.
-//";
+        //        [TestMethod]
+        //        public void NakedPairsSquareGroupRuleTest()
+        //        {
+        //            //Arrange
+        //            GameState gameState = new GameState();
+        //            string game = @"
+        //265194738
+        //7.986.42.
+        //..472.6.9
+        //647931..2
+        //..82473.6
+        //3.2586.74
+        //4.6352...
+        //.21679.43
+        //9.341826.
+        //";
 
-//            //Act
-//            gameState.LoadGame(game);
-//            int squaresSolved = gameState.ProcessRules(true, true,
-//                true, true, false,
-//                true);
+        //            //Act
+        //            gameState.LoadGame(game);
+        //            int squaresSolved = gameState.ProcessRules(true, true,
+        //                true, true, false,
+        //                true);
 
-//            //Assert
-//            string expected = @"
-//265194738
-//7.986.42.
-//..472.6.9
-//647931..2
-//..8247356
-//3.2586.74
-//4.6352...
-//.21679.43
-//9.341826.
-//";
+        //            //Assert
+        //            string expected = @"
+        //265194738
+        //7.986.42.
+        //..472.6.9
+        //647931..2
+        //..8247356
+        //3.2586.74
+        //4.6352...
+        //.21679.43
+        //9.341826.
+        //";
 
-        //    Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-        //    Assert.AreEqual(21, gameState.UnsolvedSquareCount);
-        //    Assert.AreEqual(2, gameState.GameBoardPossibilities[1, 8].Count);
-        //    Assert.AreEqual(2, gameState.GameBoardPossibilities[6, 8].Count);
-        //    //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
-        //    Assert.AreEqual(1, squaresSolved);
-        //}
+        //            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+        //            Assert.AreEqual(21, gameState.UnsolvedSquareCount);
+        //            Assert.AreEqual(2, gameState.GameBoardPossibilities[1, 8].Count);
+        //            Assert.AreEqual(2, gameState.GameBoardPossibilities[6, 8].Count);
+        //            //Assert.AreEqual(2, gameState.GameBoardPossibilities[7, 8].Count);
+        //            Assert.AreEqual(1, squaresSolved);
+        //        }
 
 
 
@@ -290,7 +290,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            bool result = Rules.CrossCheckResultRule(gameState.GameBoard);
+            bool result = BasicRules.CrossCheckResultRule(gameState.GameBoard);
 
             //Assert
             Assert.AreEqual(false, result);
@@ -315,7 +315,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            bool result = Rules.CrossCheckResultRule(gameState.GameBoard);
+            bool result = BasicRules.CrossCheckResultRule(gameState.GameBoard);
 
             //Assert
             Assert.AreEqual(false, result);
@@ -340,11 +340,68 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            bool result = Rules.CrossCheckResultRule(gameState.GameBoard);
+            bool result = BasicRules.CrossCheckResultRule(gameState.GameBoard);
 
             //Assert
             Assert.AreEqual(false, result);
         }
+
+        [TestMethod]
+        public void SquareGroupSectionRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+123456789
+456789123
+789123456
+912345678
+678912345
+345678912
+234567891
+891234567
+567891234
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int[,] topLeft = BasicRules.ExtractSquareGroupFromGameBoard(gameState.GameBoard, 0, 0);
+            int[,] topMiddle = BasicRules.ExtractSquareGroupFromGameBoard(gameState.GameBoard, 1, 0);
+            int[,] topRight = BasicRules.ExtractSquareGroupFromGameBoard(gameState.GameBoard, 2, 0);
+            int[,] bottomRight = BasicRules.ExtractSquareGroupFromGameBoard(gameState.GameBoard, 2, 2);
+
+            //Assert      
+            string expectedTopLeft = @"
+123
+456
+789
+";
+            string expectedTopMiddle = @"
+456
+789
+123
+";
+            string expectedTopRight = @"
+789
+123
+456
+";
+            string expectedBottomRight = @"
+891
+567
+234
+";
+            Assert.AreEqual(Utility.TrimNewLines(expectedTopLeft), 
+                Utility.TrimNewLines(RulesUtility.ConvertGameBoardToString(topLeft).Replace(".", "0")));
+            Assert.AreEqual(Utility.TrimNewLines(expectedTopMiddle),
+                Utility.TrimNewLines(RulesUtility.ConvertGameBoardToString(topMiddle).Replace(".", "0")));
+            Assert.AreEqual(Utility.TrimNewLines(expectedTopRight),
+                Utility.TrimNewLines(RulesUtility.ConvertGameBoardToString(topRight).Replace(".", "0")));
+            Assert.AreEqual(Utility.TrimNewLines(expectedBottomRight),
+                Utility.TrimNewLines(RulesUtility.ConvertGameBoardToString(bottomRight).Replace(".", "0")));
+        }
+
+
 
         [TestMethod]
         public void AllRulesTest()
@@ -368,7 +425,7 @@ namespace SudokuSolver.Tests
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, false, false,
                 true);
-            bool crossCheckSuccessful = Rules.CrossCheckResultRule(gameState.GameBoard);
+            bool crossCheckSuccessful = BasicRules.CrossCheckResultRule(gameState.GameBoard);
 
             //Assert       
             string expected = @"

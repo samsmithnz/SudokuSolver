@@ -205,7 +205,7 @@ namespace SudokuSolver.Core
             } while (newSquaresSolved > 0);
 
             //validate result
-            CrossCheckSuccessful = BasicRules.CrossCheckResultRule(GameBoard);
+            CrossCheckSuccessful = RulesUtility.CrossCheckResult(GameBoard);
 
             return squaresSolved;
         }

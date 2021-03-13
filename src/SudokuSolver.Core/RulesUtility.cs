@@ -56,5 +56,188 @@ namespace SudokuSolver.Core
             }
             return sb.ToString();
         }
+
+
+
+        public static int[,] ExtractSquareGroupFromGameBoard(int[,] gameBoard, int squareGroupX, int squareGroupY)
+        {
+            int[,] result = new int[3, 3];
+
+            int xLow = (squareGroupX * 3);
+            int xHigh = ((squareGroupX + 1) * 3) - 1;
+            int yLow = (squareGroupY * 3);
+            int yHigh = ((squareGroupY + 1) * 3) - 1;
+            int x2 = 0;
+            int y2 = 0;
+            for (int y = 0; y < 9; y++)
+            {
+                for (int x = 0; x < 9; x++)
+                {
+                    if (x >= xLow & x <= xHigh & y >= yLow & y <= yHigh)
+                    {
+                        int number = gameBoard[x, y];
+                        result[x2, y2] = number;
+                        //Debug.WriteLine(number);
+                    }
+                    x2++;
+                    if (x2 >= 3)
+                    {
+                        x2 = 0;
+                    }
+                }
+                y2++;
+                if (y2 >= 3)
+                {
+                    y2 = 0;
+                }
+            }
+
+            return result;
+        }
+
+        public static int[,] InsertSquareGroupIntoGameBoard(int[,] gameBoard, int[,] squareBoard, int squareGroupX, int squareGroupY)
+        {
+            int xLow = (squareGroupX * 3);
+            int xHigh = ((squareGroupX + 1) * 3) - 1;
+            int yLow = (squareGroupY * 3);
+            int yHigh = ((squareGroupY + 1) * 3) - 1;
+            int x2 = 0;
+            int y2 = 0;
+            for (int y = 0; y < 9; y++)
+            {
+                for (int x = 0; x < 9; x++)
+                {
+                    if (x >= xLow & x <= xHigh & y >= yLow & y <= yHigh)
+                    {
+                        int number = squareBoard[x2, y2];
+                        gameBoard[x, y] = number;
+                        //Debug.WriteLine(number);
+                    }
+                    x2++;
+                    if (x2 >= 3)
+                    {
+                        x2 = 0;
+                    }
+                }
+                y2++;
+                if (y2 >= 3)
+                {
+                    y2 = 0;
+                }
+            }
+
+            return gameBoard;
+        }
+
+        public static HashSet<int>[,] ExtractSquareGroupFromGamePossibilities(HashSet<int>[,] gameBoardPossibilities, int squareGroupX, int squareGroupY)
+        {
+            HashSet<int>[,] result = new HashSet<int>[3, 3];
+
+            int xLow = (squareGroupX * 3);
+            int xHigh = ((squareGroupX + 1) * 3) - 1;
+            int yLow = (squareGroupY * 3);
+            int yHigh = ((squareGroupY + 1) * 3) - 1;
+            int x2 = 0;
+            int y2 = 0;
+            for (int y = 0; y < 9; y++)
+            {
+                for (int x = 0; x < 9; x++)
+                {
+                    if (x >= xLow & x <= xHigh & y >= yLow & y <= yHigh)
+                    {
+                        HashSet<int> number = gameBoardPossibilities[x, y];
+                        result[x2, y2] = number;
+                        //Debug.WriteLine(number);
+                    }
+                    x2++;
+                    if (x2 >= 3)
+                    {
+                        x2 = 0;
+                    }
+                }
+                y2++;
+                if (y2 >= 3)
+                {
+                    y2 = 0;
+                }
+            }
+
+            return result;
+        }
+
+        public static HashSet<int>[,] InsertSquareGroupIntoGamePossibilities(HashSet<int>[,] gameBoardPossibilities, HashSet<int>[,] squareBoard, int squareGroupX, int squareGroupY)
+        {
+            int xLow = (squareGroupX * 3);
+            int xHigh = ((squareGroupX + 1) * 3) - 1;
+            int yLow = (squareGroupY * 3);
+            int yHigh = ((squareGroupY + 1) * 3) - 1;
+            int x2 = 0;
+            int y2 = 0;
+            for (int y = 0; y < 9; y++)
+            {
+                for (int x = 0; x < 9; x++)
+                {
+                    if (x >= xLow & x <= xHigh & y >= yLow & y <= yHigh)
+                    {
+                        HashSet<int> number = squareBoard[x2, y2];
+                        gameBoardPossibilities[x, y] = number;
+                        //Debug.WriteLine(number);
+                    }
+                    x2++;
+                    if (x2 >= 3)
+                    {
+                        x2 = 0;
+                    }
+                }
+                y2++;
+                if (y2 >= 3)
+                {
+                    y2 = 0;
+                }
+            }
+
+            return gameBoardPossibilities;
+        }
+
+        //Confirms that the puzzle has been solved correctly
+        public static bool CrossCheckResult(int[,] gameBoard)
+        {
+            int[] checker;
+
+            //Check that each row only contains a number once
+            for (int y = 0; y < 9; y++)
+            {
+                checker = new int[10];
+                for (int x = 0; x < 9; x++)
+                {
+                    checker[gameBoard[x, y]]++;
+                }
+                for (int j = 1; j <= 9; j++)
+                {
+                    if (checker[j] > 1)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            //Check that each column only contains a number once
+            for (int x = 0; x < 9; x++)
+            {
+                checker = new int[10];
+                for (int y = 0; y < 9; y++)
+                {
+                    checker[gameBoard[x, y]]++;
+                }
+                for (int j = 1; j <= 9; j++)
+                {
+                    if (checker[j] > 1)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     }
 }

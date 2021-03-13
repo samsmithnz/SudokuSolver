@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Test
-      run: dotnet test  src/SudokuSolver.Tests/SudokuSolver.Tests.csproj --configuration Release /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov --logger:trx;LogFileName=TestResults/TestOutput.xml
+      run: dotnet test  src/SudokuSolver.Tests/SudokuSolver.Tests.csproj --configuration Release --logger:trx;LogFileName=TestResults\TestOutput.xml /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: always()

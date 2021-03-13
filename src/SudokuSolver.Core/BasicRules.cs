@@ -24,14 +24,18 @@ namespace SudokuSolver.Core
                         //Get the top left of the square group
                         int xSquare = (int)(x / 3f);
                         int ySquare = (int)(y / 3f);
+                        //Get the square group into an individual 3x3 array and scan the results there
+                        HashSet<int>[,] gameBoardPossibilitiesSquareGroup = RulesUtility.ExtractSquareGroupFromGamePossibilities(gameBoardPossibilities, xSquare, ySquare);
                         //Loop through the square group
                         for (int y2 = 0; y2 < 3; y2++)
                         {
                             for (int x2 = 0; x2 < 3; x2++)
                             {
-                                gameBoardPossibilities[(xSquare * 3) + x2, (ySquare * 3) + y2].Remove(gameBoard[x, y]);
+                                gameBoardPossibilitiesSquareGroup[x2, y2].Remove(gameBoard[x, y]);
+                                //gameBoardPossibilities[(xSquare * 3) + x2, (ySquare * 3) + y2].Remove(gameBoard[x, y]);
                             }
                         }
+                        gameBoardPossibilities = RulesUtility.InsertSquareGroupIntoGamePossibilities(gameBoardPossibilities, gameBoardPossibilitiesSquareGroup, xSquare, ySquare);
                     }
                 }
             }
@@ -212,7 +216,7 @@ namespace SudokuSolver.Core
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }
 
- 
+
 
         //Looks at a specific row possibilities 
         private static HashSet<int>[,] UpdateRowPossibilities(HashSet<int>[,] gameBoardPossibilities, int y, int number)

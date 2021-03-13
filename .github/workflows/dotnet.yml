@@ -18,12 +18,12 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Test
-      run: dotnet test  src/SudokuSolver.Tests/SudokuSolver.Tests.csproj --configuration Release --logger:trx;LogFileName=TestResults\TestOutput.xml /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      run: dotnet test  src/SudokuSolver.Tests/SudokuSolver.Tests.csproj --configuration Release --logger:trx;LogFileName=TestOutput.xml /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: always()
       with:
-        files: test-results/TestOutput.xml  
+        files: TestOutput.xml  
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
       with:

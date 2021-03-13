@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SudokuSolver.Core;
+using System.Collections.Generic;
 
 namespace SudokuSolver.Tests
 {
@@ -449,6 +450,87 @@ namespace SudokuSolver.Tests
 ";
             Assert.AreEqual(Utility.TrimNewLines(expected), Utility.TrimNewLines(gameState.ProcessedGameBoardString));
 
+        }
+
+        [TestMethod]
+        public void SquareGroupPossibilitiesExtractionRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+12345678.
+456789123
+789123456
+912345678
+678912345
+345678912
+234567891
+891234567
+567891234
+";
+            HashSet<int>[,] expectedTopRight = new HashSet<int>[3, 3];
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    expectedTopRight[x, y] = new HashSet<int>();
+                }
+            }
+            expectedTopRight[2, 0].Add(9);
+
+            //Act
+            gameState.LoadGame(game);
+            gameState.ProcessRules(true, false, false, false, false, false);
+            HashSet<int>[,] topRight = BasicRules.ExtractSquareGroupFromGamePossibilities(gameState.GameBoardPossibilities, 2, 0);
+
+            //Assert      
+            Assert.IsTrue(expectedTopRight[2,0].SetEquals(topRight[2,0]));
+        }
+
+
+        [TestMethod]
+        public void SquareGroupPossibilitiesInsertationRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+12345678.
+456789123
+789123456
+912345678
+678912345
+345678912
+234567891
+891234567
+567891234
+";
+            HashSet<int>[,] expectedTopRight = new HashSet<int>[3, 3];
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    expectedTopRight[x, y] = new HashSet<int>();
+                }
+            }
+            expectedTopRight[2, 0].Add(9);
+            HashSet<int>[,] topRight = new HashSet<int>[3, 3];
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    topRight[x, y] = new HashSet<int>();
+                }
+            }
+            topRight[2, 0].Add(9);
+
+            //Act
+            gameState.LoadGame(game);
+            gameState.ProcessRules(true, false, false, false, false, false);
+            gameState.GameBoardPossibilities = BasicRules.InsertSquareGroupIntoGamePossibilities(gameState.GameBoardPossibilities, topRight, 0, 0);
+
+            //Assert
+            Assert.IsTrue(expectedTopRight[2, 0].SetEquals(topRight[2, 0]));
+            Assert.IsTrue(expectedTopRight[2, 0].SetEquals(gameState.GameBoardPossibilities[2, 0]));
         }
 
 

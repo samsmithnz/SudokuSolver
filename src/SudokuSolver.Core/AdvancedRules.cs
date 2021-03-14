@@ -15,6 +15,7 @@ namespace SudokuSolver.Core
             int squaresSolved = 0;
             List<KeyValuePair<Point, HashSet<int>>> nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
 
+            //TODO: refactor this into a separate function (it helps to keep the variables declared within just this if statement scope
             if (true)
             {
                 //Check each row
@@ -63,6 +64,7 @@ namespace SudokuSolver.Core
                 }
             }
 
+            //TODO: refactor this into a separate function (it helps to keep the variables declared within just this if statement scope
             if (true)
             {
                 //Check each column
@@ -111,6 +113,7 @@ namespace SudokuSolver.Core
                 }
             }
 
+            //TODO: refactor this into a separate function (it helps to keep the variables declared within just this if statement scope
             //square group
             if (true)
             {
@@ -121,9 +124,6 @@ namespace SudokuSolver.Core
                     for (int xSquare = 0; xSquare < 3; xSquare++)
                     {
                         nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
-                        ////Get the top left of the square group
-                        //int xSquare = (int)(x / 3f);
-                        //int ySquare = (int)(y / 3f);
                         HashSet<int>[,] gameBoardPossibilitiesSquare = RulesUtility.ExtractSquareGroupFromGamePossibilities(gameBoardPossibilities, xSquare, ySquare);
                         //Loop through the square group
                         for (int y2 = 0; y2 < 3; y2++)
@@ -138,10 +138,6 @@ namespace SudokuSolver.Core
                             }
                         }
 
-                        if (xSquare == 2 && ySquare == 1)
-                        {
-                            int jk = 0;
-                        }
                         //Now loop through the hashsets and check if their are duplicates and hence can remove some possibilities in the square group
                         foreach (KeyValuePair<Point, HashSet<int>> item in nakedPair)
                         {
@@ -149,8 +145,9 @@ namespace SudokuSolver.Core
                             if (item.Value.Count == 2)
                             {
                                 int number1 = item.Value.First();
-                                int number2 = RulesUtility.NthElement(item.Value, 2); //get the second item (not zero based)         
-                                                                                      //Loop through the square group
+                                int number2 = RulesUtility.NthElement(item.Value, 2); //get the second item (not zero based)   
+
+                                //Loop through the square group
                                 for (int y2 = 0; y2 < 3; y2++)
                                 {
                                     for (int x2 = 0; x2 < 3; x2++)
@@ -158,10 +155,6 @@ namespace SudokuSolver.Core
                                         if (x2 != item.Key.X | y2 != item.Key.Y)
                                         {
                                             Point point1 = item.Key;
-                                            if (item.Key.X == 0 & item.Key.Y == 0 & x2 == 1 && y2 == 0)
-                                            {
-                                                int kj = 0;
-                                            }
                                             if (item.Value.SetEquals(gameBoardPossibilitiesSquare[x2, y2]))
                                             {
                                                 Point point2 = new Point(x2, y2);

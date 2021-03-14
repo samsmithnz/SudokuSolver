@@ -37,8 +37,8 @@ namespace SudokuSolver.Core
                         //double check there is still a value - as this evolves as we solve the puzzle
                         if (item.Value.Count == 2)
                         {
-                            int number1 = item.Value.First();
-                            int number2 = RulesUtility.NthElement(item.Value, 2); //get the second item (not zero based)         
+                            int number1 = RulesUtility.GetNthElement(item.Value, 1); //get the first item (not zero based)         
+                            int number2 = RulesUtility.GetNthElement(item.Value, 2); //get the second item (not zero based)         
                             for (int x2 = 0; x2 < 9; x2++)
                             {
                                 if (x2 != item.Key.X)
@@ -86,8 +86,8 @@ namespace SudokuSolver.Core
                         //double check there is still a value - as this evolves as we solve the puzzle
                         if (item.Value.Count == 2)
                         {
-                            int number1 = item.Value.First();
-                            int number2 = RulesUtility.NthElement(item.Value, 2); //get the second item (not zero based)         
+                            int number1 = RulesUtility.GetNthElement(item.Value, 1); //get the first item (not zero based)    
+                            int number2 = RulesUtility.GetNthElement(item.Value, 2); //get the second item (not zero based)         
                             for (int y2 = 0; y2 < 9; y2++)
                             {
                                 if (y2 != item.Key.Y)
@@ -144,8 +144,8 @@ namespace SudokuSolver.Core
                             //double check there is still a value - as this evolves as we solve the puzzle
                             if (item.Value.Count == 2)
                             {
-                                int number1 = item.Value.First();
-                                int number2 = RulesUtility.NthElement(item.Value, 2); //get the second item (not zero based)   
+                                int number1 = RulesUtility.GetNthElement(item.Value, 1); //get the first item (not zero based)    
+                                int number2 = RulesUtility.GetNthElement(item.Value, 2); //get the second item (not zero based)   
 
                                 //Loop through the square group
                                 for (int y2 = 0; y2 < 3; y2++)

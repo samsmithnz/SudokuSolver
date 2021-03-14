@@ -29,7 +29,7 @@ namespace SudokuSolver.Core
         }
 
         //Note that n is NOT zero based - hence the -1 on line 37
-        public static int NthElement(HashSet<int> mySet, int n)
+        public static int GetNthElement(HashSet<int> mySet, int n)
         {
             List<int> items = mySet.ToList<int>();
             if (items.Count >= n)

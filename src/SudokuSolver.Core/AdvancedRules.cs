@@ -13,7 +13,7 @@ namespace SudokuSolver.Core
         public static RuleResult NakedPairsEliminationRule(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int squaresSolved = 0;
-            List<KeyValuePair<Point, HashSet<int>>> nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
+            List<KeyValuePair<Point, HashSet<int>>> nakedPair;
 
             //TODO: refactor this into a separate function (it helps to keep the variables declared within just this if statement scope
             if (true)

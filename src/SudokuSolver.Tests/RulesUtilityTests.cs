@@ -217,7 +217,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            gameState.ProcessRules(true, false, false, false, false, false);
+            gameState.ProcessRules(true, false, false, false, false, false, false);
             HashSet<int>[,] topRight = RulesUtility.ExtractSquareGroupFromGamePossibilities(gameState.GameBoardPossibilities, 2, 0);
 
             //Assert      
@@ -262,7 +262,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            gameState.ProcessRules(true, false, false, false, false, false);
+            gameState.ProcessRules(true, false, false, false, false, false, false);
             gameState.GameBoardPossibilities = RulesUtility.InsertSquareGroupIntoGamePossibilities(gameState.GameBoardPossibilities, topRight, 0, 0);
 
             //Assert
@@ -276,10 +276,12 @@ namespace SudokuSolver.Tests
         {
             //Arrange
             HashSet<int> emptyItemSet = new HashSet<int>();
-            HashSet<int> threeItemSet = new HashSet<int>();
-            threeItemSet.Add(1);
-            threeItemSet.Add(2);
-            threeItemSet.Add(3);
+            HashSet<int> threeItemSet = new HashSet<int>
+            {
+                1,
+                2,
+                3
+            };
 
             //Act
             int emptyItem1 = RulesUtility.GetNthElement(emptyItemSet, 1);

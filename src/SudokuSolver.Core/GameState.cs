@@ -98,6 +98,7 @@ namespace SudokuSolver.Core
             bool useSquareGroupRule,
             bool useNakedPairsRule,
             bool useHiddenNakedPairsRule,
+            bool useBruteStrengthRule,
             bool solveSquares)
         {
             RuleResult ruleResult;
@@ -191,6 +192,7 @@ namespace SudokuSolver.Core
             bool useSquareGroupRule = true,
             bool useNakedPairsRule = true,
             bool useHiddenNakedPairsRule = true,
+            bool useBruteStrengthRule = false,
             bool solveSquares = true)
         {
             int squaresSolved = 0;
@@ -199,7 +201,7 @@ namespace SudokuSolver.Core
             do
             {
                 //Keep looping while new squares are solved
-                newSquaresSolved = ProcessRules(useRowRule, useColumnRule, useSquareGroupRule, useNakedPairsRule, useHiddenNakedPairsRule, solveSquares);
+                newSquaresSolved = ProcessRules(useRowRule, useColumnRule, useSquareGroupRule, useNakedPairsRule, useHiddenNakedPairsRule, useBruteStrengthRule, solveSquares);
                 squaresSolved += newSquaresSolved;
                 IterationsToSolve++;
             } while (newSquaresSolved > 0);

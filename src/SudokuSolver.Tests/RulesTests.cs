@@ -29,7 +29,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, false,
                 false, false, false,
-                true);
+               false, true);
 
             //Assert
             string expected = @"
@@ -73,7 +73,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(false, true,
                 false, false, false,
-                true);
+               false, true);
 
             //Assert
             string expected = @"
@@ -116,7 +116,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(false, false,
                 true, false, false,
-                true);
+               false, true);
 
             //Assert
             string expected = @"
@@ -159,7 +159,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, true, true,
-                true);
+               false, true);
 
             //Assert
             string expected = @"
@@ -203,7 +203,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, true, false,
-                true);
+               false, true);
 
             //Assert
             string expected = @"
@@ -247,7 +247,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, true, false,
-                true);
+              false, true);
 
             //Assert
             string expected = @"
@@ -291,7 +291,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, false, false,
-                true);
+               false, true);
             bool crossCheckSuccessful = RulesUtility.CrossCheckResult(gameState.GameBoard);
 
             //Assert       

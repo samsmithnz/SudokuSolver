@@ -15,6 +15,7 @@ namespace SudokuSolver.Core
             int squaresSolved = 0;
             List<KeyValuePair<Point, HashSet<int>>> nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
 
+            //TODO: refactor this into a separate function (it helps to keep the variables declared within just this if statement scope
             if (true)
             {
                 //Check each row
@@ -63,6 +64,7 @@ namespace SudokuSolver.Core
                 }
             }
 
+            //TODO: refactor this into a separate function (it helps to keep the variables declared within just this if statement scope
             if (true)
             {
                 //Check each column
@@ -111,79 +113,74 @@ namespace SudokuSolver.Core
                 }
             }
 
-            ////square group
-            //if (true)
-            //{
-            //    //Get each row 
-            //    for (int y = 0; y < 9; y += 3)
-            //    {
-            //        //Get each column
-            //        for (int x = 0; x < 9; x += 3)
-            //        {
-            //            if (y == 6 && x == 3)
-            //            {
-            //                int jk = 0;
-            //            }
-            //            nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
-            //            //Get the top left of the square group
-            //            int xSquare = (int)(x / 3f);
-            //            int ySquare = (int)(y / 3f);
-            //            //Loop through the square group
-            //            for (int y2 = 0; y2 < 3; y2++)
-            //            {
-            //                for (int x2 = 0; x2 < 3; x2++)
-            //                {
-            //                    //If there is only one instance of a number, look closer at the square group
-            //                    int newX = (xSquare * 3) + x2;
-            //                    int newY = (ySquare * 3) + y2;
-            //                    if (gameBoardPossibilities[newX, newY].Count == 2)
-            //                    {
-            //                        nakedPair.Add(new KeyValuePair<Point, HashSet<int>>(new Point(newX, newY), gameBoardPossibilities[newX, newY]));
-            //                    }
-            //                }
-            //            }
+            //TODO: refactor this into a separate function (it helps to keep the variables declared within just this if statement scope
+            //square group
+            if (true)
+            {
+                //Get each row 
+                for (int ySquare = 0; ySquare < 3; ySquare++)
+                {
+                    //Get each column
+                    for (int xSquare = 0; xSquare < 3; xSquare++)
+                    {
+                        nakedPair = new List<KeyValuePair<Point, HashSet<int>>>();
+                        HashSet<int>[,] gameBoardPossibilitiesSquare = RulesUtility.ExtractSquareGroupFromGamePossibilities(gameBoardPossibilities, xSquare, ySquare);
+                        //Loop through the square group
+                        for (int y2 = 0; y2 < 3; y2++)
+                        {
+                            for (int x2 = 0; x2 < 3; x2++)
+                            {
+                                //If there is only a pair of possible numbers, add it to the shortlist
+                                if (gameBoardPossibilitiesSquare[x2, y2].Count == 2)
+                                {
+                                    nakedPair.Add(new KeyValuePair<Point, HashSet<int>>(new Point(x2, y2), gameBoardPossibilitiesSquare[x2, y2]));
+                                }
+                            }
+                        }
 
-            //            //Now loop through the hashsets and check if their are duplicates and hence can remove some possibilities in the square group
-            //            foreach (KeyValuePair<Point, HashSet<int>> item in nakedPair)
-            //            {
-            //                //double check there is still a value - as this evolves as we solve the puzzle
-            //                if (item.Value.Count == 2)
-            //                {
-            //                    int number1 = item.Value.First();
-            //                    int number2 = Utility.NthElement(item.Value, 2); //get the second item (not zero based)         
-            //                                                                     //Loop through the square group
-            //                    for (int y2 = 0; y2 < 3; y2++)
-            //                    {
-            //                        for (int x2 = 0; x2 < 3; x2++)
-            //                        {
-            //                            if (x2 != item.Key.X & y2 != item.Key.Y)
-            //                            {
-            //                                Point point1 = item.Key;
-            //                                if (item.Value.SetEquals(gameBoardPossibilities[(xSquare * 3) + x2, (ySquare * 3) + y2]))
-            //                                {
-            //                                    Point point2 = new Point((xSquare * 3) + x2, (ySquare * 3) + y2);
-            //                                    //Loop back through the column, removing all numbers not at the two points
-            //                                    for (int x3 = 0; x3 < 9; x3++)
-            //                                    {
-            //                                        for (int y3 = 0; y3 < 9; y3++)
-            //                                        {
-            //                                            if (new Point(x3, y3) != point1 & new Point(x3, y3) != point2)
-            //                                            {
-            //                                                gameBoardPossibilities[x3, y3].Remove(number1);
-            //                                                gameBoardPossibilities[x3, y3].Remove(number2);
-            //                                            }
-            //                                        }
-            //                                    }
-            //                                }
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            }
+                        //Now loop through the hashsets and check if their are duplicates and hence can remove some possibilities in the square group
+                        foreach (KeyValuePair<Point, HashSet<int>> item in nakedPair)
+                        {
+                            //double check there is still a value - as this evolves as we solve the puzzle
+                            if (item.Value.Count == 2)
+                            {
+                                int number1 = item.Value.First();
+                                int number2 = RulesUtility.NthElement(item.Value, 2); //get the second item (not zero based)   
 
-            //        }
-            //    }
-            //}
+                                //Loop through the square group
+                                for (int y2 = 0; y2 < 3; y2++)
+                                {
+                                    for (int x2 = 0; x2 < 3; x2++)
+                                    {
+                                        if (x2 != item.Key.X | y2 != item.Key.Y)
+                                        {
+                                            Point point1 = item.Key;
+                                            if (item.Value.SetEquals(gameBoardPossibilitiesSquare[x2, y2]))
+                                            {
+                                                Point point2 = new Point(x2, y2);
+                                                //Loop back through the square group, removing all numbers not at the two points
+                                                for (int x3 = 0; x3 < 3; x3++)
+                                                {
+                                                    for (int y3 = 0; y3 < 3; y3++)
+                                                    {
+                                                        if (new Point(x3, y3) != point1 & new Point(x3, y3) != point2)
+                                                        {
+                                                            gameBoardPossibilitiesSquare[x3, y3].Remove(number1);
+                                                            gameBoardPossibilitiesSquare[x3, y3].Remove(number2);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        gameBoardPossibilities = RulesUtility.InsertSquareGroupIntoGamePossibilities(gameBoardPossibilities, gameBoardPossibilitiesSquare, xSquare, ySquare);
+
+                    }
+                }
+            }
 
             return new RuleResult(squaresSolved, gameBoard, gameBoardPossibilities);
         }

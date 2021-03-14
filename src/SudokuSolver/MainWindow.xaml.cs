@@ -64,7 +64,7 @@ namespace SudokuSolver
         {
             GameState.ProcessRules((bool)chkUseRowRule.IsChecked, (bool)chkUseColumnRule.IsChecked, (bool)chkUseSquareGroupRule.IsChecked,
                 (bool)chkUseNakedPairsRule.IsChecked, (bool)chkUseHiddenNakedPairsRule.IsChecked, true);
-            GameState.CrossCheckSuccessful = BasicRules.CrossCheckResultRule(GameState.GameBoard);
+            GameState.CrossCheckSuccessful = RulesUtility.CrossCheckResult(GameState.GameBoard);
             LoadGrid();
             UpdateTextStatus();
         }

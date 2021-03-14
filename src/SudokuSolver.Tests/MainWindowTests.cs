@@ -41,7 +41,7 @@ namespace SudokuSolver.Tests
             TestPositions(result);
         }
 
-        private void TestPositions(string[] result)
+        private static void TestPositions(string[] result)
         {
             Assert.AreEqual("0,0", result[0]);
             Assert.AreEqual("1,0", result[1]);

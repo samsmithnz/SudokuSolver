@@ -9,47 +9,6 @@ namespace SudokuSolver.Tests
     {
 
         [TestMethod]
-        public void SolveHard1GameTest()
-        {
-            //Arrange
-            GameState gameState = new GameState();
-            string game = @"
-.....8...
-3......76
-2.7..39..
-.....264.
-...957...
-.528.....
-..32..5.8
-94......1
-...6.....
-        ";
-
-            //Act
-            gameState.LoadGame(game);
-            int squaresSolved = gameState.SolveGame(true, true, true, true, true, true);
-
-            //Assert     
-            string expected = @"
-.....8..3
-3......76
-2.7..39.4
-.....2645
-.3.957..2
-.528.6...
-..32..5.8
-94...5..1
-.2.6..4..
-";
-
-            Assert.IsTrue(gameState.CrossCheckSuccessful);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(47, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(9, squaresSolved);
-            //Assert.AreEqual(3, gameState.IterationsToSolve);
-        }
-
-        [TestMethod]
         public void SolveHard2GameTest()
         {
             //Arrange

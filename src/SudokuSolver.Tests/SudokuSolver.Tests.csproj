@@ -13,6 +13,8 @@
     <None Remove="Games\1Easy004.sdk" />
     <None Remove="Games\1Easy005.sdk" />
     <None Remove="Games\2Medium001.sdk" />
+    <None Remove="Games\2Medium002.sdk" />
+    <None Remove="Games\2Medium003.sdk" />
     <None Remove="Games\Hard001.sdk" />
     <None Remove="Games\Hard002.sdk" />
     <None Remove="Games\Hard003.sdk" />
@@ -22,11 +24,9 @@
     <None Remove="Games\Hard007.sdk" />
     <None Remove="Games\Hard008.sdk" />
     <None Remove="Games\Hard009.sdk" />
-    <None Remove="Games\VeryHard001.sdk" />
+    <None Remove="Games\Hard010.sdk" />
     <None Remove="Games\VeryHard002.sdk" />
-    <None Remove="Games\VeryHard003.sdk" />
     <None Remove="Games\VeryHard004.sdk" />
-    <None Remove="Games\VeryHard005.sdk" />
     <None Remove="Games\VeryHard006.sdk" />
     <None Remove="Games\VeryHard007.sdk" />
   </ItemGroup>
@@ -50,7 +50,7 @@
     <Content Include="Games\2Medium001.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\Hard001.sdk">
+    <Content Include="Games\2Medium002.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\Hard002.sdk">
@@ -77,19 +77,19 @@
     <Content Include="Games\Hard009.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\VeryHard001.sdk">
+    <Content Include="Games\2Medium003.sdk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Games\Hard010.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\VeryHard002.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\VeryHard003.sdk">
+    <Content Include="Games\Hard001.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\VeryHard004.sdk">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Games\VeryHard005.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\VeryHard006.sdk">

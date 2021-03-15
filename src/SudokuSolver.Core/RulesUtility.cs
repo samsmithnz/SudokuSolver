@@ -200,7 +200,7 @@ namespace SudokuSolver.Core
         }
 
         //Confirms that the puzzle has been solved correctly
-        public static bool CrossCheckResult(int[,] gameBoard)
+        public static bool CrossCheckResult(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int[] checker;
 
@@ -237,7 +237,38 @@ namespace SudokuSolver.Core
                     }
                 }
             }
+
+            //Finally check that the solves are correct
+            int numberOfUnsolvedSquares = 0;
+            for (int y = 0; y < 9; y++)
+            {
+                checker = new int[10];
+                for (int x = 0; x < 9; x++)
+                {
+                    if (gameBoard[x, y] == 0)
+                    {
+                        numberOfUnsolvedSquares++;
+                    }
+                }
+            }
+            if (numberOfUnsolvedSquares > 0 & CountRemainingPossibilities(gameBoardPossibilities) == 0)
+            {
+                return false;
+            }
             return true;
+        }
+
+        public static int CountRemainingPossibilities(HashSet<int>[,] gameBoardPossibilities)
+        {
+            int result = 0;
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    result += gameBoardPossibilities[x, y].Count;
+                }
+            }
+            return result;
         }
     }
 }

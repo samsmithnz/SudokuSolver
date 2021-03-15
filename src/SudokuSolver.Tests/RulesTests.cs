@@ -292,7 +292,7 @@ namespace SudokuSolver.Tests
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, false, false,
                false, true);
-            bool crossCheckSuccessful = RulesUtility.CrossCheckResult(gameState.GameBoard);
+            bool crossCheckSuccessful = RulesUtility.CrossCheckResult(gameState.GameBoard, gameState.GameBoardPossibilities);
 
             //Assert       
             string expected = @"

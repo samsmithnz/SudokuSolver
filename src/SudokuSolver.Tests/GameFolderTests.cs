@@ -34,28 +34,28 @@ namespace SudokuSolver.Tests
                     case "Medium":
                         Assert.AreEqual(0, gameState.UnsolvedSquareCount);
                         break;
-                    case "Hard":
-                        if (solvedSquares >= 35)
-                        {
-                            Assert.AreEqual(solvedSquares, path);
-                        }
-                        Assert.IsTrue(solvedSquares >= 0);
-                        Assert.IsTrue(solvedSquares <= 35);
-                        Assert.IsTrue(gameState.UnsolvedSquareCount > 0);
-                        break;
-                    case "Very Hard":
-                        if (solvedSquares >= 5)
-                        {
-                            Assert.AreEqual(solvedSquares, path);
-                        }
-                        Assert.IsTrue(solvedSquares >= 0);
-                        Assert.IsTrue(solvedSquares <= 5);
-                        Assert.IsTrue(gameState.UnsolvedSquareCount > 0);
-                        break;
-                    default:
-                        throw new Exception("Unknown game: " + path);
-                        //Assert.IsTrue(gameState.GameLevel == "");
-                        //break;
+                    //case "Hard":
+                    //    if (solvedSquares >= 35)
+                    //    {
+                    //        Assert.AreEqual(solvedSquares, path);
+                    //    }
+                    //    Assert.IsTrue(solvedSquares >= 0);
+                    //    Assert.IsTrue(solvedSquares <= 35);
+                    //    Assert.IsTrue(gameState.UnsolvedSquareCount > 0);
+                    //    break;
+                    //case "Very Hard":
+                    //    if (solvedSquares >= 5)
+                    //    {
+                    //        Assert.AreEqual(solvedSquares, path);
+                    //    }
+                    //    Assert.IsTrue(solvedSquares >= 0);
+                    //    Assert.IsTrue(solvedSquares <= 5);
+                    //    Assert.IsTrue(gameState.UnsolvedSquareCount > 0);
+                    //    break;
+                    //default:
+                    //    throw new Exception("Unknown game: " + path);
+                    //    //Assert.IsTrue(gameState.GameLevel == "");
+                    //    //break;
                 }
             }
 

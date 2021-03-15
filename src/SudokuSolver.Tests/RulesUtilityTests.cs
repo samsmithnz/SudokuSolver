@@ -28,7 +28,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard);
+            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard, gameState.GameBoardPossibilities);
 
             //Assert
             Assert.AreEqual(false, result);
@@ -53,7 +53,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard);
+            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard, gameState.GameBoardPossibilities);
 
             //Assert
             Assert.AreEqual(false, result);
@@ -78,7 +78,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard);
+            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard, gameState.GameBoardPossibilities);
 
             //Assert
             Assert.AreEqual(false, result);

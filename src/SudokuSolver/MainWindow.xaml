@@ -66,7 +66,7 @@
                     <CheckBox Name="chkUseColumnRule" Margin="7,10,7,0" IsChecked="True">Column</CheckBox>
                     <CheckBox Name="chkUseSquareGroupRule" Margin="7,10,7,0" IsChecked="True">Square group</CheckBox>
                     <CheckBox Name="chkUseNakedPairsRule" Margin="7,10,7,0" IsChecked="True">Naked pairs</CheckBox>
-                    <CheckBox Name="chkTakeAGuessRule" Margin="7,10,7,0" IsChecked="False">Include guesses (brute strength)</CheckBox>
+                    <CheckBox Name="chkUseBruteStrengthRule" Margin="7,10,7,0" IsChecked="False">Include guesses (brute strength)</CheckBox>
                     <CheckBox Name="chkUseHiddenNakedPairsRule" Margin="7,10,7,0" IsEnabled="False">Hidden naked pairs</CheckBox>
                     <Border BorderBrush="Gray" BorderThickness="0.2" Grid.Column="1" Margin="7,10,7,0" ClipToBounds="True" Height="300" >
                         <TextBlock Name="txtStatus" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="0,0,0,0" Height="300" ClipToBounds="True" ></TextBlock>

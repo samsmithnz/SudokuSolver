@@ -28,7 +28,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard);
+            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard, gameState.GameBoardPossibilities);
 
             //Assert
             Assert.AreEqual(false, result);
@@ -53,7 +53,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard);
+            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard, gameState.GameBoardPossibilities);
 
             //Assert
             Assert.AreEqual(false, result);
@@ -78,7 +78,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard);
+            bool result = RulesUtility.CrossCheckResult(gameState.GameBoard, gameState.GameBoardPossibilities);
 
             //Assert
             Assert.AreEqual(false, result);
@@ -217,11 +217,11 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            gameState.ProcessRules(true, false, false, false, false, false);
+            gameState.ProcessRules(true, false, false, false, false, false, false);
             HashSet<int>[,] topRight = RulesUtility.ExtractSquareGroupFromGamePossibilities(gameState.GameBoardPossibilities, 2, 0);
 
             //Assert      
-            Assert.IsTrue(expectedTopRight[2,0].SetEquals(topRight[2,0]));
+            Assert.IsTrue(expectedTopRight[2, 0].SetEquals(topRight[2, 0]));
         }
 
 
@@ -262,7 +262,7 @@ namespace SudokuSolver.Tests
 
             //Act
             gameState.LoadGame(game);
-            gameState.ProcessRules(true, false, false, false, false, false);
+            gameState.ProcessRules(true, false, false, false, false, false, false);
             gameState.GameBoardPossibilities = RulesUtility.InsertSquareGroupIntoGamePossibilities(gameState.GameBoardPossibilities, topRight, 0, 0);
 
             //Assert
@@ -272,46 +272,28 @@ namespace SudokuSolver.Tests
 
 
         [TestMethod]
-        public void AllRulesTest()
+        public void GetNthElementTests()
         {
             //Arrange
-            GameState gameState = new GameState();
-            string game = @"
-27.1.5..3
-354...71.
-9162.3.8.
-6.28.73.4
-.........
-1.53.98.6
-.2.7.1.6.
-.81...24.
-7..4.2..1
-";
+            HashSet<int> emptyItemSet = new HashSet<int>();
+            HashSet<int> threeItemSet = new HashSet<int>
+            {
+                1,
+                2,
+                3
+            };
 
             //Act
-            gameState.LoadGame(game);
-            int squaresSolved = gameState.ProcessRules(true, true,
-                true, false, false,
-                true);
-            bool crossCheckSuccessful = RulesUtility.CrossCheckResult(gameState.GameBoard);
+            int emptyItem1 = RulesUtility.GetNthElement(emptyItemSet, 1);
+            int threeItem1 = RulesUtility.GetNthElement(threeItemSet, 1);
+            int threeItem2 = RulesUtility.GetNthElement(threeItemSet, 2);
+            int threeItem3 = RulesUtility.GetNthElement(threeItemSet, 3);
 
-            //Assert       
-            string expected = @"
-2781.5693
-3546.8712
-916273.85
-692817354
-8.75.4129
-1.53.9876
-42.751.68
-581936247
-76.482.31
-";
-
-            Assert.IsTrue(crossCheckSuccessful);
-            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
-            Assert.AreEqual(11, gameState.UnsolvedSquareCount);
-            Assert.AreEqual(30, squaresSolved);
+            //Assert
+            Assert.AreEqual(0, emptyItem1);
+            Assert.AreEqual(1, threeItem1);
+            Assert.AreEqual(2, threeItem2);
+            Assert.AreEqual(3, threeItem3);
         }
 
     }

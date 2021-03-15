@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Text;
 
 namespace SudokuSolver.Core
@@ -98,6 +100,7 @@ namespace SudokuSolver.Core
             bool useSquareGroupRule,
             bool useNakedPairsRule,
             bool useHiddenNakedPairsRule,
+            bool useBruteStrengthRule,
             bool solveSquares)
         {
             RuleResult ruleResult;
@@ -156,6 +159,16 @@ namespace SudokuSolver.Core
                 }
             }
 
+            //if (useBruteStrengthRule == true)
+            //{
+            //    ruleResult = ProcessBruteStrength(GameBoard, GameBoardPossibilities);
+            //    if (ruleResult != null)
+            //    {
+            //        GameBoard = ruleResult.GameBoard;
+            //        GameBoardPossibilities = ruleResult.GameBoardPossibilities;
+            //    }
+            //}
+
             //2. Now looking at the possibilities, solve squares
             if (solveSquares == true)
             {
@@ -191,6 +204,7 @@ namespace SudokuSolver.Core
             bool useSquareGroupRule = true,
             bool useNakedPairsRule = true,
             bool useHiddenNakedPairsRule = true,
+            bool useBruteStrengthRule = false,
             bool solveSquares = true)
         {
             int squaresSolved = 0;
@@ -199,16 +213,103 @@ namespace SudokuSolver.Core
             do
             {
                 //Keep looping while new squares are solved
-                newSquaresSolved = ProcessRules(useRowRule, useColumnRule, useSquareGroupRule, useNakedPairsRule, useHiddenNakedPairsRule, solveSquares);
+                newSquaresSolved = ProcessRules(useRowRule, useColumnRule, useSquareGroupRule, useNakedPairsRule, useHiddenNakedPairsRule, false, solveSquares);
                 squaresSolved += newSquaresSolved;
                 IterationsToSolve++;
             } while (newSquaresSolved > 0);
 
+            //Do the brute strength processing, to minimise the chance of breaking the puzzle
+            if (useBruteStrengthRule == true & UnsolvedSquareCount > 0)
+            {
+                newSquaresSolved = ProcessBruteStrength(GameBoard, GameBoardPossibilities);
+                squaresSolved += newSquaresSolved;
+                IterationsToSolve++;
+            }
+
             //validate result
-            CrossCheckSuccessful = RulesUtility.CrossCheckResult(GameBoard);
+            CrossCheckSuccessful = RulesUtility.CrossCheckResult(GameBoard, GameBoardPossibilities);
 
             return squaresSolved;
         }
 
+        public int ProcessBruteStrength(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
+        {
+            int squaresSolved = 0;
+            int[,] gameBoardBackup = (int[,])gameBoard.Clone();
+            HashSet<int>[,] gameBoardPossibilitiesBackup = CopyHashset(gameBoardPossibilities);
+            int index = 0;
+            int currentIndex = -1;
+
+            //1. first build a list of possible moves
+            List<KeyValuePair<Point, int>> possibleMoves = new List<KeyValuePair<Point, int>>();
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    if (GameBoardPossibilities[x, y].Count > 0)
+                    {
+                        for (int i = 0; i < GameBoardPossibilities[x, y].Count; i++)
+                        {
+                            possibleMoves.Add(new KeyValuePair<Point, int>(new Point(x, y), RulesUtility.GetNthElement(GameBoardPossibilities[x, y], i + 1)));
+                        }
+                    }
+                }
+            }
+
+            if (possibleMoves.Count > 0)
+            {
+                do
+                {
+                    int squaresSolvedCircuitBreaker = squaresSolved;
+
+                    //do work
+                    //2. Try putting in a random number.
+                    if (currentIndex < index)
+                    {
+                        currentIndex = index;
+                        GameBoardPossibilities[possibleMoves[index].Key.X, possibleMoves[index].Key.Y].Remove(possibleMoves[index].Value);
+                    }
+
+                    //3. Process the rules
+                    squaresSolved += SolveGame(true, true, true, true, true, false, true);
+
+                    //4. Was it successful? Break out. If not, loop back to 1 and try another number
+                    if (RulesUtility.CrossCheckResult(GameBoard, GameBoardPossibilities) == false)
+                    {
+                        //We failed. We need to reset and try removing another number.
+                        GameBoard = (int[,])gameBoardBackup.Clone();
+                        GameBoardPossibilities = CopyHashset(gameBoardPossibilitiesBackup);
+                        squaresSolved = 0;
+                        index++;
+                    }
+                    //Otherwise, we have a valid board, check to see if we have been making progress.
+                    else if (squaresSolved == squaresSolvedCircuitBreaker)
+                    {
+                        break;
+                    }
+                } while (UnsolvedSquareCount > 0);
+            }
+
+            return squaresSolved;
+        }
+
+        private static HashSet<int>[,] CopyHashset(HashSet<int>[,] hashSet)
+        {
+            HashSet<int>[,] newHashSet = new HashSet<int>[9, 9];
+
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    newHashSet[x, y] = new HashSet<int>();
+                    for (int i = 1; i <= hashSet[x, y].Count; i++)
+                    {
+                        int number = RulesUtility.GetNthElement(hashSet[x, y], i);
+                        newHashSet[x, y].Add(number);
+                    }
+                }
+            }
+            return newHashSet;
+        }
     }
 }

@@ -1,20 +1,10 @@
 ﻿using SudokuSolver.Core;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SudokuSolver
 {
@@ -56,14 +46,14 @@ namespace SudokuSolver
             string game = sb.ToString();
             GameState.LoadGame(game);
             GameState.ProcessRules((bool)chkUseRowRule.IsChecked, (bool)chkUseColumnRule.IsChecked, (bool)chkUseSquareGroupRule.IsChecked,
-                (bool)chkUseNakedPairsRule.IsChecked, (bool)chkUseHiddenNakedPairsRule.IsChecked, false, false);
+                (bool)chkUseNakedPairsRule.IsChecked, (bool)chkUseHiddenNakedPairsRule.IsChecked,  false);
             LoadGrid();
         }
 
         private void ButtonSolvePartialSudoku_Click(object sender, RoutedEventArgs e)
         {
             GameState.ProcessRules((bool)chkUseRowRule.IsChecked, (bool)chkUseColumnRule.IsChecked, (bool)chkUseSquareGroupRule.IsChecked,
-                (bool)chkUseNakedPairsRule.IsChecked, (bool)chkUseHiddenNakedPairsRule.IsChecked, false, true);
+                (bool)chkUseNakedPairsRule.IsChecked, (bool)chkUseHiddenNakedPairsRule.IsChecked,  true);
             GameState.CrossCheckSuccessful = RulesUtility.CrossCheckResult(GameState.GameBoard, GameState.GameBoardPossibilities);
             LoadGrid();
             UpdateTextStatus();

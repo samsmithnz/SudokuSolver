@@ -30,12 +30,12 @@ namespace SudokuSolver.Tests
                 //Check that it was solved.
                 switch (gameState.GameLevel)
                 {
-                    case "Easy":
-                    case "Medium":
-                    case "Hard":
+                    case "Easy": //easy games can be solved with simple elimination
+                    case "Medium": //medium games require naked pairs
+                    case "Hard": //hard games require some brute strength
                         Assert.AreEqual(0, gameState.UnsolvedSquareCount);
                         break;
-                    case "Very Hard":
+                    case "Very Hard": //very hard games are still unsolvable.
                         if (solvedSquares > 30)
                         {
                             Assert.AreEqual(solvedSquares, path);
@@ -51,12 +51,6 @@ namespace SudokuSolver.Tests
                 }
             }
 
-            ////Assert
-            ////TODO: Solve roadblocks with the "FilesToIgnore"
-            ////Check if any errors were detected
-            //Assert.AreEqual(null, comments.FirstOrDefault(s => s.Contains("#Error:")));
-            ////Check that the remaining comments equals what we expect
-            //Assert.AreEqual(28, comments.Count);
         }
 
     }

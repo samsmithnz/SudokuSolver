@@ -242,7 +242,6 @@ namespace SudokuSolver.Core
             int numberOfUnsolvedSquares = 0;
             for (int y = 0; y < 9; y++)
             {
-                checker = new int[10];
                 for (int x = 0; x < 9; x++)
                 {
                     if (gameBoard[x, y] == 0)
@@ -251,24 +250,48 @@ namespace SudokuSolver.Core
                     }
                 }
             }
-            if (numberOfUnsolvedSquares > 0 & CountRemainingPossibilities(gameBoardPossibilities) == 0)
+            if (numberOfUnsolvedSquares > 0 & CountRemainingPossibilities(gameBoard, gameBoardPossibilities) == 0)
             {
                 return false;
             }
             return true;
         }
 
-        public static int CountRemainingPossibilities(HashSet<int>[,] gameBoardPossibilities)
+        public static int CountRemainingPossibilities(int[,] gameBoard, HashSet<int>[,] gameBoardPossibilities)
         {
             int result = 0;
             for (int x = 0; x < 9; x++)
             {
                 for (int y = 0; y < 9; y++)
                 {
+                    //Break out if we find any unsolved squares with no possibilities
+                    if (gameBoard[x, y] == 0 & gameBoardPossibilities[x, y].Count == 0)
+                    {
+                        return 0;
+                    }
                     result += gameBoardPossibilities[x, y].Count;
                 }
             }
             return result;
+        }
+
+        public static HashSet<int>[,] CopyHashset(HashSet<int>[,] hashSet)
+        {
+            HashSet<int>[,] newHashSet = new HashSet<int>[9, 9];
+
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    newHashSet[x, y] = new HashSet<int>();
+                    for (int i = 1; i <= hashSet[x, y].Count; i++)
+                    {
+                        int number = RulesUtility.GetNthElement(hashSet[x, y], i);
+                        newHashSet[x, y].Add(number);
+                    }
+                }
+            }
+            return newHashSet;
         }
     }
 }

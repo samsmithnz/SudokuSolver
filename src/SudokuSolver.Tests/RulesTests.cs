@@ -1,6 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SudokuSolver.Core;
-using System.Collections.Generic;
 
 namespace SudokuSolver.Tests
 {
@@ -29,7 +28,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, false,
                 false, false, false,
-               false, true);
+                true);
 
             //Assert
             string expected = @"
@@ -73,7 +72,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(false, true,
                 false, false, false,
-               false, true);
+                true);
 
             //Assert
             string expected = @"
@@ -116,7 +115,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(false, false,
                 true, false, false,
-               false, true);
+                true);
 
             //Assert
             string expected = @"
@@ -159,7 +158,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, true, true,
-               false, true);
+                true);
 
             //Assert
             string expected = @"
@@ -203,7 +202,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, true, false,
-               false, true);
+                true);
 
             //Assert
             string expected = @"
@@ -247,7 +246,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, true, false,
-              false, true);
+               true);
 
             //Assert
             string expected = @"
@@ -291,7 +290,7 @@ namespace SudokuSolver.Tests
             gameState.LoadGame(game);
             int squaresSolved = gameState.ProcessRules(true, true,
                 true, false, false,
-               false, true);
+                true);
             bool crossCheckSuccessful = RulesUtility.CrossCheckResult(gameState.GameBoard, gameState.GameBoardPossibilities);
 
             //Assert       

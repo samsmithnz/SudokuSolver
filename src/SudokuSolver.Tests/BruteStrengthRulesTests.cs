@@ -93,6 +93,48 @@ namespace SudokuSolver.Tests
             Assert.AreEqual(0, gameState.UnsolvedSquareCount);
             Assert.AreEqual(22, squaresSolved);
         }
+        [TestMethod]
+        public void BruteStrengthHard4GameRuleTest()
+        {
+            //Arrange
+            GameState gameState = new GameState();
+            string game = @"
+..73....9
+38.46.7..
+4..7...3.
+.......73
+.39...28.
+87.......
+.6...8..4
+..3.74.28
+1....26..
+";
+
+            //Act
+            gameState.LoadGame(game);
+            int squaresSolved = gameState.SolveGame(true, true, true,
+                true, true,
+                true,
+                true);
+
+            //Assert
+            string expected = @"
+217385469
+385469712
+496721835
+524816973
+639547281
+871293546
+762158394
+953674128
+148932657
+";
+
+            Assert.AreEqual(Utility.TrimNewLines(expected), gameState.ProcessedGameBoardString);
+            Assert.AreEqual(true, gameState.CrossCheckSuccessful);
+            Assert.AreEqual(0, gameState.UnsolvedSquareCount);
+            Assert.AreEqual(51, squaresSolved);
+        }
 
 
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 
 namespace SudokuSolver.Core
@@ -100,7 +99,6 @@ namespace SudokuSolver.Core
             bool useSquareGroupRule,
             bool useNakedPairsRule,
             bool useHiddenNakedPairsRule,
-            bool useBruteStrengthRule,
             bool solveSquares)
         {
             RuleResult ruleResult;
@@ -159,16 +157,6 @@ namespace SudokuSolver.Core
                 }
             }
 
-            //if (useBruteStrengthRule == true)
-            //{
-            //    ruleResult = ProcessBruteStrength(GameBoard, GameBoardPossibilities);
-            //    if (ruleResult != null)
-            //    {
-            //        GameBoard = ruleResult.GameBoard;
-            //        GameBoardPossibilities = ruleResult.GameBoardPossibilities;
-            //    }
-            //}
-
             //2. Now looking at the possibilities, solve squares
             if (solveSquares == true)
             {
@@ -213,7 +201,7 @@ namespace SudokuSolver.Core
             do
             {
                 //Keep looping while new squares are solved
-                newSquaresSolved = ProcessRules(useRowRule, useColumnRule, useSquareGroupRule, useNakedPairsRule, useHiddenNakedPairsRule, false, solveSquares);
+                newSquaresSolved = ProcessRules(useRowRule, useColumnRule, useSquareGroupRule, useNakedPairsRule, useHiddenNakedPairsRule, solveSquares);
                 squaresSolved += newSquaresSolved;
                 IterationsToSolve++;
             } while (newSquaresSolved > 0);
@@ -236,7 +224,7 @@ namespace SudokuSolver.Core
         {
             int squaresSolved = 0;
             int[,] gameBoardBackup = (int[,])gameBoard.Clone();
-            HashSet<int>[,] gameBoardPossibilitiesBackup = CopyHashset(gameBoardPossibilities);
+            HashSet<int>[,] gameBoardPossibilitiesBackup = RulesUtility.CopyHashset(gameBoardPossibilities);
             int index = 0;
             int currentIndex = -1;
 
@@ -278,7 +266,7 @@ namespace SudokuSolver.Core
                     {
                         //We failed. We need to reset and try removing another number.
                         GameBoard = (int[,])gameBoardBackup.Clone();
-                        GameBoardPossibilities = CopyHashset(gameBoardPossibilitiesBackup);
+                        GameBoardPossibilities = RulesUtility.CopyHashset(gameBoardPossibilitiesBackup);
                         squaresSolved = 0;
                         index++;
                     }
@@ -291,25 +279,6 @@ namespace SudokuSolver.Core
             }
 
             return squaresSolved;
-        }
-
-        private static HashSet<int>[,] CopyHashset(HashSet<int>[,] hashSet)
-        {
-            HashSet<int>[,] newHashSet = new HashSet<int>[9, 9];
-
-            for (int x = 0; x < 9; x++)
-            {
-                for (int y = 0; y < 9; y++)
-                {
-                    newHashSet[x, y] = new HashSet<int>();
-                    for (int i = 1; i <= hashSet[x, y].Count; i++)
-                    {
-                        int number = RulesUtility.GetNthElement(hashSet[x, y], i);
-                        newHashSet[x, y].Add(number);
-                    }
-                }
-            }
-            return newHashSet;
         }
     }
 }

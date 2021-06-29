@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 
@@ -198,16 +199,18 @@ namespace SudokuSolver.Core
             int squaresSolved = 0;
             int newSquaresSolved;
             IterationsToSolve = 0;
+
             do
             {
                 //Keep looping while new squares are solved
                 newSquaresSolved = ProcessRules(useRowRule, useColumnRule, useSquareGroupRule, useNakedPairsRule, useHiddenNakedPairsRule, solveSquares);
                 squaresSolved += newSquaresSolved;
                 IterationsToSolve++;
-            } while (newSquaresSolved > 0);
+
+            } while (UnsolvedSquareCount > 0 && newSquaresSolved > 0);
 
             //Do the brute strength processing, to minimise the chance of breaking the puzzle
-            if (useBruteStrengthRule == true & UnsolvedSquareCount > 0)
+            if (useBruteStrengthRule == true & newSquaresSolved == 0)
             {
                 newSquaresSolved = ProcessBruteStrength(GameBoard, GameBoardPossibilities);
                 squaresSolved += newSquaresSolved;
@@ -269,6 +272,7 @@ namespace SudokuSolver.Core
                         GameBoardPossibilities = RulesUtility.CopyHashset(gameBoardPossibilitiesBackup);
                         squaresSolved = 0;
                         index++;
+                        Debug.WriteLine("Trying another brute strength iteration: " + index.ToString());
                     }
                     //Otherwise, we have a valid board, check to see if we have been making progress.
                     else if (squaresSolved == squaresSolvedCircuitBreaker)

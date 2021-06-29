@@ -61,10 +61,18 @@ namespace SudokuSolver
 
         private void ButtonSolveEntireSudoku_Click(object sender, RoutedEventArgs e)
         {
-            GameState.SolveGame((bool)chkUseRowRule.IsChecked, (bool)chkUseColumnRule.IsChecked, (bool)chkUseSquareGroupRule.IsChecked,
-                (bool)chkUseNakedPairsRule.IsChecked, (bool)chkUseHiddenNakedPairsRule.IsChecked, (bool)chkUseBruteStrengthRule.IsChecked);
-            LoadGrid();
-            UpdateTextStatus();
+            try
+            {
+                btnSolveEntireSudoku.Content = "Solving Sudoku...";
+                GameState.SolveGame((bool)chkUseRowRule.IsChecked, (bool)chkUseColumnRule.IsChecked, (bool)chkUseSquareGroupRule.IsChecked,
+                    (bool)chkUseNakedPairsRule.IsChecked, (bool)chkUseHiddenNakedPairsRule.IsChecked, (bool)chkUseBruteStrengthRule.IsChecked);
+                LoadGrid();
+                UpdateTextStatus();
+            }
+            finally
+            {
+                btnSolveEntireSudoku.Content = "Solve entire Sudoku";
+            }
         }
 
         private void LoadGamesIntoDropdown()

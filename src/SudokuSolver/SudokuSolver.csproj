@@ -22,6 +22,7 @@
     <None Remove="Games\Hard006.sdk" />
     <None Remove="Games\Hard007.sdk" />
     <None Remove="Games\Hard008.sdk" />
+    <None Remove="Games\VeryAlmostHard001.sdk" />
     <None Remove="Games\VeryHard001.sdk" />
     <None Remove="Games\VeryHard002.sdk" />
     <None Remove="Games\VeryHard003.sdk" />
@@ -29,7 +30,6 @@
     <None Remove="Games\VeryHard005.sdk" />
     <None Remove="Games\VeryHard006.sdk" />
     <None Remove="Games\VeryHard007.sdk" />
-    <None Remove="Games\VeryHard008.sdk" />
     <None Remove="Games\VeryHard009.sdk" />
   </ItemGroup>
 
@@ -94,7 +94,7 @@
     <Content Include="Games\VeryHard007.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Games\VeryHard008.sdk">
+    <Content Include="Games\VeryAlmostHard001.sdk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Games\VeryHard009.sdk">
